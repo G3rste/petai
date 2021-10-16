@@ -1,0 +1,12 @@
+{
+    "type": "code",
+    "modid": "wolftaming",
+    "name": "Wolf taming",
+    "side": "universal",
+    "author": "G3rste",
+    "description": "Mod that focuses on making wolfes tamable and usable by the player.",
+    "version": "0.0.1",
+    "dependency": {
+        "game": "1.15.5"
+    }
+}

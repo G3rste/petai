@@ -1,0 +1,10 @@
+[
+    {
+      "op": "add",
+      "path": "/server/behaviors/-",
+      "value": {
+        "code": "EntityBehaviorRaisable"
+      },
+      "file": "game:entities/land/wolf-pup.json"
+    }
+]
