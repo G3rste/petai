@@ -105,7 +105,8 @@ namespace WolfTaming
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
             AiTaskIdle task = new AiTaskIdle(entity as EntityAgent);
             EntityPlayer player = byEntity as EntityPlayer;
-            entity.GetBehavior<EntityBehaviorTaskAI>().taskManager.ExecuteTask<AiTaskIdle>();
+            entity.Api.Logger.Debug("BehaviorRaisable Triggered");
+            entity.WatchedAttributes.SetString("simplecommand", "sit");
         }
 
         public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data, ref EnumHandling handled)

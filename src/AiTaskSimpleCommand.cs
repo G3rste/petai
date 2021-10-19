@@ -9,7 +9,7 @@ using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
-    public class AiTaskSimpleCommand : AiTaskBase
+    public class AiTaskSimpleCommand : AiTaskIdle
     {
         public AiTaskSimpleCommand(EntityAgent entity) : base(entity)
         {
@@ -78,7 +78,9 @@ namespace WolfTaming
 
         public override bool ShouldExecute()
         {
-            return false;
+            bool execute = entity.WatchedAttributes.GetString("simplecommand") == "sit";
+            if (execute) entity.WatchedAttributes.RemoveAttribute("simplecommand");
+            return execute;
         }
 
         public override void StartExecute()

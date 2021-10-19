@@ -7,6 +7,6 @@
     "description": "Mod that focuses on making wolfes tamable and usable by the player.",
     "version": "0.0.1",
     "dependency": {
-        "game": "1.15.5"
+        "game": "1.15.6"
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Vintagestory.API.Common;
+using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
@@ -8,6 +9,7 @@ namespace WolfTaming
         {
             base.Start(api);
             api.RegisterEntityBehaviorClass("EntityBehaviorRaisable", typeof(EntityBehaviorRaisable));
+            AiTaskRegistry.Register<AiTaskSimpleCommand>("simplecommand");
         }
     }
 }
