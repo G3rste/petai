@@ -106,7 +106,20 @@ namespace WolfTaming
             AiTaskIdle task = new AiTaskIdle(entity as EntityAgent);
             EntityPlayer player = byEntity as EntityPlayer;
             entity.Api.Logger.Debug("BehaviorRaisable Triggered");
-            entity.WatchedAttributes.SetString("simplecommand", "sit");
+            if (itemslot.Empty)
+            {
+                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Sit");
+            }
+            else
+            if (itemslot.Itemstack.Item.Code.GetName().Contains("stick"))
+            {
+                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Talk");
+            }
+            else
+            if (itemslot.Itemstack.Item.Code.GetName().Contains("bone"))
+            {
+                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Flop");
+            }
         }
 
         public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data, ref EnumHandling handled)

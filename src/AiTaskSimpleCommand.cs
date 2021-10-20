@@ -21,6 +21,10 @@ namespace WolfTaming
 
         public override float PriorityForCancel => base.PriorityForCancel;
 
+        public string commandName;
+
+        public static readonly string commandKey = "simpleCommand";
+
         public override bool ContinueExecute(float dt)
         {
             return base.ContinueExecute(dt);
@@ -44,6 +48,7 @@ namespace WolfTaming
         public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
         {
             base.LoadConfig(taskConfig, aiConfig);
+            commandName = taskConfig["command"].AsString();
         }
 
         public override bool Notify(string key, object data)
@@ -78,8 +83,8 @@ namespace WolfTaming
 
         public override bool ShouldExecute()
         {
-            bool execute = entity.WatchedAttributes.GetString("simplecommand") == "sit";
-            if (execute) entity.WatchedAttributes.RemoveAttribute("simplecommand");
+            bool execute = entity.WatchedAttributes.GetString(commandKey) == commandName;
+            if (execute) entity.WatchedAttributes.RemoveAttribute(commandKey);
             return execute;
         }
 

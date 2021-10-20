@@ -16,7 +16,37 @@
       "minduration": 2000,
       "maxduration": 10000,
       "priorityForCancel": 1.35,
-      "animation": "Sit"
+      "animation": "Sit",
+      "command": "Sit"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
+    "path": "/server/behaviors/10/aitasks/-",
+    "value": {
+      "code": "simplecommand",
+      "priority": 3,
+      "minduration": 5000,
+      "maxduration": 15000,
+      "priorityForCancel": 1.35,
+      "animation": "Lie",
+      "command": "Flop"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
+    "path": "/server/behaviors/10/aitasks/-",
+    "value": {
+      "code": "simplecommand",
+      "priority": 3,
+      "minduration": 2000,
+      "maxduration": 3000,
+      "priorityForCancel": 1.35,
+      "animation": "Howl",
+      "command": "Talk",
+      "sound": "creature/wolf/pup-flop"
     },
     "file": "game:entities/land/wolf-pup.json"
   }
