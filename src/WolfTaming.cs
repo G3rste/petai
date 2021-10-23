@@ -8,7 +8,9 @@ namespace WolfTaming
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
-            api.RegisterEntityBehaviorClass("EntityBehaviorRaisable", typeof(EntityBehaviorRaisable));
+            api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
+            api.RegisterEntityBehaviorClass("taskaiextended", typeof(EntityBehaviorTaskAIExtension));
+            api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             AiTaskRegistry.Register<AiTaskSimpleCommand>("simplecommand");
         }
     }

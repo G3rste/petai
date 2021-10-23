@@ -120,36 +120,16 @@ namespace WolfTaming
             {
                 entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Flop");
             }
+            else
+            if (itemslot.Itemstack.Item.Code.GetName().Contains("bushmeat"))
+            {
+                entity.GetBehavior<EntityBehaviorTameable>().domesticationLevel = DomesticationLevel.DOMESTICATED;
+                entity.GetBehavior<EntityBehaviorTaskAIExtension>().reloadTasks();
+            }
         }
-
-        public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data, ref EnumHandling handled)
-        {
-            base.OnReceivedClientPacket(player, packetid, data, ref handled);
-        }
-
-        public override void OnReceivedServerPacket(int packetid, byte[] data, ref EnumHandling handled)
-        {
-            base.OnReceivedServerPacket(packetid, data, ref handled);
-        }
-
-        public override void OnReceivedServerPos(bool isTeleport, ref EnumHandling handled)
-        {
-            base.OnReceivedServerPos(isTeleport, ref handled);
-        }
-
-        public override void OnStateChanged(EnumEntityState beforeState, ref EnumHandling handling)
-        {
-            base.OnStateChanged(beforeState, ref handling);
-        }
-
         public override string PropertyName()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
+            return "raisable";
         }
     }
 }
