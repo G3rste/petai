@@ -25,77 +25,16 @@ namespace WolfTaming
 
         public static readonly string commandKey = "simpleCommand";
 
-        public override bool ContinueExecute(float dt)
-        {
-            return base.ContinueExecute(dt);
-        }
-
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
-
-        public override void FinishExecute(bool cancelled)
-        {
-            base.FinishExecute(cancelled);
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
         public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
         {
             base.LoadConfig(taskConfig, aiConfig);
             commandName = taskConfig["command"].AsString();
         }
-
-        public override bool Notify(string key, object data)
-        {
-            return base.Notify(key, data);
-        }
-
-        public override void OnEntityDespawn(EntityDespawnReason reason)
-        {
-            base.OnEntityDespawn(reason);
-        }
-
-        public override void OnEntityHurt(DamageSource source, float damage)
-        {
-            base.OnEntityHurt(source, damage);
-        }
-
-        public override void OnEntityLoaded()
-        {
-            base.OnEntityLoaded();
-        }
-
-        public override void OnEntitySpawn()
-        {
-            base.OnEntitySpawn();
-        }
-
-        public override void OnStateChanged(EnumEntityState beforeState)
-        {
-            base.OnStateChanged(beforeState);
-        }
-
         public override bool ShouldExecute()
         {
             bool execute = entity.WatchedAttributes.GetString(commandKey) == commandName;
             if (execute) entity.WatchedAttributes.RemoveAttribute(commandKey);
             return execute;
-        }
-
-        public override void StartExecute()
-        {
-            base.StartExecute();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString();
         }
     }
 }
