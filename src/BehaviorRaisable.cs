@@ -23,7 +23,7 @@ namespace WolfTaming
                 }
                 else
                 {
-                    entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand);
+                    entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
                 }
             }
         }

@@ -49,6 +49,6 @@ namespace WolfTaming
     }
     public enum CommandType
     {
-        SHORT_TERM, LONG_TERM
+        SIMPLE, COMPLEX
     }
 }

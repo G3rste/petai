@@ -4,9 +4,9 @@ using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
-    public class AiTaskSimpleCommand : AiTaskIdle
+    public class AiTaskTrick : AiTaskIdle
     {
-        public AiTaskSimpleCommand(EntityAgent entity) : base(entity)
+        public AiTaskTrick(EntityAgent entity) : base(entity)
         {
         }
 
@@ -18,8 +18,6 @@ namespace WolfTaming
 
         public string commandName;
 
-        public static readonly string commandKey = "simpleCommand";
-
         public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
         {
             base.LoadConfig(taskConfig, aiConfig);
@@ -27,11 +25,11 @@ namespace WolfTaming
         }
         public override bool ShouldExecute()
         {
-            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.shortTermCommand == commandName;;
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.simpleCommand == commandName;;
         }
 
         public override void StartExecute() {
-            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(CommandType.SHORT_TERM, null));
+            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(CommandType.SIMPLE, null), null);
             base.StartExecute();
         }
     }

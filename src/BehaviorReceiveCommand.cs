@@ -1,12 +1,13 @@
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Common;
 
 namespace WolfTaming
 {
     public class EntityBehaviorReceiveCommand : EntityBehavior
     {
-        public string shortTermCommand { get; private set; }
+        public string simpleCommand { get; private set; }
 
-        public string longTermCommand
+        public string complexCommand
         {
             get { return entity.WatchedAttributes.GetString("activeCommand"); }
             private set
@@ -17,15 +18,19 @@ namespace WolfTaming
         public EntityBehaviorReceiveCommand(Entity entity) : base(entity)
         {
         }
-        public void setCommand(Command command)
+        public void setCommand(Command command, EntityPlayer byPlayer)
         {
-            if (command.type == CommandType.LONG_TERM)
+            if (entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
+                || entity.GetBehavior<EntityBehaviorTameable>()?.owner.PlayerUID == byPlayer.PlayerUID)
             {
-                longTermCommand = command.commandName;
-            }
-            if (command.type == CommandType.SHORT_TERM)
-            {
-                shortTermCommand = command.commandName;
+                if (command.type == CommandType.COMPLEX)
+                {
+                    complexCommand = command.commandName;
+                }
+                if (command.type == CommandType.SIMPLE)
+                {
+                    simpleCommand = command.commandName;
+                }
             }
         }
 

@@ -19,7 +19,7 @@ namespace WolfTaming
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
-            AiTaskRegistry.Register<AiTaskSimpleCommand>("simplecommand");
+            AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
         }
 
         public override void StartClientSide(ICoreClientAPI api)
@@ -48,7 +48,7 @@ namespace WolfTaming
                 {
                     player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand = command;
                 }
-                target?.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(command);
+                target?.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(command, player);
             }
         }
     }
