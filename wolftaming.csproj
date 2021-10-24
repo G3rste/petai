@@ -29,6 +29,10 @@
 		</None>
 	</ItemGroup>
 	
+	<ItemGroup>
+	  <PackageReference Include="protobuf-net" Version="3.0.101" />
+	</ItemGroup>
+	
 	<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
 		<ZipDirectory DestinationFile="bin/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
 	</Target>

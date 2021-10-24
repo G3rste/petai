@@ -103,28 +103,18 @@ namespace WolfTaming
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
         {
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
-            AiTaskIdle task = new AiTaskIdle(entity as EntityAgent);
             EntityPlayer player = byEntity as EntityPlayer;
-            entity.Api.Logger.Debug("BehaviorRaisable Triggered");
-            if (itemslot.Empty)
+            if (player != null && itemslot.Empty)
             {
-                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Sit");
-            }
-            else
-            if (itemslot.Itemstack.Item.Code.GetName().Contains("stick"))
-            {
-                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Talk");
-            }
-            else
-            if (itemslot.Itemstack.Item.Code.GetName().Contains("bone"))
-            {
-                entity.WatchedAttributes.SetString(AiTaskSimpleCommand.commandKey, "Flop");
-            }
-            else
-            if (itemslot.Itemstack.Item.Code.GetName().Contains("bushmeat"))
-            {
-                entity.GetBehavior<EntityBehaviorTameable>().domesticationLevel = DomesticationLevel.DOMESTICATED;
-                entity.GetBehavior<EntityBehaviorTaskAIExtension>().reloadTasks();
+                ICoreClientAPI capi = entity.Api as ICoreClientAPI;
+                if (byEntity.Controls.Sneak)
+                {
+                    new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
+                }
+                else
+                {
+                    entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand);
+                }
             }
         }
         public override string PropertyName()

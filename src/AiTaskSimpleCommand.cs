@@ -32,9 +32,12 @@ namespace WolfTaming
         }
         public override bool ShouldExecute()
         {
-            bool execute = entity.WatchedAttributes.GetString(commandKey) == commandName;
-            if (execute) entity.WatchedAttributes.RemoveAttribute(commandKey);
-            return execute;
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.shortTermCommand == commandName;;
+        }
+
+        public override void StartExecute() {
+            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(CommandType.SHORT_TERM, null));
+            base.StartExecute();
         }
     }
 }
