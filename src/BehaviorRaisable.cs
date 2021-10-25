@@ -19,11 +19,20 @@ namespace WolfTaming
                 ICoreClientAPI capi = entity.Api as ICoreClientAPI;
                 if (byEntity.Controls.Sneak)
                 {
-                    new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
+                    if (capi != null) new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
                 }
                 else
                 {
                     entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
+                }
+            }
+            else if (player != null && !itemslot.Empty && itemslot.GetStackName().Contains("meat"))
+            {
+                var tameable = entity.GetBehavior<EntityBehaviorTameable>();
+                if (tameable != null)
+                {
+                    tameable.owner = entity.Api.World.PlayerByUid(player.PlayerUID);
+                    tameable.domesticationLevel = DomesticationLevel.DOMESTICATED;
                 }
             }
         }

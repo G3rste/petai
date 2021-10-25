@@ -23,9 +23,11 @@ namespace WolfTaming
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar("Choose next PetCommand!", () => TryClose())
                 .BeginChildElements(bgBounds)
-                    .AddButton("Sit", () => onCommandClick(new Command(CommandType.SIMPLE, "Sit")), ElementBounds.Fixed(0, 20, 90, 40))
-                    .AddButton("Lay", () => onCommandClick(new Command(CommandType.SIMPLE, "Flop")), ElementBounds.Fixed(100, 20, 90, 40))
-                    .AddButton("Speak", () => onCommandClick(new Command(CommandType.SIMPLE, "Talk")), ElementBounds.Fixed(200, 20, 90, 40))
+                    .AddButton("Sit", () => onCommandClick(new Command(CommandType.SIMPLE, "sit")), ElementBounds.Fixed(0, 20, 90, 40))
+                    .AddButton("Lay", () => onCommandClick(new Command(CommandType.SIMPLE, "lay")), ElementBounds.Fixed(100, 20, 90, 40))
+                    .AddButton("Speak", () => onCommandClick(new Command(CommandType.SIMPLE, "speak")), ElementBounds.Fixed(200, 20, 90, 40))
+                    .AddButton("Follow", () => onCommandClick(new Command(CommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 70, 90, 40))
+                    .AddButton("Stay", () => onCommandClick(new Command(CommandType.COMPLEX, "stay")), ElementBounds.Fixed(100, 70, 90, 40))
                 .EndChildElements()
                 .Compose();
         }

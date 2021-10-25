@@ -170,14 +170,26 @@
           "animationSpeed": 2.2
         },
         {
-          "code": "stayclosetoentity",
-          "priority": 1.4,
-          "entityCode": "player",
+          "code": "followmaster",
+          "priority": 2,
+          "priorityForCancel": 1.9,
+          "command": "followmaster",
           "movespeed": 0.02,
           "animationSpeed": 4,
           "maxDistance": 5,
-          "searchRange": 25,
+          "searchRange": 40,
           "animation": "Run"
+        },
+        {
+          "code": "stay",
+          "priority": 2,
+          "priorityForCancel": 1.9,
+          "command": "stay",
+          "movespeed": 0.004,
+          "animationSpeed": 2,
+          "maxDistance": 10,
+          "searchRange": 40,
+          "animation": "Walk"
         },
         {
           "code": "idle",
@@ -279,7 +291,7 @@
           "maxduration": 10000,
           "priorityForCancel": 1.35,
           "animation": "Sit",
-          "command": "Sit"
+          "command": "sit"
         },
         {
           "code": "simplecommand",
@@ -288,7 +300,7 @@
           "maxduration": 15000,
           "priorityForCancel": 1.35,
           "animation": "Lie",
-          "command": "Flop"
+          "command": "lay"
         },
         {
           "code": "simplecommand",
@@ -297,7 +309,7 @@
           "maxduration": 3000,
           "priorityForCancel": 1.35,
           "animation": "Howl",
-          "command": "Talk",
+          "command": "speak",
           "sound": "creature/wolf/pup-flop"
         }
       ]

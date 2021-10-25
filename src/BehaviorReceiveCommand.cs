@@ -1,5 +1,6 @@
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
+using Vintagestory.API.Datastructures;
 
 namespace WolfTaming
 {
@@ -20,8 +21,9 @@ namespace WolfTaming
         }
         public void setCommand(Command command, EntityPlayer byPlayer)
         {
-            if (entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
-                || entity.GetBehavior<EntityBehaviorTameable>()?.owner.PlayerUID == byPlayer.PlayerUID)
+            if (byPlayer == null
+                || entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
+                || entity.GetBehavior<EntityBehaviorTameable>().owner.PlayerUID == byPlayer.PlayerUID)
             {
                 if (command.type == CommandType.COMPLEX)
                 {
@@ -31,6 +33,13 @@ namespace WolfTaming
                 {
                     simpleCommand = command.commandName;
                 }
+
+                ITreeAttribute location = new TreeAttribute();
+                location.SetDouble("x", entity.ServerPos.X);
+                location.SetDouble("y", entity.ServerPos.Y);
+                location.SetDouble("z", entity.ServerPos.Z);
+
+                entity.WatchedAttributes.SetAttribute("staylocation", location);
             }
         }
 

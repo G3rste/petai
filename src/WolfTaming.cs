@@ -20,6 +20,8 @@ namespace WolfTaming
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
+            AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
+            AiTaskRegistry.Register<AiTaskStay>("stay");
         }
 
         public override void StartClientSide(ICoreClientAPI api)

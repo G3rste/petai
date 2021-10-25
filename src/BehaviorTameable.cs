@@ -28,6 +28,7 @@ namespace WolfTaming
             set
             {
                 entity.WatchedAttributes.SetString("domesticationLevel", value.ToString());
+                entity.GetBehavior<EntityBehaviorTaskAIExtension>()?.reloadTasks();
             }
         }
 
