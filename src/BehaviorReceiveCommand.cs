@@ -1,6 +1,8 @@
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
+using Vintagestory.API.Client;
 
 namespace WolfTaming
 {
@@ -18,6 +20,26 @@ namespace WolfTaming
         }
         public EntityBehaviorReceiveCommand(Entity entity) : base(entity)
         {
+        }
+
+        public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
+        {
+            base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
+            EntityPlayer player = byEntity as EntityPlayer;
+            if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
+                && player != null
+                && itemslot.Empty)
+            {
+                ICoreClientAPI capi = entity.Api as ICoreClientAPI;
+                if (byEntity.Controls.Sneak && capi != null)
+                {
+                    new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
+                }
+                if(!byEntity.Controls.Sneak && capi == null)
+                {
+                    setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
+                }
+            }
         }
         public void setCommand(Command command, EntityPlayer byPlayer)
         {

@@ -14,19 +14,7 @@ namespace WolfTaming
         {
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
             EntityPlayer player = byEntity as EntityPlayer;
-            if (player != null && itemslot.Empty)
-            {
-                ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                if (byEntity.Controls.Sneak)
-                {
-                    if (capi != null) new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
-                }
-                else
-                {
-                    entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
-                }
-            }
-            else if (player != null && !itemslot.Empty && itemslot.GetStackName().Contains("meat"))
+            if (player != null && !itemslot.Empty && itemslot.GetStackName().Contains("meat"))
             {
                 var tameable = entity.GetBehavior<EntityBehaviorTameable>();
                 if (tameable != null)

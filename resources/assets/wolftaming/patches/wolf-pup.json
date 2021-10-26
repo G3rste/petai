@@ -27,6 +27,22 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
+      "code": "receivecommand"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "tameable"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
       "code": "raisable"
     },
     "file": "game:entities/land/wolf-pup.json"
