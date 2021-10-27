@@ -335,16 +335,6 @@
           "animation": "Sit"
         },
         {
-          "code": "simplecommand",
-          "priority": 0.9,
-          "minduration": 5000,
-          "maxduration": 30000,
-          "mincooldown": 2000,
-          "maxcooldown": 120000,
-          "priorityForCancel": 1.35,
-          "animation": "Sit"
-        },
-        {
           "code": "lookaround",
           "priority": 0.5
         },
@@ -353,7 +343,7 @@
           "priority": 3,
           "minduration": 2000,
           "maxduration": 10000,
-          "priorityForCancel": 1.35,
+          "priorityForCancel": 3.1,
           "animation": "Sit",
           "command": "sit"
         },
@@ -362,7 +352,7 @@
           "priority": 3,
           "minduration": 5000,
           "maxduration": 15000,
-          "priorityForCancel": 1.35,
+          "priorityForCancel": 3.1,
           "animation": "Lie",
           "command": "lay"
         },
@@ -371,7 +361,7 @@
           "priority": 3,
           "minduration": 2000,
           "maxduration": 3000,
-          "priorityForCancel": 1.35,
+          "priorityForCancel": 3.1,
           "animation": "Howl",
           "command": "speak",
           "sound": "creature/wolf/pup-flop"
