@@ -153,6 +153,15 @@ namespace WolfTaming
                         capi.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
                     }
                 }
+                if (domesticationProgress >= 1f)
+                {
+                    domesticationLevel = DomesticationLevel.DOMESTICATED;
+                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
+                    if (capi != null)
+                    {
+                        capi.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
+                    }
+                }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
@@ -180,14 +189,14 @@ namespace WolfTaming
                         capi.ShowChatMessage(String.Format("Entity {0} is not ready to be tended to again.", entity.GetName()));
                     }
                 }
-            }
-            if (domesticationProgress >= 1f)
-            {
-                domesticationLevel = DomesticationLevel.DOMESTICATED;
-                ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                if (capi != null)
+                if (domesticationProgress >= 1f)
                 {
-                    capi.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
+                    domesticationLevel = DomesticationLevel.DOMESTICATED;
+                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
+                    if (capi != null)
+                    {
+                        capi.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
+                    }
                 }
             }
         }
