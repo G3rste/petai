@@ -11,7 +11,31 @@
     "op": "add",
     "path": "/server/behaviors/-",
     "value": {
-      "code": "tameable"
+      "code": "tameable",
+      "initiator": [
+        {
+          "code": "bone",
+          "progress": 0.1,
+          "cooldown": 6
+        }
+      ],
+      "progressor": [
+        {
+          "code": "bushmeat",
+          "progress": 0.3,
+          "cooldown": 6
+        },
+        {
+          "code": "redmeat",
+          "progress": 0.3,
+          "cooldown": 6
+        },
+        {
+          "code": "poultry",
+          "progress": 0.3,
+          "cooldown": 6
+        }
+      ]
     },
     "file": "game:entities/land/wolf-pup.json"
   },
@@ -35,7 +59,31 @@
     "op": "add",
     "path": "/client/behaviors/-",
     "value": {
-      "code": "tameable"
+      "code": "tameable",
+      "initiator": [
+        {
+          "code": "bone",
+          "progress": 0.1,
+          "cooldown": 6
+        }
+      ],
+      "progressor": [
+        {
+          "code": "bushmeat",
+          "progress": 0.3,
+          "cooldown": 6
+        },
+        {
+          "code": "redmeat",
+          "progress": 0.3,
+          "cooldown": 6
+        },
+        {
+          "code": "poultry",
+          "progress": 0.3,
+          "cooldown": 6
+        }
+      ]
     },
     "file": "game:entities/land/wolf-pup.json"
   },
