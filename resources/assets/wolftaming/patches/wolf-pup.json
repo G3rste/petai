@@ -1,10 +1,8 @@
 [
   {
-    "op": "add",
-    "path": "/server/behaviors/-",
-    "value": {
-      "code": "raisable"
-    },
+    "op": "replace",
+    "path": "/server/behaviors/9/code",
+    "value": "raisable",
     "file": "game:entities/land/wolf-pup.json"
   },
   {
@@ -84,14 +82,6 @@
           "cooldown": 6
         }
       ]
-    },
-    "file": "game:entities/land/wolf-pup.json"
-  },
-  {
-    "op": "add",
-    "path": "/client/behaviors/-",
-    "value": {
-      "code": "raisable"
     },
     "file": "game:entities/land/wolf-pup.json"
   },
@@ -210,7 +200,106 @@
           "animation": "Sit"
         },
         {
-          "code": "simplecommand",
+          "code": "lookaround",
+          "priority": 0.5
+        }
+      ],
+      "aitaskstaming": [
+        {
+          "code": "stayclosetoentity",
+          "priority": 1.4,
+          "entityCode": "player",
+          "movespeed": 0.02,
+          "animationSpeed": 4,
+          "maxDistance": 5,
+          "searchRange": 25,
+          "animation": "Run"
+        },
+        {
+          "code": "getoutofwater",
+          "priority": 1.45,
+          "movespeed": 0.015,
+          "animation": "Walk",
+          "animationSpeed": 2.2
+        },
+        {
+          "code": "stayclosetoentity",
+          "priority": 1.5,
+          "entityCode": "wolf-female",
+          "movespeed": 0.02,
+          "animationSpeed": 4,
+          "maxDistance": 5,
+          "searchRange": 25,
+          "animation": "Run"
+        },
+        {
+          "code": "idle",
+          "priority": 1.35,
+          "priorityForCancel": 1.35,
+          "minduration": 200000,
+          "maxduration": 800000,
+          "mincooldown": 10000,
+          "maxcooldown": 30000,
+          "animation": "Sleep",
+          "whenNotInEmotionState": "aggressiveondamage",
+          "duringDayTimeFrames": [
+            {
+              "fromHour": 10,
+              "toHour": 18
+            },
+            {
+              "fromHour": 1,
+              "toHour": 3
+            }
+          ],
+          "stopRange": 6,
+          "stopOnHurt": true
+        },
+        {
+          "code": "idle",
+          "priority": 1.3,
+          "priorityForCancel": 1.35,
+          "minduration": 2500,
+          "maxduration": 2500,
+          "mincooldown": 10000,
+          "maxcooldown": 50000,
+          "animation": "Sniff",
+          "animationSpeed": 0.8
+        },
+        {
+          "code": "idle",
+          "priority": 1.31,
+          "priorityForCancel": 1.35,
+          "minduration": 1500,
+          "maxduration": 1500,
+          "mincooldown": 50000,
+          "maxcooldown": 300000,
+          "animation": "Howl",
+          "animationSpeed": 0.8,
+          "sound": "game:creature/wolf/pup-howl"
+        },
+        {
+          "code": "idle",
+          "priority": 1.32,
+          "priorityForCancel": 1.35,
+          "minduration": 2830,
+          "maxduration": 2830,
+          "mincooldown": 80000,
+          "maxcooldown": 200000,
+          "animation": "Flop",
+          "sound": "game:creature/wolf/pup-flop"
+        },
+        {
+          "code": "wander",
+          "priority": 1.0,
+          "priorityForCancel": 1.35,
+          "movespeed": 0.004,
+          "animationSpeed": 2,
+          "animation": "Walk",
+          "preferredLightLevel": 18
+        },
+        {
+          "code": "idle",
           "priority": 0.9,
           "minduration": 5000,
           "maxduration": 30000,
@@ -222,9 +311,36 @@
         {
           "code": "lookaround",
           "priority": 0.5
+        },
+        {
+          "code": "simplecommand",
+          "priority": 3,
+          "minduration": 2000,
+          "maxduration": 10000,
+          "priorityForCancel": 3.1,
+          "animation": "Sit",
+          "command": "sit"
+        },
+        {
+          "code": "simplecommand",
+          "priority": 3,
+          "minduration": 5000,
+          "maxduration": 15000,
+          "priorityForCancel": 3.1,
+          "animation": "Lie",
+          "command": "lay"
+        },
+        {
+          "code": "simplecommand",
+          "priority": 3,
+          "minduration": 2000,
+          "maxduration": 3000,
+          "priorityForCancel": 3.1,
+          "animation": "Howl",
+          "command": "speak",
+          "sound": "creature/wolf/pup-flop"
         }
       ],
-      "aitaskstaming": [],
       "aitasksdomesticated": [
         {
           "code": "getoutofwater",
@@ -274,9 +390,6 @@
               "fromHour": 1,
               "toHour": 3
             }
-          ],
-          "stopOnNearbyEntityCodes": [
-            "player"
           ],
           "stopRange": 6,
           "stopOnHurt": true
