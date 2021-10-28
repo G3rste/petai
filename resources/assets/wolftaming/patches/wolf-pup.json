@@ -55,6 +55,22 @@
   },
   {
     "op": "add",
+    "path": "/server/behaviors/-",
+    "value": {
+      "code": "nametag"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
+    "path": "/client/behaviors/-",
+    "value": {
+      "code": "nametag"
+    },
+    "file": "game:entities/land/wolf-pup.json"
+  },
+  {
+    "op": "add",
     "path": "/client/behaviors/-",
     "value": {
       "code": "tameable",

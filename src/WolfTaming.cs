@@ -28,14 +28,18 @@ namespace WolfTaming
         {
             base.StartClientSide(api);
 
-            api.Network.RegisterChannel("wolftamingnetwork").RegisterMessageType<PetCommandMessage>();
+            api.Network.RegisterChannel("wolftamingnetwork")
+                .RegisterMessageType<PetCommandMessage>()
+                .RegisterMessageType<PetNameMessage>();
         }
 
         public override void StartServerSide(ICoreServerAPI api)
         {
             base.StartServerSide(api);
             this.serverAPI = api;
-            api.Network.RegisterChannel("wolftamingnetwork").RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage);
+            api.Network.RegisterChannel("wolftamingnetwork")
+                .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessage);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -53,6 +57,12 @@ namespace WolfTaming
                 target?.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(command, player);
             }
         }
+
+        private void OnPetNameMessage(IServerPlayer fromPlayer, PetNameMessage networkMessage)
+        {
+            EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
+            target.GetBehavior<EntityBehaviorNameTag>()?.SetName(networkMessage.petName);
+        }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetCommandMessage
@@ -60,6 +70,12 @@ namespace WolfTaming
         public string playerUID;
         public string commandName;
         public string commandType;
+        public long targetEntityUID;
+    }
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class PetNameMessage
+    {
+        public string petName;
         public long targetEntityUID;
     }
 }

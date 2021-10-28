@@ -71,6 +71,22 @@
         "op": "add",
         "path": "/server/behaviors/-",
         "value": {
+            "code": "nametag"
+        },
+        "file": "game:entities/land/wolf-female.json"
+    },
+    {
+        "op": "add",
+        "path": "/client/behaviors/-",
+        "value": {
+            "code": "nametag"
+        },
+        "file": "game:entities/land/wolf-female.json"
+    },
+    {
+        "op": "add",
+        "path": "/server/behaviors/-",
+        "value": {
             "code": "taskaiextended",
             "aitaskswild": [
                 {

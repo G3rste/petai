@@ -151,6 +151,7 @@ namespace WolfTaming
                     if (capi != null)
                     {
                         capi.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
+                        new PetNameGUI(capi, entity as EntityAgent).TryOpen();
                     }
                 }
                 if (domesticationProgress >= 1f)
