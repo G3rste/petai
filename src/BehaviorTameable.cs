@@ -82,7 +82,7 @@ namespace WolfTaming
             }
         }
 
-        ITreeAttribute domesticationStatus
+        public ITreeAttribute domesticationStatus
         {
             get
             {
