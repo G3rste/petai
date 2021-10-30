@@ -80,7 +80,7 @@ namespace WolfTaming
             }
 
             Vec3d pos = entity.ServerPos.XYZ.Add(0, entity.CollisionBox.Y2 / 2, 0).Ahead(entity.CollisionBox.XSize / 2, 0, entity.ServerPos.Yaw);
-            targetEntity = getEntityToAttack();
+            targetEntity = getEntityToAttack(entity, isCommandable);
 
             lastCheckOrAttackMs = entity.World.ElapsedMilliseconds;
             damageInflicted = false;
@@ -201,7 +201,7 @@ namespace WolfTaming
             return new Entity[0];
         }
 
-        private Entity getEntityToAttack()
+        public static Entity getEntityToAttack(Entity entity, bool isCommandable)
         {
             Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
             if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
@@ -212,7 +212,14 @@ namespace WolfTaming
             {
                 victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
             }
-            if(victim == null || !victim.Alive){
+            IPlayer owner = entity.GetBehavior<EntityBehaviorTameable>()?.owner;
+            if (victim == null
+                || !victim.Alive
+                || victim.EntityId == entity.EntityId
+                || owner != null
+                    && ((victim as EntityPlayer)?.PlayerUID == owner.PlayerUID
+                    || victim.GetBehavior<EntityBehaviorTameable>()?.owner?.PlayerUID == owner.PlayerUID))
+            {
                 return null;
             }
             return victim;

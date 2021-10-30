@@ -69,6 +69,13 @@ namespace WolfTaming
                 if (command.type == EnumCommandType.COMPLEX)
                 {
                     complexCommand = command.commandName;
+
+                    ITreeAttribute location = new TreeAttribute();
+                    location.SetDouble("x", entity.ServerPos.X);
+                    location.SetDouble("y", entity.ServerPos.Y);
+                    location.SetDouble("z", entity.ServerPos.Z);
+
+                    entity.WatchedAttributes.SetAttribute("staylocation", location);
                 }
                 if (command.type == EnumCommandType.SIMPLE)
                 {
@@ -82,13 +89,6 @@ namespace WolfTaming
                         aggressionLevel = level;
                     }
                 }
-
-                ITreeAttribute location = new TreeAttribute();
-                location.SetDouble("x", entity.ServerPos.X);
-                location.SetDouble("y", entity.ServerPos.Y);
-                location.SetDouble("z", entity.ServerPos.Z);
-
-                entity.WatchedAttributes.SetAttribute("staylocation", location);
             }
         }
 

@@ -124,7 +124,7 @@ namespace WolfTaming
                 ClimateCondition conds = entity.World.BlockAccessor.GetClimateAt(entity.Pos.AsBlockPos, EnumGetClimateMode.NowValues);
                 lowTempMode = conds != null && conds.Temperature <= belowTempThreshold;
             }
-            targetEntity = getEntityToAttack();
+            targetEntity = AiTaskMeleeAttackExtension.getEntityToAttack(entity, isCommandable);
             if (targetEntity == null) return false;
             float range = lowTempMode ? belowTempSeekingRange : seekingRange;
 
@@ -346,25 +346,6 @@ namespace WolfTaming
             {
                 stopNow = true;
             }
-
-        }
-
-        private Entity getEntityToAttack()
-        {
-            Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
-            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
-            {
-                victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
-            }
-            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
-            {
-                victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
-            }
-            if (victim == null || !victim.Alive)
-            {
-                return null;
-            }
-            return victim;
         }
     }
 }
