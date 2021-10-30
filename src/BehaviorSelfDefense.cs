@@ -1,5 +1,12 @@
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
+using System;
+using System.Collections.Generic;
+using Vintagestory.API;
+using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
+using Vintagestory.API.Server;
+using Vintagestory.API.Util;
 
 namespace WolfTaming
 {
@@ -12,13 +19,17 @@ namespace WolfTaming
         public override void OnEntityReceiveDamage(DamageSource damageSource, float damage)
         {
             base.OnEntityReceiveDamage(damageSource, damage);
-            if(attacker == null || attacker.ServerPos.SquareDistanceTo(entity.ServerPos.XYZ) > 25 && damage > 0f){
-                attacker = damageSource.SourceEntity;
+            IPlayer player = (damageSource.SourceEntity as EntityPlayer)?.Player;
+            if (player == null
+                || (player.WorldData.CurrentGameMode != EnumGameMode.Creative
+                    && player.WorldData.CurrentGameMode != EnumGameMode.Spectator
+                    && (player as IServerPlayer).ConnectionState == EnumClientState.Playing))
+            {
+                if (attacker == null || attacker.ServerPos.SquareDistanceTo(entity.ServerPos.XYZ) > 25 && damage > 0f)
+                {
+                    attacker = damageSource.SourceEntity;
+                }
             }
-        }
-        public override void DidAttack(DamageSource source, EntityAgent targetEntity, ref EnumHandling handled)
-        {
-            base.DidAttack(source, targetEntity, ref handled);
         }
 
         public override string PropertyName()

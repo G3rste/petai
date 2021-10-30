@@ -20,7 +20,7 @@ namespace WolfTaming
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
-            api.RegisterBlockBehaviorClass("selfdefence", typeof(EntityBehaviorSelfDefense));
+            api.RegisterEntityBehaviorClass("selfdefence", typeof(EntityBehaviorSelfDefense));
 
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
