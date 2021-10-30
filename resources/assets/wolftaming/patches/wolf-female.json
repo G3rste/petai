@@ -403,6 +403,7 @@
             "aitasksdomesticated": [
                 {
                     "code": "meleeattackext",
+                    "isCommandable": true,
                     "priority": 2.2,
                     "damage": 8,
                     "damageTier": 2,
@@ -418,6 +419,7 @@
                 },
                 {
                     "code": "seekentityext",
+                    "isCommandable": true,
                     "priority": 2.1,
                     "movespeed": 0.045,
                     "seekingRange": 15,

@@ -41,6 +41,7 @@ namespace WolfTaming
 
 
         bool lowTempMode;
+        bool isCommandable = false;
 
         public AiTaskSeekEntityExtension(EntityAgent entity) : base(entity)
         {
@@ -104,6 +105,8 @@ namespace WolfTaming
             {
                 leapAtTarget = taskConfig["leapAtTarget"].AsBool(false);
             }
+
+            this.isCommandable = taskConfig["isCommandable"].AsBool(false);
         }
 
 
@@ -349,11 +352,11 @@ namespace WolfTaming
         private Entity getEntityToAttack()
         {
             Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
-            if (entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
             {
                 victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
             }
-            if (entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
             {
                 victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
             }

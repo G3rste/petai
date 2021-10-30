@@ -34,6 +34,8 @@ namespace WolfTaming
         public int damageTier = 0;
         float tamingGenerations = 10f;
 
+        bool isCommandable = false;
+
         public Vec3i MapSize { get { return entity.World.BlockAccessor.MapSize; } }
 
         public AiTaskMeleeAttackExtension(EntityAgent entity) : base(entity)
@@ -65,6 +67,8 @@ namespace WolfTaming
 
             ITreeAttribute tree = entity.WatchedAttributes.GetTreeAttribute("extraInfoText");
             tree.SetString("dmgTier", Lang.Get("Damage tier: {0}", damageTier));
+
+            this.isCommandable = taskConfig["isCommandable"].AsBool(false);
         }
 
         public override bool ShouldExecute()
@@ -200,11 +204,11 @@ namespace WolfTaming
         private Entity getEntityToAttack()
         {
             Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
-            if (entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
             {
                 victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
             }
-            if (entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
             {
                 victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
             }
