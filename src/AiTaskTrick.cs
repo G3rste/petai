@@ -29,7 +29,7 @@ namespace WolfTaming
         }
 
         public override void StartExecute() {
-            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(CommandType.SIMPLE, null), null);
+            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(EnumCommandType.SIMPLE, null), null);
             base.StartExecute();
         }
     }

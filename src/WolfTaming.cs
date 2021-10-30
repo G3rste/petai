@@ -14,14 +14,19 @@ namespace WolfTaming
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
+
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
             api.RegisterEntityBehaviorClass("taskaiextended", typeof(EntityBehaviorTaskAIExtension));
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
+            api.RegisterBlockBehaviorClass("selfdefence", typeof(EntityBehaviorSelfDefense));
+
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
             AiTaskRegistry.Register<AiTaskStay>("stay");
+            AiTaskRegistry.Register<AiTaskMeleeAttackExtension>("meleeattackext");
+            AiTaskRegistry.Register<AiTaskSeekEntityExtension>("seekentityext");
         }
 
         public override void StartClientSide(ICoreClientAPI api)
@@ -46,8 +51,8 @@ namespace WolfTaming
         {
             EntityPlayer player = serverAPI.World.PlayerByUid(networkMessage.playerUID)?.Entity;
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
-            CommandType commandType;
-            if (Enum.TryParse<CommandType>(networkMessage.commandType, out commandType))
+            EnumCommandType commandType;
+            if (Enum.TryParse<EnumCommandType>(networkMessage.commandType, out commandType))
             {
                 Command command = new Command(commandType, networkMessage.commandName);
                 if (player != null)

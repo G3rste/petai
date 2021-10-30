@@ -1,3 +1,4 @@
+using System;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -18,6 +19,24 @@ namespace WolfTaming
                 entity.WatchedAttributes.SetString("activeCommand", value);
             }
         }
+
+        public EnumAggressionLevel aggressionLevel
+        {
+            get
+            {
+                EnumAggressionLevel level;
+                if (Enum.TryParse<EnumAggressionLevel>(entity.WatchedAttributes.GetString("aggressionLevel"), out level))
+                {
+                    return level;
+                }
+                return EnumAggressionLevel.SELFDEFENSE;
+            }
+
+            private set
+            {
+                entity.WatchedAttributes.SetString("aggressionLevel", value.ToString());
+            }
+        }
         public EntityBehaviorReceiveCommand(Entity entity) : base(entity)
         {
         }
@@ -35,7 +54,7 @@ namespace WolfTaming
                 {
                     new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
                 }
-                if(!byEntity.Controls.Sneak && capi == null)
+                if (!byEntity.Controls.Sneak && capi == null)
                 {
                     setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
                 }
@@ -47,13 +66,21 @@ namespace WolfTaming
                 || entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
                 || entity.GetBehavior<EntityBehaviorTameable>().owner.PlayerUID == byPlayer.PlayerUID)
             {
-                if (command.type == CommandType.COMPLEX)
+                if (command.type == EnumCommandType.COMPLEX)
                 {
                     complexCommand = command.commandName;
                 }
-                if (command.type == CommandType.SIMPLE)
+                if (command.type == EnumCommandType.SIMPLE)
                 {
                     simpleCommand = command.commandName;
+                }
+                if (command.type == EnumCommandType.AGGRESSIONLEVEL)
+                {
+                    EnumAggressionLevel level;
+                    if (Enum.TryParse<EnumAggressionLevel>(command.commandName, out level))
+                    {
+                        aggressionLevel = level;
+                    }
                 }
 
                 ITreeAttribute location = new TreeAttribute();
