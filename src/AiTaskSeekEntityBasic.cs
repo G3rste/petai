@@ -11,7 +11,7 @@ using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
-    public class AiTaskSeekEntityExtension : AiTaskBase
+    public class AiTaskSeekEntityBasic : AiTaskBase
     {
         Entity targetEntity;
         Vec3d targetPos;
@@ -43,7 +43,7 @@ namespace WolfTaming
         bool lowTempMode;
         bool isCommandable = false;
 
-        public AiTaskSeekEntityExtension(EntityAgent entity) : base(entity)
+        public AiTaskSeekEntityBasic(EntityAgent entity) : base(entity)
         {
         }
 
@@ -124,7 +124,7 @@ namespace WolfTaming
                 ClimateCondition conds = entity.World.BlockAccessor.GetClimateAt(entity.Pos.AsBlockPos, EnumGetClimateMode.NowValues);
                 lowTempMode = conds != null && conds.Temperature <= belowTempThreshold;
             }
-            targetEntity = AiTaskMeleeAttackExtension.getEntityToAttack(entity, isCommandable);
+            targetEntity = AiTaskMeleeAttackBasic.getEntityToAttack(entity, isCommandable);
             if (targetEntity == null) return false;
             float range = lowTempMode ? belowTempSeekingRange : seekingRange;
 

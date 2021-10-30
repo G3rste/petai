@@ -11,7 +11,7 @@ using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
-    public class AiTaskMeleeAttackExtension : AiTaskBase, IWorldIntersectionSupplier
+    public class AiTaskMeleeAttackBasic : AiTaskBase, IWorldIntersectionSupplier
     {
         Entity targetEntity;
 
@@ -38,7 +38,7 @@ namespace WolfTaming
 
         public Vec3i MapSize { get { return entity.World.BlockAccessor.MapSize; } }
 
-        public AiTaskMeleeAttackExtension(EntityAgent entity) : base(entity)
+        public AiTaskMeleeAttackBasic(EntityAgent entity) : base(entity)
         {
         }
 
@@ -206,11 +206,13 @@ namespace WolfTaming
             Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
             if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
             {
-                victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
+                var nullableVictim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
+                if (nullableVictim != null) victim = nullableVictim;
             }
             if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
             {
-                victim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
+                var nullableVictim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
+                if (nullableVictim != null) victim = nullableVictim;
             }
             IPlayer owner = entity.GetBehavior<EntityBehaviorTameable>()?.owner;
             if (victim == null

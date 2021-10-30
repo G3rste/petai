@@ -25,8 +25,8 @@ namespace WolfTaming
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
             AiTaskRegistry.Register<AiTaskStay>("stay");
-            AiTaskRegistry.Register<AiTaskMeleeAttackExtension>("meleeattackext");
-            AiTaskRegistry.Register<AiTaskSeekEntityExtension>("seekentityext");
+            AiTaskRegistry.Register<AiTaskMeleeAttackBasic>("meleeattackbasic");
+            AiTaskRegistry.Register<AiTaskSeekEntityBasic>("seekentitybasic");
         }
 
         public override void StartClientSide(ICoreClientAPI api)

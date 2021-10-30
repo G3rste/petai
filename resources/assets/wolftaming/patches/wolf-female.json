@@ -98,35 +98,6 @@
             "code": "taskaiextended",
             "aitaskswild": [
                 {
-                    "code": "meleeattackext",
-                    "priority": 1.99,
-                    "damage": 8,
-                    "damageTier": 2,
-                    "damageType": "SlashingAttack",
-                    "slot": 1,
-                    "mincooldown": 1500,
-                    "maxcooldown": 1500,
-                    "attackDurationMs": 800,
-                    "damagePlayerAtMs": 500,
-                    "animation": "Attack",
-                    "animationSpeed": 2.5,
-                    "sound": "creature/wolf/attack"
-                },
-                {
-                    "code": "seekentityext",
-                    "priority": 1.49,
-                    "movespeed": 0.045,
-                    "seekingRange": 15,
-                    "belowTempSeekingRange": 25,
-                    "belowTempThreshold": -5,
-                    "animation": "Run",
-                    "leapAtTarget": true,
-                    "leapAnimation": null,
-                    "animationSpeed": 2.2,
-                    "leapChance": 0.01,
-                    "sound": "creature/wolf/growl"
-                },
-                {
                     "code": "meleeattack",
                     "entityCodes": [
                         "player",
@@ -439,7 +410,7 @@
             ],
             "aitasksdomesticated": [
                 {
-                    "code": "meleeattackext",
+                    "code": "meleeattackbasic",
                     "isCommandable": true,
                     "priority": 2.2,
                     "damage": 8,
@@ -455,7 +426,7 @@
                     "sound": "creature/wolf/attack"
                 },
                 {
-                    "code": "seekentityext",
+                    "code": "seekentitybasic",
                     "isCommandable": true,
                     "priority": 2.1,
                     "movespeed": 0.045,

@@ -62,6 +62,7 @@ namespace WolfTaming
         }
         public void setCommand(Command command, EntityPlayer byPlayer)
         {
+            if(command == null) return;
             if (byPlayer == null
                 || entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
                 || entity.GetBehavior<EntityBehaviorTameable>().owner.PlayerUID == byPlayer.PlayerUID)
