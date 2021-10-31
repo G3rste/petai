@@ -217,10 +217,10 @@
             {
                 "hoursToGrow": 336,
                 "adultEntityCodes": [
-                    "wolf-male",
-                    "wolf-female"
+                    "tame-wolf-male",
+                    "tame-wolf-female"
                 ],
-                "code": "grow"
+                "code": "raisable"
             },
             {
                 "code": "taskai",
