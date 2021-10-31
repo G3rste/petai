@@ -373,6 +373,15 @@
                         "searchRange": 40,
                         "animation": "Walk"
                     },
+					{
+						"code": "fleeentity",
+						"entityCodes": ["drifter-*"],
+						"priority": 1.6,
+						"movespeed": 0.03,
+						"seekingRange": 5,
+						"animation": "Run",
+						"animationSpeed": 1.5
+					},
                     {
                         "code": "idle",
                         "priority": 1.45,
