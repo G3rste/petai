@@ -16,7 +16,6 @@ namespace WolfTaming
             base.Start(api);
 
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
-            api.RegisterEntityBehaviorClass("taskaiextended", typeof(EntityBehaviorTaskAIExtension));
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));

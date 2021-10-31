@@ -32,7 +32,6 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetString("domesticationLevel", value.ToString());
-                entity.GetBehavior<EntityBehaviorTaskAIExtension>()?.reloadTasks();
                 entity.WatchedAttributes.MarkPathDirty("domesticationLevel");
             }
         }
@@ -244,7 +243,6 @@ namespace WolfTaming
             if (adult.HasBehavior<EntityBehaviorTameable>())
             {
                 adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
-                adult.GetBehavior<EntityBehaviorTaskAIExtension>()?.reloadTasks();
             }
             adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
 
