@@ -1,5 +1,6 @@
 ﻿using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using ProtoBuf;
@@ -11,6 +12,8 @@ namespace WolfTaming
     {
 
         ICoreServerAPI serverAPI;
+
+        ICoreClientAPI clientAPI;
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
@@ -31,10 +34,11 @@ namespace WolfTaming
         public override void StartClientSide(ICoreClientAPI api)
         {
             base.StartClientSide(api);
+            this.clientAPI = api;
 
             api.Network.RegisterChannel("wolftamingnetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetNameMessage>();
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -43,7 +47,7 @@ namespace WolfTaming
             this.serverAPI = api;
             api.Network.RegisterChannel("wolftamingnetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessage);
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -62,10 +66,21 @@ namespace WolfTaming
             }
         }
 
-        private void OnPetNameMessage(IServerPlayer fromPlayer, PetNameMessage networkMessage)
+        private void OnPetNameMessageServer(IServerPlayer fromPlayer, PetNameMessage networkMessage)
         {
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
             target.GetBehavior<EntityBehaviorNameTag>()?.SetName(networkMessage.petName);
+        }
+
+        private void OnPetNameMessageClient(PetNameMessage networkMessage)
+        {
+            if (clientAPI != null)
+            {
+                clientAPI.Logger?.Debug("Message Received!");
+                EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
+                if (entity != null) clientAPI.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), entity.GetBehavior<EntityBehaviorTameable>()?.domesticationProgress * 100));
+                new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
+            }
         }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -81,5 +96,6 @@ namespace WolfTaming
     {
         public string petName;
         public long targetEntityUID;
+        public long oldEntityUID;
     }
 }

@@ -7,13 +7,13 @@ namespace WolfTaming
     {
         public override string ToggleKeyCombinationCode => null;
 
-        private EntityAgent targetEntity;
+        private long targetEntityId;
 
         string petName;
 
-        public PetNameGUI(ICoreClientAPI capi, EntityAgent targetEntity) : base(capi)
+        public PetNameGUI(ICoreClientAPI capi, long targetEntityId) : base(capi)
         {
-            this.targetEntity = targetEntity;
+            this.targetEntityId = targetEntityId;
 
             ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
@@ -32,7 +32,7 @@ namespace WolfTaming
         {
             var message = new PetNameMessage();
             message.petName = petName;
-            message.targetEntityUID = targetEntity.EntityId;
+            message.targetEntityUID = targetEntityId;
 
             capi.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message);
 

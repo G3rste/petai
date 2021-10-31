@@ -5,6 +5,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
+using Vintagestory.API.Server;
 
 namespace WolfTaming
 {
@@ -193,7 +194,7 @@ namespace WolfTaming
                     ICoreClientAPI capi = entity.Api as ICoreClientAPI;
                     if (capi != null)
                     {
-                        capi.ShowChatMessage(String.Format("Entity {0} is not ready to be tended to again.", entity.GetName()));
+                        capi.ShowChatMessage(String.Format("{0} is not ready to be tended to again.", entity.GetName()));
                     }
                 }
                 if (domesticationProgress >= 1f)
@@ -232,29 +233,29 @@ namespace WolfTaming
                 return;
             }
 
-            Entity adult = entity.World.ClassRegistry.CreateEntity(adultType);
+            Entity tameEntity = entity.World.ClassRegistry.CreateEntity(adultType);
 
-            adult.ServerPos.SetFrom(entity.ServerPos);
-            adult.Pos.SetFrom(adult.ServerPos);
+            tameEntity.ServerPos.SetFrom(entity.ServerPos);
+            tameEntity.Pos.SetFrom(tameEntity.ServerPos);
 
             entity.Die(EnumDespawnReason.Expire, null);
-            entity.World.SpawnEntity(adult);
+            entity.World.SpawnEntity(tameEntity);
 
-            if (adult.HasBehavior<EntityBehaviorTameable>())
+            if (tameEntity.HasBehavior<EntityBehaviorTameable>())
             {
-                adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
+                tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
             }
-            adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
+            tameEntity.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
 
             //Attempt to not change the texture during taming
-            adult.WatchedAttributes.SetInt("textureIndex", entity.WatchedAttributes.GetInt("textureIndex", 0));
+            tameEntity.WatchedAttributes.SetInt("textureIndex", entity.WatchedAttributes.GetInt("textureIndex", 0));
 
-            ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-            if (capi != null)
-            {
-                capi.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", adult.GetName(), domesticationProgress * 100));
-                new PetNameGUI(capi, adult as EntityAgent).TryOpen();
-            }
+            
+            var message = new PetNameMessage();
+            message.targetEntityUID = tameEntity.EntityId;
+            message.oldEntityUID = entity.EntityId;
+
+            (entity.Api as ICoreServerAPI)?.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
         }
         public override void OnEntityDespawn(EntityDespawnReason despawn)
         {
