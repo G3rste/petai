@@ -101,6 +101,9 @@ namespace WolfTaming
 
         List<TamingItem> initiatorList = new List<TamingItem>();
         List<TamingItem> progressorList = new List<TamingItem>();
+        AssetLocation tameEntityCode;
+
+        long callbackId;
         public EntityBehaviorTameable(Entity entity) : base(entity)
         {
         }
@@ -128,6 +131,15 @@ namespace WolfTaming
 
                 progressorList.Add(new TamingItem(name, progress, cooldown));
             }
+
+            if (String.IsNullOrEmpty(attributes["tameEntityCode"].AsString()))
+            {
+                tameEntityCode = entity.Code;
+            }
+            else
+            {
+                tameEntityCode = AssetLocation.Create(attributes["tameEntityCode"].AsString());
+            }
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -147,12 +159,7 @@ namespace WolfTaming
                     domesticationLevel = DomesticationLevel.TAMING;
                     owner = player.Player;
                     domesticationProgress = tamingItem.progress;
-                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                    if (capi != null)
-                    {
-                        capi.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
-                        new PetNameGUI(capi, entity as EntityAgent).TryOpen();
-                    }
+                    spawnTameVariant(1f);
                 }
                 if (domesticationProgress >= 1f)
                 {
@@ -205,6 +212,55 @@ namespace WolfTaming
         public override string PropertyName()
         {
             return "tameable";
+        }
+
+        void spawnTameVariant(float dt)
+        {
+            EntityProperties adultType = entity.World.GetEntityType(tameEntityCode);
+
+            if (adultType == null)
+            {
+                entity.World.Logger.Error("Misconfigured entity. Entity with code '{0}' is configured (via Tameable behavior) to be tamed into '{1}', but no such entity type was registered.", entity.Code, tameEntityCode);
+                return;
+            }
+
+            Cuboidf collisionBox = adultType.SpawnCollisionBox;
+
+            // Delay spawning if we're colliding
+            if (entity.World.CollisionTester.IsColliding(entity.World.BlockAccessor, collisionBox, entity.ServerPos.XYZ, false))
+            {
+                callbackId = entity.World.RegisterCallback(spawnTameVariant, 1000);
+                return;
+            }
+
+            Entity adult = entity.World.ClassRegistry.CreateEntity(adultType);
+
+            adult.ServerPos.SetFrom(entity.ServerPos);
+            adult.Pos.SetFrom(adult.ServerPos);
+
+            entity.Die(EnumDespawnReason.Expire, null);
+            entity.World.SpawnEntity(adult);
+
+            if (adult.HasBehavior<EntityBehaviorTameable>())
+            {
+                adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
+                adult.GetBehavior<EntityBehaviorTaskAIExtension>()?.reloadTasks();
+            }
+            adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
+
+            //Attempt to not change the texture during taming
+            adult.WatchedAttributes.SetInt("textureIndex", entity.WatchedAttributes.GetInt("textureIndex", 0));
+
+            ICoreClientAPI capi = entity.Api as ICoreClientAPI;
+            if (capi != null)
+            {
+                capi.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", adult.GetName(), domesticationProgress * 100));
+                new PetNameGUI(capi, adult as EntityAgent).TryOpen();
+            }
+        }
+        public override void OnEntityDespawn(EntityDespawnReason despawn)
+        {
+            entity.World.UnregisterCallback(callbackId);
         }
     }
 

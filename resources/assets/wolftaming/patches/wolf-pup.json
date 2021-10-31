@@ -4,6 +4,7 @@
     "path": "/server/behaviors/-",
     "value": {
       "code": "tameable",
+      "tameEntityCode": "wolftaming:tame-wolf-pup",
       "initiator": [
         {
           "code": "bone",
@@ -36,6 +37,7 @@
     "path": "/client/behaviors/-",
     "value": {
       "code": "tameable",
+      "tameEntityCode": "tame-wolf-pup",
       "initiator": [
         {
           "code": "bone",
