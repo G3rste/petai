@@ -1,0 +1,472 @@
+{
+    "code": "tame-wolf-male",
+    "class": "EntityAgent",
+    "hitboxSize": {
+        "x": 1.2,
+        "y": 1
+    },
+    "deadHitboxSize": {
+        "x": 1,
+        "y": 0.75
+    },
+    "eyeHeight": 0.9,
+    "drops": [],
+    "client": {
+        "renderer": "Shape",
+        "shape": {
+            "base": "game:entity/land/wolf-male"
+        },
+        "texture": {
+            "base": "game:entity/wolf/wolf1",
+            "alternates": [
+                {
+                    "base": "game:entity/wolf/wolf2"
+                },
+                {
+                    "base": "game:entity/wolf/wolf3"
+                },
+                {
+                    "base": "game:entity/wolf/wolf4"
+                },
+                {
+                    "base": "game:entity/wolf/wolf5"
+                },
+                {
+                    "base": "game:entity/wolf/wolf6"
+                },
+                {
+                    "base": "game:entity/wolf/wolf7"
+                },
+                {
+                    "base": "game:entity/wolf/wolf8"
+                },
+                {
+                    "base": "game:entity/wolf/wolf9"
+                }
+            ]
+        },
+        "behaviors": [
+            {
+                "code": "nametag"
+            },
+            {
+                "code": "receivecommand"
+            },
+            {
+                "code": "tameable",
+                "initiator": [
+                    {
+                        "code": "bone",
+                        "progress": 0.1,
+                        "cooldown": 6
+                    }
+                ],
+                "progressor": [
+                    {
+                        "code": "bushmeat",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "poultry",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    }
+                ]
+            },
+            {
+                "code": "repulseagents"
+            },
+            {
+                "code": "controlledphysics",
+                "stepHeight": 1.1251
+            },
+            {
+                "code": "floatupwhenstuck",
+                "onlyWhenDead": true
+            },
+            {
+                "code": "interpolateposition"
+            },
+            {
+                "code": "harvestable"
+            },
+            {
+                "code": "despawn",
+                "minPlayerDistance": 8,
+                "belowLightLevel": 8,
+                "minSeconds": 300
+            },
+            {
+                "code": "ropetieable",
+                "minGeneration": 2
+            }
+        ],
+        "animations": [
+            {
+                "code": "hurt",
+                "animation": "hurt",
+                "animationSpeed": 2.2,
+                "weight": 10,
+                "blendMode": "addAverage"
+            },
+            {
+                "code": "die",
+                "animation": "death",
+                "animationSpeed": 1.25,
+                "weight": 10,
+                "blendMode": "average",
+                "triggeredBy": {
+                    "onControls": [
+                        "dead"
+                    ]
+                }
+            },
+            {
+                "code": "idle",
+                "animation": "idle",
+                "blendMode": "addAverage",
+                "easeOutSpeed": 4,
+                "triggeredBy": {
+                    "defaultAnim": true
+                }
+            },
+            {
+                "code": "sleep",
+                "animation": "sleep",
+                "easeInSpeed": 4,
+                "easeOutSpeed": 4,
+                "blendMode": "average"
+            },
+            {
+                "code": "sit",
+                "animation": "sit",
+                "easeInSpeed": 4,
+                "easeOutSpeed": 4,
+                "blendMode": "average"
+            }
+        ]
+    },
+    "server": {
+        "behaviors": [
+            {
+                "code": "selfdefence"
+            },
+            {
+                "code": "nametag"
+            },
+            {
+                "code": "tameable",
+                "initiator": [
+                    {
+                        "code": "bone",
+                        "progress": 0.1,
+                        "cooldown": 6
+                    }
+                ],
+                "progressor": [
+                    {
+                        "code": "bushmeat",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "poultry",
+                        "progress": 0.3,
+                        "cooldown": 6
+                    }
+                ]
+            },
+            {
+                "code": "receivecommand"
+            },
+            {
+                "code": "repulseagents"
+            },
+            {
+                "code": "controlledphysics",
+                "stepHeight": 1.1251
+            },
+            {
+                "code": "despawn",
+                "minPlayerDistance": 8,
+                "belowLightLevel": 8,
+                "minSeconds": 300
+            },
+            {
+                "code": "health",
+                "currenthealth": 25,
+                "maxhealth": 25
+            },
+            {
+                "code": "deaddecay",
+                "hoursToDecay": 96,
+                "decayedBlock": "carcass-medium"
+            },
+            {
+                "code": "floatupwhenstuck",
+                "onlyWhenDead": true
+            },
+            {
+                "code": "harvestable",
+                "drops": [
+                    {
+                        "type": "item",
+                        "code": "bushmeat-raw",
+                        "quantity": {
+                            "avg": 7,
+                            "var": 1
+                        }
+                    },
+                    {
+                        "type": "item",
+                        "code": "hide-raw-medium",
+                        "quantity": {
+                            "avg": 1.5,
+                            "var": 0
+                        }
+                    },
+                    {
+                        "type": "item",
+                        "code": "fat",
+                        "quantity": {
+                            "avg": 1.25,
+                            "var": 0
+                        }
+                    },
+                    {
+                        "type": "item",
+                        "code": "bone",
+                        "quantity": {
+                            "avg": 4,
+                            "var": 0.5
+                        }
+                    }
+                ]
+            },
+            {
+                "code": "breathe"
+            },
+            {
+                "code": "emotionstates",
+                "states": [
+                    {
+                        "code": "fleeondamage",
+                        "duration": 60,
+                        "chance": 0.75,
+                        "slot": 2,
+                        "priority": 5,
+                        "accumType": "max",
+                        "whenHealthRelBelow": 0.3
+                    },
+                    {
+                        "code": "saturated",
+                        "duration": 1200,
+                        "chance": 1,
+                        "slot": 0,
+                        "priority": 1,
+                        "accumType": "sum",
+                        "belowTempDuration": 600,
+                        "belowTempThreshold": -5
+                    },
+                    {
+                        "code": "aggressiveondamage",
+                        "duration": 30,
+                        "chance": 1,
+                        "slot": 2,
+                        "priority": 2,
+                        "accumType": "noaccum"
+                    }
+                ]
+            },
+            {
+                "code": "taskai",
+                "aitasks": [
+                    {
+                        "code": "meleeattackbasic",
+                        "isCommandable": true,
+                        "priority": 2.2,
+                        "damage": 8,
+                        "damageTier": 2,
+                        "damageType": "SlashingAttack",
+                        "slot": 1,
+                        "mincooldown": 1500,
+                        "maxcooldown": 1500,
+                        "attackDurationMs": 800,
+                        "damagePlayerAtMs": 500,
+                        "animation": "Attack",
+                        "animationSpeed": 2.5,
+                        "sound": "game:creature/wolf/attack"
+                    },
+                    {
+                        "code": "seekentitybasic",
+                        "isCommandable": true,
+                        "priority": 2.1,
+                        "movespeed": 0.045,
+                        "seekingRange": 15,
+                        "belowTempSeekingRange": 25,
+                        "belowTempThreshold": -5,
+                        "animation": "Run",
+                        "leapAtTarget": true,
+                        "leapAnimation": null,
+                        "animationSpeed": 2.2,
+                        "leapChance": 0.01
+                    },
+                    {
+                        "code": "simplecommand",
+                        "priority": 3,
+                        "minduration": 2000,
+                        "maxduration": 10000,
+                        "priorityForCancel": 3.1,
+                        "animation": "Sit",
+                        "command": "sit"
+                    },
+                    {
+                        "code": "simplecommand",
+                        "priority": 3,
+                        "minduration": 5000,
+                        "maxduration": 15000,
+                        "priorityForCancel": 3.1,
+                        "animation": "Lie",
+                        "animationSpeed": 0.8,
+                        "command": "lay"
+                    },
+                    {
+                        "code": "simplecommand",
+                        "priority": 3,
+                        "minduration": 4667,
+                        "maxduration": 4667,
+                        "priorityForCancel": 3.1,
+                        "animation": "Howl",
+                        "animationSpeed": 0.5,
+                        "command": "speak",
+                        "sound": "game:creature/wolf/howl"
+                    },
+                    {
+                        "code": "followmaster",
+                        "priority": 2,
+                        "priorityForCancel": 1.9,
+                        "command": "followmaster",
+                        "movespeed": 0.045,
+                        "animationSpeed": 2.2,
+                        "maxDistance": 5,
+                        "searchRange": 40,
+                        "animation": "Run"
+                    },
+                    {
+                        "code": "stay",
+                        "priority": 2,
+                        "priorityForCancel": 1.9,
+                        "command": "stay",
+                        "movespeed": 0.006,
+                        "maxDistance": 10,
+                        "searchRange": 40,
+                        "animation": "Walk"
+                    },
+                    {
+                        "code": "idle",
+                        "priority": 1.45,
+                        "priorityForCancel": 1.55,
+                        "minduration": 200000,
+                        "maxduration": 800000,
+                        "mincooldown": 10000,
+                        "maxcooldown": 30000,
+                        "animation": "Sleep",
+                        "whenNotInEmotionState": "aggressiveondamage",
+                        "duringDayTimeFrames": [
+                            {
+                                "fromHour": 10,
+                                "toHour": 18
+                            },
+                            {
+                                "fromHour": 1,
+                                "toHour": 3
+                            }
+                        ],
+                        "stopOnNearbyEntityCodes": [
+                            "player"
+                        ],
+                        "stopRange": 10,
+                        "stopOnHurt": true
+                    },
+                    {
+                        "code": "getoutofwater",
+                        "priority": 1.4,
+                        "movespeed": 0.015,
+                        "animation": "Walk",
+                        "animationSpeed": 2.2
+                    },
+                    {
+                        "code": "idle",
+                        "priority": 1.3,
+                        "priorityForCancel": 1.35,
+                        "minduration": 4667,
+                        "maxduration": 4667,
+                        "mincooldown": 80000,
+                        "maxcooldown": 500000,
+                        "animation": "Howl",
+                        "animationSpeed": 0.5,
+                        "sound": "game:creature/wolf/howl",
+                        "soundRange": 110
+                    },
+                    {
+                        "code": "idle",
+                        "priority": 1.2,
+                        "priorityForCancel": 1.35,
+                        "minduration": 2500,
+                        "maxduration": 2500,
+                        "mincooldown": 6000,
+                        "maxcooldown": 20000,
+                        "animation": "Sniff",
+                        "animationSpeed": 1.25,
+                        "whenNotInEmotionState": "aggressiveondamage"
+                    },
+                    {
+                        "code": "wander",
+                        "priority": 1.0,
+                        "priorityForCancel": 1.35,
+                        "movespeed": 0.006,
+                        "animation": "Walk",
+                        "preferredLightLevel": 20
+                    },
+                    {
+                        "code": "idle",
+                        "priority": 0.9,
+                        "minduration": 2000,
+                        "maxduration": 10000,
+                        "mincooldown": 2000,
+                        "maxcooldown": 120000,
+                        "priorityForCancel": 1.33,
+                        "animation": "Sit",
+                        "whenNotInEmotionState": "aggressiveondamage",
+                        "stopRange": 5
+                    },
+                    {
+                        "code": "lookaround",
+                        "priority": 0.5
+                    }
+                ]
+            },
+            {
+                "code": "ropetieable",
+                "minGeneration": 2
+            }
+        ]
+    },
+    "sounds": {
+        "hurt": "game:creature/wolf/hurt",
+        "death": "game:creature/wolf/hurt",
+        "idle": "game:creature/wolf/howl"
+    },
+    "idleSoundChance": 0
+}
