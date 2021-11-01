@@ -8,14 +8,14 @@
       "initiator": [
         {
           "code": "bone",
-          "progress": 0.1,
+          "progress": 0.05,
           "cooldown": 6
         }
       ],
       "progressor": [
         {
           "code": "bushmeat",
-          "progress": 0.3,
+          "progress": 0.15,
           "cooldown": 6
         },
         {
@@ -41,14 +41,14 @@
       "initiator": [
         {
           "code": "bone",
-          "progress": 0.1,
+          "progress": 0.05,
           "cooldown": 6
         }
       ],
       "progressor": [
         {
           "code": "bushmeat",
-          "progress": 0.3,
+          "progress": 0.15,
           "cooldown": 6
         },
         {

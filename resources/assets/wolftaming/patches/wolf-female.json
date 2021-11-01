@@ -4,21 +4,28 @@
         "path": "/server/behaviors/-",
         "value": {
             "code": "tameable",
-            "initiator": [],
+            "tameEntityCode": "wolftaming:tame-wolf-female",
+            "initiator": [
+                {
+                    "code": "bone",
+                    "progress": 0,
+                    "cooldown": 6
+                }
+            ],
             "progressor": [
                 {
                     "code": "bushmeat",
-                    "progress": 0.3,
+                    "progress": 0.05,
                     "cooldown": 6
                 },
                 {
                     "code": "redmeat",
-                    "progress": 0.3,
+                    "progress": 0.1,
                     "cooldown": 6
                 },
                 {
                     "code": "poultry",
-                    "progress": 0.3,
+                    "progress": 0.1,
                     "cooldown": 6
                 }
             ]
@@ -30,21 +37,28 @@
         "path": "/client/behaviors/-",
         "value": {
             "code": "tameable",
-            "initiator": [],
+            "tameEntityCode": "wolftaming:tame-wolf-female",
+            "initiator": [
+                {
+                    "code": "bone",
+                    "progress": 0,
+                    "cooldown": 6
+                }
+            ],
             "progressor": [
                 {
                     "code": "bushmeat",
-                    "progress": 0.3,
+                    "progress": 0.05,
                     "cooldown": 6
                 },
                 {
                     "code": "redmeat",
-                    "progress": 0.3,
+                    "progress": 0.1,
                     "cooldown": 6
                 },
                 {
                     "code": "poultry",
-                    "progress": 0.3,
+                    "progress": 0.1,
                     "cooldown": 6
                 }
             ]
