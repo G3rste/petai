@@ -58,7 +58,7 @@ namespace WolfTaming
                 {
                     case DomesticationLevel.WILD: return 0f;
                     case DomesticationLevel.DOMESTICATED: return 1f;
-                    case DomesticationLevel.TAMING: return domesticationStatus.GetFloat("progress");
+                    case DomesticationLevel.TAMING: return domesticationStatus.GetFloat("progress", 0f);
                     default: return domesticationStatus.GetFloat("progress");
                 }
             }
@@ -103,6 +103,7 @@ namespace WolfTaming
         List<TamingItem> progressorList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
+
         long callbackId;
         public EntityBehaviorTameable(Entity entity) : base(entity)
         {
@@ -115,8 +116,8 @@ namespace WolfTaming
             foreach (var item in initItems)
             {
                 string name = item["code"].AsString();
-                float progress = item["progress"].AsFloat();
-                long cooldown = item["cooldown"].AsInt();
+                float progress = item["progress"].AsFloat(0f);
+                long cooldown = item["cooldown"].AsInt(1);
 
                 initiatorList.Add(new TamingItem(name, progress, cooldown));
             }
@@ -126,8 +127,8 @@ namespace WolfTaming
             foreach (var item in progItems)
             {
                 string name = item["code"].AsString();
-                float progress = item["progress"].AsFloat();
-                long cooldown = item["cooldown"].AsInt();
+                float progress = item["progress"].AsFloat(1f);
+                long cooldown = item["cooldown"].AsInt(1);
 
                 progressorList.Add(new TamingItem(name, progress, cooldown));
             }
@@ -143,64 +144,31 @@ namespace WolfTaming
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
             EntityPlayer player = byEntity as EntityPlayer;
             if (player == null) return;
-            if (owner != null && owner != player.Player) return;
+            if (owner != null && owner.PlayerUID != player.PlayerUID) return;
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {
                 var tamingItem = initiatorList.Find((item) => itemslot.Itemstack.Item.Code.ToString().Contains(item.name));
-                if (tamingItem != null)
+                if (checkTamingSuccess(tamingItem, itemslot))
                 {
-                    itemslot.TakeOut(1);
-                    cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
                     domesticationLevel = DomesticationLevel.TAMING;
                     owner = player.Player;
-                    domesticationProgress = tamingItem.progress;
-                    spawnTameVariant(1f);
-                }
-                if (domesticationProgress >= 1f)
-                {
-                    domesticationLevel = DomesticationLevel.DOMESTICATED;
-                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                    if (capi != null)
-                    {
-                        capi.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
-                    }
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Startet taming {0}.", entity.GetName()));
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
             {
-                if (cooldown <= entity.World.Calendar.TotalHours)
+                var tamingItem = progressorList.Find((item) => itemslot.Itemstack.Collectible.Code.ToString().Contains(item.name));
+                if (checkTamingSuccess(tamingItem, itemslot))
                 {
-                    var tamingItem = progressorList.Find((item) => itemslot.Itemstack.Collectible.Code.ToString().Contains(item.name));
-                    if (tamingItem != null)
-                    {
-                        itemslot.TakeOut(1);
-                        cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
-                        domesticationProgress += tamingItem.progress;
-                        ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                        if (capi != null)
-                        {
-                            capi.ShowChatMessage(String.Format("Continued taming {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
-                        }
-                    }
-                }
-                else
-                {
-                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                    if (capi != null)
-                    {
-                        capi.ShowChatMessage(String.Format("{0} is not ready to be tended to again.", entity.GetName()));
-                    }
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Tended to {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
                 }
                 if (domesticationProgress >= 1f)
                 {
                     domesticationLevel = DomesticationLevel.DOMESTICATED;
-                    ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                    if (capi != null)
-                    {
-                        capi.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
-                    }
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
+                    spawnTameVariant(1f);
                 }
             }
         }
@@ -213,17 +181,17 @@ namespace WolfTaming
         void spawnTameVariant(float dt)
         {
             Entity tameEntity;
-            if (tameEntityCode != null)
+            if (tameEntityCode != null && entity.Api.Side == EnumAppSide.Server)
             {
-                EntityProperties adultType = entity.World.GetEntityType(tameEntityCode);
+                EntityProperties tameType = entity.World.GetEntityType(tameEntityCode);
 
-                if (adultType == null)
+                if (tameType == null)
                 {
                     entity.World.Logger.Error("Misconfigured entity. Entity with code '{0}' is configured (via Tameable behavior) to be tamed into '{1}', but no such entity type was registered.", entity.Code, tameEntityCode);
                     return;
                 }
 
-                Cuboidf collisionBox = adultType.SpawnCollisionBox;
+                Cuboidf collisionBox = tameType.SpawnCollisionBox;
 
                 // Delay spawning if we're colliding
                 if (entity.World.CollisionTester.IsColliding(entity.World.BlockAccessor, collisionBox, entity.ServerPos.XYZ, false))
@@ -232,17 +200,17 @@ namespace WolfTaming
                     return;
                 }
 
-                tameEntity = entity.World.ClassRegistry.CreateEntity(adultType);
+                tameEntity = entity.World.ClassRegistry.CreateEntity(tameType);
 
                 tameEntity.ServerPos.SetFrom(entity.ServerPos);
                 tameEntity.Pos.SetFrom(tameEntity.ServerPos);
 
                 entity.Die(EnumDespawnReason.Expire, null);
                 entity.World.SpawnEntity(tameEntity);
-
+                
                 if (tameEntity.HasBehavior<EntityBehaviorTameable>())
                 {
-                    tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
+                    tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = domesticationStatus;
                 }
                 tameEntity.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
 
@@ -259,6 +227,25 @@ namespace WolfTaming
             message.oldEntityUID = entity.EntityId;
 
             (entity.Api as ICoreServerAPI)?.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+        }
+
+        bool checkTamingSuccess(TamingItem tamingItem, ItemSlot itemSlot)
+        {
+            if (tamingItem != null)
+            {
+                if (cooldown <= entity.World.Calendar.TotalHours)
+                {
+                    itemSlot.TakeOut(1);
+                    domesticationProgress += tamingItem.progress;
+                    cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
+                    return true;
+                }
+                else
+                {
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("{0} is not ready to be tended to again.", entity.GetName()));
+                }
+            }
+            return false;
         }
         public override void OnEntityDespawn(EntityDespawnReason despawn)
         {
