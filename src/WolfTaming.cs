@@ -76,7 +76,6 @@ namespace WolfTaming
         {
             if (clientAPI != null)
             {
-                clientAPI.Logger?.Debug("Message Received!");
                 EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
                 if (entity != null) clientAPI.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), entity.GetBehavior<EntityBehaviorTameable>()?.domesticationProgress * 100));
                 new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
