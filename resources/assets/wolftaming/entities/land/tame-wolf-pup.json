@@ -44,17 +44,17 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat",
+                        "code": "bushmeat-*",
+                        "progress": 0.15,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat-*",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat",
-                        "progress": 0.3,
-                        "cooldown": 6
-                    },
-                    {
-                        "code": "poultry",
+                        "code": "poultry-*",
                         "progress": 0.3,
                         "cooldown": 6
                     }
@@ -152,17 +152,17 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat",
+                        "code": "bushmeat-*",
+                        "progress": 0.15,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat-*",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat",
-                        "progress": 0.3,
-                        "cooldown": 6
-                    },
-                    {
-                        "code": "poultry",
+                        "code": "poultry-*",
                         "progress": 0.3,
                         "cooldown": 6
                     }

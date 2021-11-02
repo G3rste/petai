@@ -63,17 +63,17 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat",
+                        "code": "bushmeat-*",
+                        "progress": 0.15,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat-*",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat",
-                        "progress": 0.3,
-                        "cooldown": 6
-                    },
-                    {
-                        "code": "poultry",
+                        "code": "poultry-*",
                         "progress": 0.3,
                         "cooldown": 6
                     }
@@ -171,17 +171,17 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat",
+                        "code": "bushmeat-*",
+                        "progress": 0.15,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "redmeat-*",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat",
-                        "progress": 0.3,
-                        "cooldown": 6
-                    },
-                    {
-                        "code": "poultry",
+                        "code": "poultry-*",
                         "progress": 0.3,
                         "cooldown": 6
                     }
@@ -257,16 +257,20 @@
             {
                 "code": "breathe"
             },
-			{ 
-				"code": "multiply",
-				"quantityPerDay": 0,
-				"spawnEntityCode": "wolf-pup",
-				"growthCapQuantity": 10,
-				"growthCapRange": 15,
-				"growthCapEntityCodes": ["wolf-pup", "wolf-female", "wolf-male"],
-				"requiresNearbyEntityCode": "wolf-male",
-				"requiresNearbyEntityRange": 10
-			},
+            {
+                "code": "multiply",
+                "quantityPerDay": 0,
+                "spawnEntityCode": "wolf-pup",
+                "growthCapQuantity": 10,
+                "growthCapRange": 15,
+                "growthCapEntityCodes": [
+                    "wolf-pup",
+                    "wolf-female",
+                    "wolf-male"
+                ],
+                "requiresNearbyEntityCode": "wolf-male",
+                "requiresNearbyEntityRange": 10
+            },
             {
                 "code": "emotionstates",
                 "states": [
@@ -383,16 +387,18 @@
                         "searchRange": 40,
                         "animation": "Walk"
                     },
-					{
-						"code": "fleeentity",
-						"entityCodes": ["drifter-*"],
-						"priority": 1.6,
-						"movespeed": 0.03,
+                    {
+                        "code": "fleeentity",
+                        "entityCodes": [
+                            "drifter-*"
+                        ],
+                        "priority": 1.6,
+                        "movespeed": 0.03,
                         "fleeingDistance": 8,
-						"seekingRange": 5,
-						"animation": "Run",
-						"animationSpeed": 1.5
-					},
+                        "seekingRange": 5,
+                        "animation": "Run",
+                        "animationSpeed": 1.5
+                    },
                     {
                         "code": "idle",
                         "priority": 1.45,

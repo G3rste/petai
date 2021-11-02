@@ -148,7 +148,7 @@ namespace WolfTaming
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = initiatorList.Find((item) => itemslot.Itemstack.Item.Code.ToString().Contains(item.name));
+                var tamingItem = initiatorList.Find((item) => isValidTamingItem(item, itemslot));
                 if (checkTamingSuccess(tamingItem, itemslot))
                 {
                     domesticationLevel = DomesticationLevel.TAMING;
@@ -159,7 +159,7 @@ namespace WolfTaming
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = progressorList.Find((item) => itemslot.Itemstack.Collectible.Code.ToString().Contains(item.name));
+                var tamingItem = progressorList.Find((item) => isValidTamingItem(item, itemslot));
                 if (checkTamingSuccess(tamingItem, itemslot))
                 {
                     (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Tended to {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
@@ -207,7 +207,7 @@ namespace WolfTaming
 
                 entity.Die(EnumDespawnReason.Expire, null);
                 entity.World.SpawnEntity(tameEntity);
-                
+
                 if (tameEntity.HasBehavior<EntityBehaviorTameable>())
                 {
                     tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = domesticationStatus;
@@ -227,6 +227,18 @@ namespace WolfTaming
             message.oldEntityUID = entity.EntityId;
 
             (entity.Api as ICoreServerAPI)?.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+        }
+
+        bool isValidTamingItem(TamingItem item, ItemSlot slot)
+        {
+            if (item.name.EndsWith("*"))
+            {
+                return slot.Itemstack.Item.Code.Path.StartsWith(item.name.Remove(item.name.Length - 1));
+            }
+            else
+            {
+                return slot.Itemstack.Item.Code.Path == item.name;
+            }
         }
 
         bool checkTamingSuccess(TamingItem tamingItem, ItemSlot itemSlot)
