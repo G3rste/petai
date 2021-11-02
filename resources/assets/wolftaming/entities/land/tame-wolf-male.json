@@ -378,6 +378,7 @@
 						"entityCodes": ["drifter-*"],
 						"priority": 1.6,
 						"movespeed": 0.03,
+                        "fleeingDistance": 8,
 						"seekingRange": 5,
 						"animation": "Run",
 						"animationSpeed": 1.5
