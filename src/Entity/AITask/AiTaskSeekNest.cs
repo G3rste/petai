@@ -80,7 +80,7 @@ namespace WolfTaming
             horRange = taskConfig["horRange"].AsInt(15);
             vertRange = taskConfig["vertRange"].AsInt(4);
             maxDistance = taskConfig["maxDistance"].AsInt(40);
-            moveSpeed = taskConfig["moveSpeed"].AsFloat(0.02f);
+            moveSpeed = taskConfig["movespeed"].AsFloat(0.02f);
         }
 
         public override bool ShouldExecute()
@@ -93,7 +93,7 @@ namespace WolfTaming
             }
             if (entityNest == null
                 || entity.ServerPos.SquareDistanceTo(entityNest.X, entityNest.Y, entityNest.Z) > maxDistance * maxDistance
-                || !isNestBlock(entity.World.BlockAccessor.GetBlock(entityNest)))
+                || !isNestBlock(entity.World.BlockAccessor.GetBlock(entityNest), entityNest))
             {
                 entityNest = null;
                 tryFindEntityNest();
@@ -134,7 +134,7 @@ namespace WolfTaming
                 entity.ServerPos.AsBlockPos.Add(horRange, vertRange, horRange),
                 (block, pos) =>
                     {
-                        if (isNestBlock(block))
+                        if (isNestBlock(block, pos))
                         {
                             entityNest = pos.Copy();
                             return false;
@@ -143,24 +143,35 @@ namespace WolfTaming
                     });
         }
 
-        bool isNestBlock(Block block)
+        bool isNestBlock(Block block, BlockPos pos)
         {
             return nestList.Exists(nest =>
             {
                 if (nest.EndsWith("*"))
                 {
-                    return block.Code.Path.StartsWith(nest.Remove(nest.Length - 1));
+                    if (block.Code.Path.StartsWith(nest.Remove(nest.Length - 1))) return true;
+                    Block decor = entity.World.BlockAccessor.GetDecor(pos, BlockFacing.indexUP);
+                    if (decor == null) return false;
+                    return decor.Code.Path.StartsWith(nest.Remove(nest.Length - 1));
                 }
                 else
                 {
-                    return block.Code.Path == nest;
+                    if (block.Code.Path == nest) return true;
+                    Block decor = entity.World.BlockAccessor.GetDecor(pos, BlockFacing.indexUP);
+                    if (decor == null) return false;
+                    return decor.Code.Path == nest;
                 }
             });
         }
 
-        bool nestBlockReached(){
-            return isNestBlock(entity.World.BlockAccessor.GetBlock((int)entity.ServerPos.X, (int)entity.ServerPos.Y - 1, (int)entity.ServerPos.Z))
-                || isNestBlock(entity.World.BlockAccessor.GetBlock((int)entity.ServerPos.X, (int)entity.ServerPos.Y, (int)entity.ServerPos.Z));
+        bool nestBlockReached()
+        {
+            int x = (int)entity.ServerPos.X;
+            int y = (int)entity.ServerPos.Y;
+            int z = (int)entity.ServerPos.Z;
+
+            return isNestBlock(entity.World.BlockAccessor.GetBlock(x, y - 1, z), new BlockPos(x, y - 1, z))
+                || isNestBlock(entity.World.BlockAccessor.GetBlock(x, y, z), new BlockPos(x, y, z));
         }
     }
 }
