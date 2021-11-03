@@ -71,7 +71,7 @@ namespace WolfTaming
             base.LoadConfig(taskConfig, aiConfig);
             if (taskConfig["duringDayTimeFrames"] != null)
             {
-                duringDayTimeFrames.AddRange(taskConfig["duringDayTimeFrames"].AsArray<DayTimeFrame>(new DayTimeFrame[0]));
+                duringDayTimeFrames.AddRange(taskConfig["duringDayTimeFrames"].AsObject<DayTimeFrame[]>(new DayTimeFrame[0]));
             }
             if (taskConfig["validNests"] != null)
             {
