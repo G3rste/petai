@@ -400,6 +400,26 @@
                         "animationSpeed": 1.5
                     },
                     {
+                        "code": "seeknest",
+                        "priority": 1.56,
+                        "validNests": [
+                            "linen-*",
+                            "rushmat"
+                        ],
+                        "duringDayTimeFrames": [
+                            {
+                                "fromHour": 10,
+                                "toHour": 18
+                            },
+                            {
+                                "fromHour": 1,
+                                "toHour": 3
+                            }
+                        ],
+                        "movespeed": 0.006,
+                        "animation": "Walk"
+                    },
+                    {
                         "code": "idle",
                         "priority": 1.45,
                         "priorityForCancel": 1.55,

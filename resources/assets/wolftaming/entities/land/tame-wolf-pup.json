@@ -281,6 +281,26 @@
                         "animationSpeed": 2.2
                     },
                     {
+                        "code": "seeknest",
+                        "priority": 1.4,
+                        "validNests": [
+                            "bed-*"
+                        ],
+                        "duringDayTimeFrames": [
+                            {
+                                "fromHour": 10,
+                                "toHour": 18
+                            },
+                            {
+                                "fromHour": 1,
+                                "toHour": 3
+                            }
+                        ],
+                        "movespeed": 0.004,
+                        "animationSpeed": 2,
+                        "animation": "Walk"
+                    },
+                    {
                         "code": "idle",
                         "priority": 1.35,
                         "priorityForCancel": 1.35,
