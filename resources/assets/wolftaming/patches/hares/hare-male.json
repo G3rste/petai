@@ -1,0 +1,14 @@
+[
+    {
+        "op": "add",
+        "path": "/server/behaviors/9/aitasks/0/entityCodes/-",
+        "value": "tame-wolf-male",
+        "file": "game:entities/land/hare-male.json"
+    },
+    {
+        "op": "add",
+        "path": "/server/behaviors/9/aitasks/0/entityCodes/-",
+        "value": "tame-wolf-female",
+        "file": "game:entities/land/hare-male.json"
+    }
+]
