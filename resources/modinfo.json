@@ -4,7 +4,7 @@
     "name": "Wolf taming",
     "side": "universal",
     "author": "G3rste",
-    "description": "Mod that focuses on making wolfes tamable and usable by the player.",
+    "description": "Mod that focuses on making wolfes tameable and usable by the player.",
     "version": "0.0.3",
     "dependency": {
         "game": "1.15.6"
