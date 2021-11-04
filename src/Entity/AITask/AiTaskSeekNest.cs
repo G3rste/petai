@@ -59,6 +59,8 @@ namespace WolfTaming
 
         long lastSearch;
 
+        long lastCheck;
+
         bool stuck = false;
 
         float moveSpeed = 0.02f;
@@ -85,7 +87,9 @@ namespace WolfTaming
 
         public override bool ShouldExecute()
         {
-            if (entityNest == null && lastSearch + 10000 > entity.World.ElapsedMilliseconds) return false;
+            if (lastCheck + 10000 > entity.World.ElapsedMilliseconds) return false;
+            lastCheck = entity.World.ElapsedMilliseconds;
+            if (entityNest == null && lastSearch + 120000 > entity.World.ElapsedMilliseconds) return false;
             if (duringDayTimeFrames.Count > 0)
             {
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
@@ -114,7 +118,7 @@ namespace WolfTaming
 
         public override bool ContinueExecute(float dt)
         {
-            if (nestBlockReached())
+            if (nestBlockReached() && entity.ServerPos.InHorizontalRangeOf(entityNest.X, entityNest.Z, 0.25f))
             {
                 pathTraverser.Stop();
                 return false;
@@ -137,7 +141,7 @@ namespace WolfTaming
                         if (isNestBlock(block, pos))
                         {
                             entityNest = pos.Copy();
-                            return false;
+                            return entity.World.Rand.NextDouble() > 0.1;
                         }
                         return true;
                     });
