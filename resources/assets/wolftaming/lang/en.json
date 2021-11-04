@@ -4,5 +4,27 @@
     "item-creature-tame-wolf-pup": "Dog (pup)",
     "item-dead-creature-tame-wolf-male": "Dead dog (male)",
     "item-dead-creature-tame-wolf-female": "Dead dog (female)",
-    "item-dead-creature-tame-wolf-pup": "Dead dog (pup)"
+    "item-dead-creature-tame-wolf-pup": "Dead dog (pup)",
+
+
+    "gui-command-title": "Choose a command!",
+    "gui-command-simple": "Simple Commands:",
+    "gui-command-sit": "Sit",
+    "gui-command-lay": "Lay",
+    "gui-command-speak": "Speak",
+    "gui-command-complex": "Complex Commands:",
+    "gui-command-follow": "Follow",
+    "gui-command-stay": "Stay",
+    "gui-command-aggressionlevel": "Aggression levels:",
+    "gui-command-attack": "Attack",
+    "gui-command-protect": "Protect",
+    "gui-command-neutral": "Neutral",
+
+    "gui-name-title": "Choose a name!",
+    "gui-name-ok": "OK",
+
+    "message-tended-to": "Tended to {0}, current progress is {1}%.",
+    "message-not-ready": "{0} is not ready to be tended to again.",
+    "message-startet-taming": "Successfully startet taming {0}, current progress is {1}%.",
+    "message-finished-taming":"Successfully tamed {0}."
 }

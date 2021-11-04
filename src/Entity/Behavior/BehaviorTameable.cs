@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -153,7 +154,7 @@ namespace WolfTaming
                 {
                     domesticationLevel = DomesticationLevel.TAMING;
                     owner = player.Player;
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Startet taming {0}.", entity.GetName()));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-startet-taming", entity.GetName(), domesticationProgress * 100));
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
@@ -162,12 +163,11 @@ namespace WolfTaming
                 var tamingItem = progressorList.Find((item) => isValidTamingItem(item, itemslot));
                 if (checkTamingSuccess(tamingItem, itemslot))
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Tended to {0}, current progress is {1}%.", entity.GetName(), domesticationProgress * 100));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-tended-to", entity.GetName(), domesticationProgress * 100));
                 }
                 if (domesticationProgress >= 1f)
                 {
                     domesticationLevel = DomesticationLevel.DOMESTICATED;
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("Successfully tamed {0}.", entity.GetName()));
                     spawnTameVariant(1f);
                 }
             }
@@ -254,7 +254,7 @@ namespace WolfTaming
                 }
                 else
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(String.Format("{0} is not ready to be tended to again.", entity.GetName()));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-not-ready", entity.GetName()));
                 }
             }
             return false;

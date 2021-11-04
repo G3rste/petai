@@ -1,5 +1,5 @@
 using Vintagestory.API.Client;
-using Vintagestory.API.Common;
+using Vintagestory.API.Config;
 
 namespace WolfTaming
 {
@@ -21,10 +21,10 @@ namespace WolfTaming
 
             SingleComposer = capi.Gui.CreateCompo("PetNameDialog-", dialogBounds)
                 .AddShadedDialogBG(bgBounds)
-                .AddDialogTitleBar("Choose PetName!", () => TryClose())
+                .AddDialogTitleBar(Lang.Get("wolftaming:gui-name-title"), () => TryClose())
                 .BeginChildElements(bgBounds)
                     .AddTextInput(ElementBounds.Fixed(0, 20, 200, 40), (name) => petName = name)
-                    .AddButton("Ok", () => onClick(), ElementBounds.Fixed(0, 70, 90, 40))
+                    .AddButton(Lang.Get("wolftaming:gui-name-ok"), () => onClick(), ElementBounds.Fixed(0, 70, 90, 40))
                 .EndChildElements()
                 .Compose();
         }

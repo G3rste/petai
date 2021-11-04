@@ -1,6 +1,6 @@
 ﻿using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using ProtoBuf;
@@ -78,7 +78,7 @@ namespace WolfTaming
             if (clientAPI != null)
             {
                 EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
-                if (entity != null) clientAPI.ShowChatMessage(String.Format("Successfully startet taming {0}, current progress is {1}%.", entity.GetName(), entity.GetBehavior<EntityBehaviorTameable>()?.domesticationProgress * 100));
+                if (entity != null) clientAPI.ShowChatMessage(Lang.Get("wolftaming:message-finished-taming", entity.GetName()));
                 new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
