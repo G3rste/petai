@@ -25,7 +25,7 @@ namespace WolfTaming
                     && player.WorldData.CurrentGameMode != EnumGameMode.Spectator
                     && (player as IServerPlayer).ConnectionState == EnumClientState.Playing))
             {
-                if (attacker == null || attacker.ServerPos.SquareDistanceTo(entity.ServerPos.XYZ) > 25 && damage > 0f)
+                if (attacker == null || !attacker.Alive || attacker.ServerPos.SquareDistanceTo(entity.ServerPos.XYZ) > 25 && damage > 0f)
                 {
                     attacker = damageSource.SourceEntity;
                 }
