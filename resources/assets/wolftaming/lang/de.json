@@ -1,0 +1,30 @@
+{
+    "item-creature-tame-wolf-male": "Hund (männlich)",
+    "item-creature-tame-wolf-female": "Hund (weiblich)",
+    "item-creature-tame-wolf-pup": "Hund (Welpe)",
+    "item-dead-creature-tame-wolf-male": "Toter Hund (männlich)",
+    "item-dead-creature-tame-wolf-female": "Tote Hund (weiblich)",
+    "item-dead-creature-tame-wolf-pup": "Toter Hund (Welpe)",
+
+
+    "gui-command-title": "Wähle einen Befehl!",
+    "gui-command-simple": "Einfache Tricks:",
+    "gui-command-sit": "Sitz",
+    "gui-command-lay": "Platz",
+    "gui-command-speak": "Gib Laut",
+    "gui-command-complex": "Befehle:",
+    "gui-command-follow": "Bei Fuß",
+    "gui-command-stay": "Bleib",
+    "gui-command-aggressionlevel": "Kampfverhalten:",
+    "gui-command-attack": "Angriff",
+    "gui-command-protect": "Schutz",
+    "gui-command-neutral": "Neutral",
+
+    "gui-name-title": "Wähle einen Namen",
+    "gui-name-ok": "OK",
+
+    "message-tended-to": "Du hast dich um {0} gekümmert, aktueller Zähmfortschritt ist {1}%.",
+    "message-not-ready": "{0} ist noch nicht wieder hungrig.",
+    "message-startet-taming": "{0} wird jetzt von dir gezähmt, aktueller Zähmfortschritt ist {1}%.",
+    "message-finished-taming":"{0} erfolgreich gezähmt."
+}
