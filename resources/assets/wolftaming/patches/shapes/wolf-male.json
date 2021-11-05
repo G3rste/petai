@@ -1,0 +1,154 @@
+[
+    {
+      "op": "add",
+      "path": "/animations/-",
+      "value": {
+        "name": "Stretch",
+        "code": "stretch",
+        "quantityframes": 150,
+        "onActivityStopped": "EaseOut",
+        "onAnimationEnd": "Stop",
+        "keyframes": [
+            {
+                "frame": 0,
+                "elements": {
+                    "Body": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": -0.0, "rotationZ": 0.0 },
+                    "tail end": { "rotationX": -0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": -0.0, "rotationY": 0.0, "rotationZ": -0.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -0.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left leg": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -0.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -0.0 },
+                    "right leg": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -0.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 }
+                }
+            },
+            {
+                "frame": 20,
+                "elements": {
+                    "Body": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": -5.0, "rotationY": 0.0, "rotationZ": 15.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 6.0, "rotationY": 0.0, "rotationZ": 19.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 5.0, "rotationY": 0.0, "rotationZ": -15.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "tail end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "left leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -36.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -44.0 },
+                    "right leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 11.0, "rotationY": 6.0, "rotationZ": -22.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -75.0 }
+                }
+            },
+            {
+                "frame": 45,
+                "elements": {
+                    "Body": { "offsetX": -1.0, "offsetY": -3.0, "offsetZ": 0.0, "rotationX": -5.0, "rotationY": 0.0, "rotationZ": 17.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 6.0, "rotationY": 0.0, "rotationZ": -3.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -39.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 5.0, "rotationY": 0.0, "rotationZ": 8.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 14.0 },
+                    "tail end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "left leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 6.0, "rotationZ": -75.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -25.0 },
+                    "right leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": -11.0, "rotationZ": -75.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -28.0 }
+                }
+            },
+            {
+                "frame": 75,
+                "elements": {
+                    "Body": { "offsetX": -2.0, "offsetY": -3.5, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 14.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 6.0, "rotationY": 0.0, "rotationZ": -3.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 8.0, "rotationY": 0.0, "rotationZ": -39.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 28.0 },
+                    "left ear": { "rotationX": 11.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": -6.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 17.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 8.0, "rotationY": 0.0, "rotationZ": 42.0 },
+                    "tail end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "left leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 6.0, "rotationZ": -75.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -25.0 },
+                    "right leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": -11.0, "rotationZ": -75.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -28.0 }
+                }
+            },
+            {
+                "frame": 100,
+                "elements": {
+                    "Body": { "offsetX": -2.0, "offsetY": -4.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 11.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 6.0, "rotationY": 0.0, "rotationZ": -3.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -47.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left ear": { "rotationX": 11.0, "rotationY": 6.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": -6.0, "rotationY": -8.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 23.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 8.0, "rotationY": 0.0, "rotationZ": 50.0 },
+                    "tail end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 8.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -11.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -20.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -11.0 },
+                    "left leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 6.0, "rotationZ": -83.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -6.0 },
+                    "right leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": -11.0, "rotationZ": -83.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -11.0 }
+                }
+            },
+            {
+                "frame": 130,
+                "elements": {
+                    "Body": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": -5.0, "rotationY": 0.0, "rotationZ": 15.0 },
+                    "neck": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 6.0, "rotationY": 0.0, "rotationZ": 19.0 },
+                    "head": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "mouth up": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "jaw": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right ear": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "abdomen": { "rotationX": 5.0, "rotationY": 0.0, "rotationZ": -15.0 },
+                    "tail": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "tail end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "left leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "right back leg": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+                    "right leg back end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -8.0 },
+                    "left leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -36.0 },
+                    "left leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -44.0 },
+                    "right leg": { "offsetX": 0.0, "offsetY": -1.0, "offsetZ": 0.0, "rotationX": 11.0, "rotationY": 6.0, "rotationZ": 0.0 },
+                    "right leg end": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -83.0 }
+                }
+            }
+        ]
+    },
+      "file": "game:shapes/entity/land/wolf-male.json"
+    }
+]

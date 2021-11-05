@@ -454,6 +454,28 @@
                     },
                     {
                         "code": "idle",
+                        "priority": 1.35,
+                        "priorityForCancel": 1.35,
+                        "minduration": 5000,
+                        "maxduration": 5000,
+                        "mincooldown": 80000,
+                        "maxcooldown": 500000,
+                        "duringDayTimeFrames": [
+                            {
+                                "fromHour": 9,
+                                "toHour": 11
+                            },
+                            {
+                                "fromHour": 17,
+                                "toHour": 19
+                            }
+                        ],
+                        "animation": "Stretch",
+                        "animationSpeed": 1,
+                        "soundRange": 110
+                    },
+                    {
+                        "code": "idle",
                         "priority": 1.3,
                         "priorityForCancel": 1.35,
                         "minduration": 4667,
