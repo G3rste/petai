@@ -5,9 +5,9 @@
         "value": [
             {
                 "code": "LeftHand",
-                "posX": "0.5",
-                "posY": "0.0",
-                "posZ": "2.5",
+                "posX": "0.51",
+                "posY": "0.01",
+                "posZ": "2.51",
                 "rotationX": "0.0",
                 "rotationY": "90.0",
                 "rotationZ": "0.0"
