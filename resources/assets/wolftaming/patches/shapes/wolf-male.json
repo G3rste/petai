@@ -149,6 +149,18 @@
             }
         ]
     },
-      "file": "game:shapes/entity/land/wolf-male.json"
-    }
+    "file": "game:shapes/entity/land/wolf-male.json"
+},
+{
+    "op": "add",
+    "path": "/elements/0/children/0/children/0/children/0/attachmentpoints",
+    "value": [
+        {
+            "code": "LeftHand",
+            "posX": "2.0","posY": "0.0","posZ": "4.5",
+            "rotationX": "-0.0","rotationY": "90.0","rotationZ": "0.0"
+        }
+    ],
+    "file": "game:shapes/entity/land/wolf-male.json"
+}
 ]

@@ -1,0 +1,18 @@
+[
+    {
+        "op": "add",
+        "path": "/elements/0/children/0/children/0/children/0/attachmentpoints",
+        "value": [
+            {
+                "code": "LeftHand",
+                "posX": "0.5",
+                "posY": "0.0",
+                "posZ": "2.5",
+                "rotationX": "0.0",
+                "rotationY": "90.0",
+                "rotationZ": "0.0"
+            }
+        ],
+        "file": "game:shapes/entity/land/wolf-pup.json"
+    }
+]
