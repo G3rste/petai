@@ -7,6 +7,7 @@ using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
+using Vintagestory.GameContent;
 
 namespace WolfTaming
 {
@@ -247,7 +248,16 @@ namespace WolfTaming
             {
                 if (cooldown <= entity.World.Calendar.TotalHours)
                 {
-                    itemSlot.TakeOut(1);
+                    int acceptedItems = 0;
+                    var mouth = (entity as EntityAgent)?.LeftHandItemSlot as ItemSlotMouth;
+                    if (mouth != null && mouth.mouthable(itemSlot))
+                    {
+                        acceptedItems += itemSlot.TryPutInto(entity.World, (entity as EntityAgent).LeftHandItemSlot, 1);
+                    }
+                    if(acceptedItems < 1)
+                    {
+                        itemSlot.TakeOut(1);
+                    }
                     domesticationProgress += tamingItem.progress;
                     cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
                     return true;
