@@ -1,0 +1,13 @@
+[
+    {
+    "op": "replace",
+    "path": "/tpHandTransform",
+    "value": {
+		"translation": { "x": -0.376, "y": -0.01, "z": -0.5775 },
+		"rotation": { "x": 0, "y": 0, "z": 0 },
+		"origin": { "x": 0.376, "y": 0.01, "z": 0.5775 },
+		"scale": 1
+	},
+    "file": "game:itemtypes/food/bushmeat.json"
+}
+]

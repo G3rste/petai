@@ -1,0 +1,13 @@
+[
+    {
+    "op": "replace",
+    "path": "/tpHandTransform",
+    "value": {
+		"translation": { "x": -0.5, "y": -0.0675, "z": -0.5 },
+		"rotation": { "x": 0, "y": 0, "z": 270 },
+		"origin": { "x": 0.5, "y": 0.0675, "z": 0.5 },
+		"scale": 1
+	},
+    "file": "game:itemtypes/resource/bone.json"
+}
+]

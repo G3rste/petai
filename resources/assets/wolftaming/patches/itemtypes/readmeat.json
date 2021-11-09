@@ -1,0 +1,13 @@
+[
+    {
+    "op": "replace",
+    "path": "/tpHandTransformByType/*",
+    "value": {
+		"translation": { "x": -0.251, "y": -0.01, "z": -0.51 },
+		"rotation": { "x": 0, "y": 0, "z": 0 },
+		"origin": { "x": 0.251, "y": 0.01, "z": 0.51 },
+		"scale": 1
+	},
+    "file": "game:itemtypes/food/redmeat.json"
+}
+]
