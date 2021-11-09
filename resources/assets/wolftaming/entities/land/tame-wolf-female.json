@@ -63,19 +63,45 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat-*",
+                        "code": "bone",
+                        "progress": 0.1,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "bushmeat-raw",
                         "progress": 0.15,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat-*",
+                        "code": "redmeat-raw",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "poultry-*",
+                        "code": "poultry-raw",
                         "progress": 0.3,
                         "cooldown": 6
+                    }
+                ]
+            },
+            {
+                "code": "mouthinventory",
+                "acceptStacks": [
+                    {
+                        "type": "item",
+                        "code": "bone"
+                    },
+                    {
+                        "type": "item",
+                        "code": "bushmeat-raw"
+                    },
+                    {
+                        "type": "item",
+                        "code": "redmeat-raw"
+                    },
+                    {
+                        "type": "item",
+                        "code": "poultry-raw"
                     }
                 ]
             },
@@ -171,19 +197,45 @@
                 ],
                 "progressor": [
                     {
-                        "code": "bushmeat-*",
+                        "code": "bone",
+                        "progress": 0.1,
+                        "cooldown": 6
+                    },
+                    {
+                        "code": "bushmeat-raw",
                         "progress": 0.15,
                         "cooldown": 6
                     },
                     {
-                        "code": "redmeat-*",
+                        "code": "redmeat-raw",
                         "progress": 0.3,
                         "cooldown": 6
                     },
                     {
-                        "code": "poultry-*",
+                        "code": "poultry-raw",
                         "progress": 0.3,
                         "cooldown": 6
+                    }
+                ]
+            },
+            {
+                "code": "mouthinventory",
+                "acceptStacks": [
+                    {
+                        "type": "item",
+                        "code": "bone"
+                    },
+                    {
+                        "type": "item",
+                        "code": "bushmeat-raw"
+                    },
+                    {
+                        "type": "item",
+                        "code": "redmeat-raw"
+                    },
+                    {
+                        "type": "item",
+                        "code": "poultry-raw"
                     }
                 ]
             },
@@ -507,6 +559,18 @@
                         "animation": "Walk",
                         "preferredLightLevel": 20
                     },
+					{
+						"code": "useinventory",
+						"animation": "eat",
+                        "animationSpeed": 0.75,
+						"priority": 1.0,
+						"priorityForCancel": 1.7,
+						"eatItemCategories": ["Protein"],
+						"eatItemCodes": ["bone", "bushmeat-raw", "redmeat-raw", "poultry-raw"],
+						"useTime": 1.5,
+						"mincooldownHours": 1,
+						"maxcooldownHours": 1.5
+					},
                     {
                         "code": "idle",
                         "priority": 0.9,

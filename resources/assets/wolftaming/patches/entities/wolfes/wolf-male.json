@@ -2,31 +2,63 @@
     {
         "op": "add",
         "path": "/server/behaviors/-",
-        "value": {
+        "value": 
+        {
             "code": "tameable",
-            "tameEntityCode": "wolftaming:tame-wolf-male",
             "initiator": [
                 {
                     "code": "bone",
-                    "progress": 0,
+                    "progress": 0.1,
                     "cooldown": 6
                 }
             ],
             "progressor": [
                 {
-                    "code": "bushmeat-*",
-                    "progress": 0.05,
-                    "cooldown": 6
-                },
-                {
-                    "code": "redmeat-*",
+                    "code": "bone",
                     "progress": 0.1,
                     "cooldown": 6
                 },
                 {
-                    "code": "poultry-*",
-                    "progress": 0.1,
+                    "code": "bushmeat-raw",
+                    "progress": 0.15,
                     "cooldown": 6
+                },
+                {
+                    "code": "redmeat-raw",
+                    "progress": 0.3,
+                    "cooldown": 6
+                },
+                {
+                    "code": "poultry-raw",
+                    "progress": 0.3,
+                    "cooldown": 6
+                }
+            ]
+        },
+        "file": "game:entities/land/wolf-male.json"
+    },
+        {
+            "op": "add",
+            "path": "/server/behaviors/-",
+            "value": 
+        {
+            "code": "mouthinventory",
+            "acceptStacks": [
+                {
+                    "type": "item",
+                    "code": "bone"
+                },
+                {
+                    "type": "item",
+                    "code": "bushmeat-raw"
+                },
+                {
+                    "type": "item",
+                    "code": "redmeat-raw"
+                },
+                {
+                    "type": "item",
+                    "code": "poultry-raw"
                 }
             ]
         },
@@ -35,31 +67,63 @@
     {
         "op": "add",
         "path": "/client/behaviors/-",
-        "value": {
+        "value": 
+        {
             "code": "tameable",
-            "tameEntityCode": "wolftaming:tame-wolf-male",
             "initiator": [
                 {
                     "code": "bone",
-                    "progress": 0,
+                    "progress": 0.1,
                     "cooldown": 6
                 }
             ],
             "progressor": [
                 {
-                    "code": "bushmeat-*",
-                    "progress": 0.05,
-                    "cooldown": 6
-                },
-                {
-                    "code": "redmeat-*",
+                    "code": "bone",
                     "progress": 0.1,
                     "cooldown": 6
                 },
                 {
-                    "code": "poultry-*",
-                    "progress": 0.1,
+                    "code": "bushmeat-raw",
+                    "progress": 0.15,
                     "cooldown": 6
+                },
+                {
+                    "code": "redmeat-raw",
+                    "progress": 0.3,
+                    "cooldown": 6
+                },
+                {
+                    "code": "poultry-raw",
+                    "progress": 0.3,
+                    "cooldown": 6
+                }
+            ]
+        },
+        "file": "game:entities/land/wolf-male.json"
+    },
+        {
+            "op": "add",
+            "path": "/client/behaviors/-",
+            "value": 
+        {
+            "code": "mouthinventory",
+            "acceptStacks": [
+                {
+                    "type": "item",
+                    "code": "bone"
+                },
+                {
+                    "type": "item",
+                    "code": "bushmeat-raw"
+                },
+                {
+                    "type": "item",
+                    "code": "redmeat-raw"
+                },
+                {
+                    "type": "item",
+                    "code": "poultry-raw"
                 }
             ]
         },
@@ -109,6 +173,30 @@
             "animationSpeed": 2.5,
             "sound": "creature/wolf/attack",
             "whenInEmotionState": "aggressiveondamage"
+        },
+        "file": "game:entities/land/wolf-male.json"
+    },
+    {
+        "op": "add",
+        "path": "/server/behaviors/9/aitasks/-",
+        "value": {
+            "code": "useinventory",
+            "animation": "eat",
+            "animationSpeed": 0.75,
+            "priority": 2.1,
+            "priorityForCancel": 2.2,
+            "eatItemCategories": [
+                "Protein"
+            ],
+            "eatItemCodes": [
+                "bone",
+                "bushmeat-raw",
+                "redmeat-raw",
+                "poultry-raw"
+            ],
+            "useTime": 1.5,
+            "mincooldownHours": 1,
+            "maxcooldownHours": 1.5
         },
         "file": "game:entities/land/wolf-male.json"
     }
