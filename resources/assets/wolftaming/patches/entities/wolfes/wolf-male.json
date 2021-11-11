@@ -5,6 +5,7 @@
         "value": 
         {
             "code": "tameable",
+            "tameEntityCode": "wolftaming:tame-wolf-male", 
             "initiator": [
                 {
                     "code": "bone",
