@@ -172,6 +172,10 @@ namespace WolfTaming
                     spawnTameVariant(1f);
                 }
             }
+            else if (domesticationLevel == DomesticationLevel.DOMESTICATED)
+            {
+                attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
+            }
         }
 
         public override string PropertyName()
@@ -254,7 +258,7 @@ namespace WolfTaming
                     {
                         acceptedItems += itemSlot.TryPutInto(entity.World, (entity as EntityAgent).LeftHandItemSlot, 1);
                     }
-                    if(acceptedItems < 1)
+                    if (acceptedItems < 1)
                     {
                         itemSlot.TakeOut(1);
                     }
@@ -272,6 +276,17 @@ namespace WolfTaming
         public override void OnEntityDespawn(EntityDespawnReason despawn)
         {
             entity.World.UnregisterCallback(callbackId);
+        }
+
+        private void attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
+        {
+            if (owner.PlayerUID != byEntity?.PlayerUID) return;
+            var item = slot?.Itemstack?.Item;
+            var pet = entity as EntityPet;
+            if (pet != null && item is ItemPetAccessory)
+            {
+                slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot).slot);
+            }
         }
     }
 

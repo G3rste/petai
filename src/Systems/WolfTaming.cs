@@ -30,6 +30,10 @@ namespace WolfTaming
             AiTaskRegistry.Register<AiTaskMeleeAttackBasic>("meleeattackbasic");
             AiTaskRegistry.Register<AiTaskSeekEntityBasic>("seekentitybasic");
             AiTaskRegistry.Register<AiTaskSeekNest>("seeknest");
+
+            api.RegisterEntity("EntityPet", typeof(EntityPet));
+
+            api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
         }
 
         public override void StartClientSide(ICoreClientAPI api)
