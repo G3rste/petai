@@ -16,7 +16,6 @@ namespace WolfTaming
     {
         PetAccessoryType type { get; }
         string owningEntity { get; }
-        public override int MaxSlotStackSize { get => 1; set { } }
         public ItemSlotPetAccessory(PetAccessoryType type, string owningEntity, InventoryBase inventory) : base(inventory)
         {
             this.type = type;
@@ -32,7 +31,6 @@ namespace WolfTaming
         }
         private bool isCorrectAccessory(ItemSlot sourceSlot)
         {
-            if (!Empty) return false;
             var accessory = sourceSlot.Itemstack.Item as ItemPetAccessory;
             if (accessory != null)
             {
