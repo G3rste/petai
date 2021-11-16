@@ -1,6 +1,6 @@
 {
     "code": "tame-wolf-male",
-    "class": "EntityAgent",
+    "class": "EntityPet",
     "hitboxSize": {
         "x": 1.2,
         "y": 1
