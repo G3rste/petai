@@ -1,0 +1,29 @@
+{
+    "ingredientPattern": "LLL,L_M,LLL",
+    "ingredients": {
+        "L": {
+            "type": "item",
+            "code": "game:leather"
+        },
+        "M": {
+            "type": "item",
+            "code": "game:metalbit-*",
+            "name": "metal",
+            "allowedVariants": [
+				"copper",
+				"tinbronze",
+				"blackbronze",
+				"gold",
+				"silver",
+				"iron"
+            ]
+        }
+    },
+    "width": 3,
+    "height": 3,
+    "output": {
+        "type": "item",
+        "code": "dogcollar-basic-{metal}",
+        "quantity": 1
+    }
+}
