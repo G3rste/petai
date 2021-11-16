@@ -145,8 +145,12 @@ namespace WolfTaming
         {
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
             EntityPlayer player = byEntity as EntityPlayer;
+
             if (player == null) return;
             if (owner != null && owner.PlayerUID != player.PlayerUID) return;
+            if (mode != EnumInteractMode.Interact) return;
+            if (byEntity.Controls.Sneak) return;
+
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {

@@ -47,22 +47,18 @@ namespace WolfTaming
             EntityPlayer player = byEntity as EntityPlayer;
             if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && player != null
-                && itemslot.Empty)
+                && byEntity.Controls.Sneak
+                && mode == EnumInteractMode.Interact)
             {
-                ICoreClientAPI capi = entity.Api as ICoreClientAPI;
-                if (byEntity.Controls.Sneak && capi != null)
+                if (entity.Api.Side == EnumAppSide.Client)
                 {
-                    new TaskSelectionGui(capi, player, entity as EntityAgent).TryOpen();
-                }
-                if (!byEntity.Controls.Sneak && capi == null)
-                {
-                    setCommand(player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand, player);
+                    new TaskSelectionGui(entity.Api as ICoreClientAPI, player, entity as EntityAgent).TryOpen();
                 }
             }
         }
         public void setCommand(Command command, EntityPlayer byPlayer)
         {
-            if(command == null) return;
+            if (command == null) return;
             if (byPlayer == null
                 || entity.GetBehavior<EntityBehaviorTameable>()?.owner == null
                 || entity.GetBehavior<EntityBehaviorTameable>().owner.PlayerUID == byPlayer.PlayerUID)
