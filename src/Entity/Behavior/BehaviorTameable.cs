@@ -100,9 +100,7 @@ namespace WolfTaming
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
-
-        List<TamingItem> initiatorList = new List<TamingItem>();
-        List<TamingItem> progressorList = new List<TamingItem>();
+        List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
 
@@ -113,26 +111,15 @@ namespace WolfTaming
 
         public override void Initialize(EntityProperties properties, JsonObject attributes)
         {
-            JsonObject[] initItems = attributes["initiator"]?.AsArray();
-            if (initItems == null) initItems = new JsonObject[0];
-            foreach (var item in initItems)
-            {
-                string name = item["code"].AsString();
-                float progress = item["progress"].AsFloat(0f);
-                long cooldown = item["cooldown"].AsInt(1);
-
-                initiatorList.Add(new TamingItem(name, progress, cooldown));
-            }
-
-            JsonObject[] progItems = attributes["progressor"]?.AsArray();
-            if (progItems == null) progItems = new JsonObject[0];
-            foreach (var item in progItems)
+            JsonObject[] treatItems = attributes["treat"]?.AsArray();
+            if (treatItems == null) treatItems = new JsonObject[0];
+            foreach (var item in treatItems)
             {
                 string name = item["code"].AsString();
                 float progress = item["progress"].AsFloat(1f);
                 long cooldown = item["cooldown"].AsInt(1);
 
-                progressorList.Add(new TamingItem(name, progress, cooldown));
+                treatList.Add(new TamingItem(name, progress, cooldown));
             }
 
             if (!String.IsNullOrEmpty(attributes["tameEntityCode"].AsString()))
@@ -154,7 +141,7 @@ namespace WolfTaming
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = initiatorList.Find((item) => isValidTamingItem(item, itemslot));
+                var tamingItem = treatList.Find((item) => isValidTamingItem(item, itemslot));
                 if (checkTamingSuccess(tamingItem, itemslot))
                 {
                     domesticationLevel = DomesticationLevel.TAMING;
@@ -165,7 +152,7 @@ namespace WolfTaming
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = progressorList.Find((item) => isValidTamingItem(item, itemslot));
+                var tamingItem = treatList.Find((item) => isValidTamingItem(item, itemslot));
                 if (checkTamingSuccess(tamingItem, itemslot))
                 {
                     (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-tended-to", entity.GetName(), domesticationProgress * 100));

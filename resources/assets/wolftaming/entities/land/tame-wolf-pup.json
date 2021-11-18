@@ -35,14 +35,7 @@
             },
             {
                 "code": "tameable",
-                "initiator": [
-                    {
-                        "code": "bone",
-                        "progress": 0.1,
-                        "cooldown": 6
-                    }
-                ],
-                "progressor": [
+                "treat": [
                     {
                         "code": "bone",
                         "progress": 0.1,
@@ -169,14 +162,7 @@
             },
             {
                 "code": "tameable",
-                "initiator": [
-                    {
-                        "code": "bone",
-                        "progress": 0.1,
-                        "cooldown": 6
-                    }
-                ],
-                "progressor": [
+                "treat": [
                     {
                         "code": "bone",
                         "progress": 0.1,
