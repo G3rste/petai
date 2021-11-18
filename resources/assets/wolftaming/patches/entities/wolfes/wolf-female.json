@@ -2,47 +2,7 @@
     {
         "op": "add",
         "path": "/server/behaviors/-",
-        "value": 
-        {
-            "code": "tameable",
-            "tameEntityCode": "wolftaming:tame-wolf-female", 
-            "initiator": [
-                {
-                    "code": "bone",
-                    "progress": 0.1,
-                    "cooldown": 6
-                }
-            ],
-            "progressor": [
-                {
-                    "code": "bone",
-                    "progress": 0.1,
-                    "cooldown": 6
-                },
-                {
-                    "code": "bushmeat-raw",
-                    "progress": 0.15,
-                    "cooldown": 6
-                },
-                {
-                    "code": "redmeat-raw",
-                    "progress": 0.3,
-                    "cooldown": 6
-                },
-                {
-                    "code": "poultry-raw",
-                    "progress": 0.3,
-                    "cooldown": 6
-                }
-            ]
-        },
-        "file": "game:entities/land/wolf-female.json"
-    },
-        {
-            "op": "add",
-            "path": "/server/behaviors/-",
-            "value": 
-        {
+        "value": {
             "code": "mouthinventory",
             "acceptStacks": [
                 {
@@ -68,46 +28,7 @@
     {
         "op": "add",
         "path": "/client/behaviors/-",
-        "value": 
-        {
-            "code": "tameable",
-            "initiator": [
-                {
-                    "code": "bone",
-                    "progress": 0.1,
-                    "cooldown": 6
-                }
-            ],
-            "progressor": [
-                {
-                    "code": "bone",
-                    "progress": 0.1,
-                    "cooldown": 6
-                },
-                {
-                    "code": "bushmeat-raw",
-                    "progress": 0.15,
-                    "cooldown": 6
-                },
-                {
-                    "code": "redmeat-raw",
-                    "progress": 0.3,
-                    "cooldown": 6
-                },
-                {
-                    "code": "poultry-raw",
-                    "progress": 0.3,
-                    "cooldown": 6
-                }
-            ]
-        },
-        "file": "game:entities/land/wolf-female.json"
-    },
-        {
-            "op": "add",
-            "path": "/client/behaviors/-",
-            "value": 
-        {
+        "value": {
             "code": "mouthinventory",
             "acceptStacks": [
                 {
