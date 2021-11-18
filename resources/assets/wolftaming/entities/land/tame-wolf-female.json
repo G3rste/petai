@@ -298,13 +298,13 @@
             {
                 "code": "multiply",
                 "quantityPerDay": 0,
-                "spawnEntityCode": "wolf-pup",
+                "spawnEntityCode": "tame-wolf-pup",
                 "growthCapQuantity": 10,
                 "growthCapRange": 15,
                 "growthCapEntityCodes": [
-                    "wolf-pup",
-                    "wolf-female",
-                    "wolf-male"
+                    "tame-wolf-pup",
+                    "tame-wolf-female",
+                    "tame-wolf-male"
                 ],
                 "requiresNearbyEntityCode": "wolf-male",
                 "requiresNearbyEntityRange": 10
