@@ -181,6 +181,7 @@
             },
             {
                 "code": "tameable",
+                "disobediencePerDay": 0.2,
                 "treat": [
                     {
                         "code": "bone",

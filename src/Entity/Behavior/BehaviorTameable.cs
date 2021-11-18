@@ -103,6 +103,19 @@ namespace WolfTaming
             }
         }
 
+        double disobedienceTime
+        {
+            get
+            {
+                return domesticationStatus.GetDouble("disobedienceTime", entity.World.Calendar.TotalHours);
+            }
+            set
+            {
+                domesticationStatus.SetDouble("disobedienceTime", value);
+                entity.WatchedAttributes.MarkPathDirty("disobedienceTime");
+            }
+        }
+
         public ITreeAttribute domesticationStatus
         {
             get
@@ -122,8 +135,14 @@ namespace WolfTaming
         List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
+        float disobediencePerDay;
+
 
         long callbackId;
+
+        long listenerId;
+
+
         public EntityBehaviorTameable(Entity entity) : base(entity)
         {
         }
@@ -145,6 +164,9 @@ namespace WolfTaming
             {
                 tameEntityCode = AssetLocation.Create(attributes["tameEntityCode"].AsString());
             }
+
+            disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
+            listenerId = entity.World.RegisterGameTickListener(disobey, 60000);
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -288,6 +310,7 @@ namespace WolfTaming
         public override void OnEntityDespawn(EntityDespawnReason despawn)
         {
             entity.World.UnregisterCallback(callbackId);
+            entity.World.UnregisterGameTickListener(listenerId);
         }
 
         private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
@@ -306,6 +329,14 @@ namespace WolfTaming
         {
             var tamingItem = treatList.Find((item) => isValidTamingItem(item, foodsource));
             return checkTamingSuccess(tamingItem, foodsource);
+        }
+
+        private void disobey(float intervall)
+        {
+            double hoursPassed = entity.World.Calendar.TotalHours - disobedienceTime;
+
+            obedience -= disobediencePerDay * ((float)(hoursPassed / 24));
+            disobedienceTime = entity.World.Calendar.TotalHours;
         }
     }
 
