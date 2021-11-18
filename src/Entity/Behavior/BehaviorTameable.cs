@@ -78,7 +78,7 @@ namespace WolfTaming
                 switch (domesticationLevel)
                 {
                     case DomesticationLevel.WILD: return 0f;
-                    case DomesticationLevel.DOMESTICATED: return Math.Max(domesticationStatus.GetFloat("obedience", 0f), 0f);
+                    case DomesticationLevel.DOMESTICATED: return Math.Min(Math.Max(domesticationStatus.GetFloat("obedience", 0f), 0f), 1f);
                     case DomesticationLevel.TAMING: return 0f;
                     default: return domesticationStatus.GetFloat("obedience");
                 }
