@@ -35,7 +35,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetString("domesticationLevel", value.ToString());
-                entity.WatchedAttributes.MarkPathDirty("domesticationLevel");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
@@ -48,7 +48,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetString("owner", value.PlayerUID);
-                entity.WatchedAttributes.MarkPathDirty("owner");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
@@ -67,7 +67,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetFloat("progress", value);
-                entity.WatchedAttributes.MarkPathDirty("progress");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
@@ -86,7 +86,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetFloat("obedience", value);
-                entity.WatchedAttributes.MarkPathDirty("obedience");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
@@ -99,7 +99,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetDouble("cooldown", value);
-                entity.WatchedAttributes.MarkPathDirty("cooldown");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
@@ -112,7 +112,7 @@ namespace WolfTaming
             set
             {
                 domesticationStatus.SetDouble("disobedienceTime", value);
-                entity.WatchedAttributes.MarkPathDirty("disobedienceTime");
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
 
