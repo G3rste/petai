@@ -253,10 +253,10 @@
                 ]
             },
             {
-                "hoursToGrow": 336,
+                "hoursToGrow": 1008,
                 "adultEntityCodes": [
-                    "tame-wolf-male",
-                    "tame-wolf-female"
+                    "wolftaming:tame-wolf-male",
+                    "wolftaming:tame-wolf-female"
                 ],
                 "code": "raisable"
             },
