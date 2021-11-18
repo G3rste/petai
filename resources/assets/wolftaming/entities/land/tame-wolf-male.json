@@ -348,7 +348,7 @@
                         "code": "meleeattackbasic",
                         "isCommandable": true,
                         "priority": 2.2,
-                        "damage": 8,
+                        "damage": 5,
                         "damageTier": 2,
                         "damageType": "SlashingAttack",
                         "slot": 1,
