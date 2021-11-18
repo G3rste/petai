@@ -45,6 +45,8 @@
     "gui-command-protect": "Protect",
     "gui-command-neutral": "Neutral",
 
+    "gui-pet-obedience":"Obedience: {0}%",
+
     "gui-name-title": "Choose a name!",
     "gui-name-ok": "OK",
 

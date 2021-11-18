@@ -71,6 +71,25 @@ namespace WolfTaming
             }
         }
 
+        public float obedience
+        {
+            get
+            {
+                switch (domesticationLevel)
+                {
+                    case DomesticationLevel.WILD: return 0f;
+                    case DomesticationLevel.DOMESTICATED: return Math.Max(domesticationStatus.GetFloat("obedience", 0f), 0f);
+                    case DomesticationLevel.TAMING: return 0f;
+                    default: return domesticationStatus.GetFloat("obedience");
+                }
+            }
+            set
+            {
+                domesticationStatus.SetFloat("obedience", value);
+                entity.WatchedAttributes.MarkPathDirty("obedience");
+            }
+        }
+
         double cooldown
         {
             get
@@ -141,21 +160,19 @@ namespace WolfTaming
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = treatList.Find((item) => isValidTamingItem(item, itemslot));
-                if (checkTamingSuccess(tamingItem, itemslot))
+                if (feedEntityIfPossible(itemslot))
                 {
                     domesticationLevel = DomesticationLevel.TAMING;
                     owner = player.Player;
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-startet-taming", entity.GetName(), domesticationProgress * 100));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
             {
-                var tamingItem = treatList.Find((item) => isValidTamingItem(item, itemslot));
-                if (checkTamingSuccess(tamingItem, itemslot))
+                if (feedEntityIfPossible(itemslot))
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-tended-to", entity.GetName(), domesticationProgress * 100));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-tended-to", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
                 }
                 if (domesticationProgress >= 1f)
                 {
@@ -165,7 +182,8 @@ namespace WolfTaming
             }
             else if (domesticationLevel == DomesticationLevel.DOMESTICATED)
             {
-                attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
+                if (!attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot))
+                    feedEntityIfPossible(itemslot);
             }
         }
 
@@ -239,28 +257,31 @@ namespace WolfTaming
 
         bool checkTamingSuccess(TamingItem tamingItem, ItemSlot itemSlot)
         {
-            if (tamingItem != null)
+            if (tamingItem == null) return false;
+            if (cooldown <= entity.World.Calendar.TotalHours)
             {
-                if (cooldown <= entity.World.Calendar.TotalHours)
+                int acceptedItems = 0;
+                var mouth = (entity as EntityAgent)?.LeftHandItemSlot as ItemSlotMouth;
+                if (mouth != null)
                 {
-                    int acceptedItems = 0;
-                    var mouth = (entity as EntityAgent)?.LeftHandItemSlot as ItemSlotMouth;
-                    if (mouth != null && mouth.mouthable(itemSlot))
-                    {
-                        acceptedItems += itemSlot.TryPutInto(entity.World, (entity as EntityAgent).LeftHandItemSlot, 1);
-                    }
-                    if (acceptedItems < 1)
-                    {
-                        itemSlot.TakeOut(1);
-                    }
-                    domesticationProgress += tamingItem.progress;
-                    cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
-                    return true;
+                    acceptedItems += itemSlot.TryPutInto(entity.World, (entity as EntityAgent).LeftHandItemSlot, 1);
                 }
                 else
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-not-ready", entity.GetName()));
+                    acceptedItems = 1;
+                    itemSlot.TakeOut(1);
                 }
+                if (acceptedItems < 1) return false;
+
+                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress;
+                else domesticationProgress += tamingItem.progress;
+
+                cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
+                return true;
+            }
+            else
+            {
+                (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-not-ready", entity.GetName()));
             }
             return false;
         }
@@ -269,15 +290,22 @@ namespace WolfTaming
             entity.World.UnregisterCallback(callbackId);
         }
 
-        private void attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
+        private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
         {
-            if (owner.PlayerUID != byEntity?.PlayerUID) return;
+            if (owner.PlayerUID != byEntity?.PlayerUID) return false;
             var item = slot?.Itemstack?.Item;
             var pet = entity as EntityPet;
             if (pet != null && item is ItemPetAccessory)
             {
-                slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot).slot);
+                return slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot).slot);
             }
+            return false;
+        }
+
+        private bool feedEntityIfPossible(ItemSlot foodsource)
+        {
+            var tamingItem = treatList.Find((item) => isValidTamingItem(item, foodsource));
+            return checkTamingSuccess(tamingItem, foodsource);
         }
     }
 

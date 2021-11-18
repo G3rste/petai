@@ -50,6 +50,25 @@ namespace WolfTaming
             base.ToBytes(writer, forClient);
         }
 
+        public override ItemStack[] GetDrops(IWorldAccessor world, BlockPos pos, IPlayer byPlayer)
+        {
+            List<ItemStack> list = new List<ItemStack>(base.GetDrops(world, pos, byPlayer));
+            foreach (ItemSlot slot in GearInventory)
+            {
+                list.Add(slot.Itemstack);
+            }
+            return list.ToArray();
+        }
+
+        public override string GetInfoText()
+        {
+            if (!HasBehavior<EntityBehaviorTameable>()) return base.GetInfoText();
+
+            return String.Concat(base.GetInfoText(),
+                    "\n",
+                    Lang.Get("wolftaming:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100), 2));
+        }
+
         private ITreeAttribute getInventoryTree()
         {
             if (!WatchedAttributes.HasAttribute("petinventory"))
