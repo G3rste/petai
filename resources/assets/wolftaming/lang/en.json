@@ -23,9 +23,15 @@
     "item-dogcollar-spiked-gold": "Spiked dog collar (Gold)",
     "item-dogcollar-spiked-silver": "Spiked dog collar (Silver)",
     "item-dogcollar-spiked-iron": "Spiked dog collar (Iron)",
-
-
-
+    "item-dogscarf-red": "Dog scarf (red)",
+    "item-dogscarf-orange": "Dog scarf (orange)",
+    "item-dogscarf-green": "Dog scarf (green)",
+    "item-dogscarf-brown": "Dog scarf (brown)",
+    "item-dogscarf-black": "Dog scarf (black)",
+    "item-dogscarf-purple": "Dog scarf (purple)",
+    "item-dogscarf-pink": "Dog scarf (pink)",
+    "item-dogscarf-yellow": "Dog scarf (yellow)",
+    
     "gui-command-title": "Choose a command!",
     "gui-command-simple": "Simple Commands:",
     "gui-command-sit": "Sit",
