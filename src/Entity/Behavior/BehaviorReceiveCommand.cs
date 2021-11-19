@@ -4,16 +4,34 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
+using System.Collections.Generic;
 
 namespace WolfTaming
 {
     public class EntityBehaviorReceiveCommand : EntityBehavior
     {
-        public string simpleCommand { get; private set; }
+        private string _simpleCommand;
+        public string simpleCommand
+        {
+            get
+            {
+                if (isEntityObedient(new Command(EnumCommandType.SIMPLE, _simpleCommand))) return _simpleCommand;
+                else return null;
 
+            }
+            private set
+            {
+                _simpleCommand = value;
+            }
+        }
         public string complexCommand
         {
-            get { return entity.WatchedAttributes.GetString("activeCommand"); }
+            get
+            {
+                string commandName = entity.WatchedAttributes.GetString("activeCommand");
+                if (isEntityObedient(new Command(EnumCommandType.COMPLEX, commandName))) return commandName;
+                else return null;
+            }
             private set
             {
                 entity.WatchedAttributes.SetString("activeCommand", value);
@@ -25,7 +43,8 @@ namespace WolfTaming
             get
             {
                 EnumAggressionLevel level;
-                if (Enum.TryParse<EnumAggressionLevel>(entity.WatchedAttributes.GetString("aggressionLevel"), out level))
+                string commandName = entity.WatchedAttributes.GetString("aggressionLevel");
+                if (Enum.TryParse<EnumAggressionLevel>(commandName, out level) && (isEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName))))
                 {
                     return level;
                 }
@@ -37,8 +56,26 @@ namespace WolfTaming
                 entity.WatchedAttributes.SetString("aggressionLevel", value.ToString());
             }
         }
+        public Dictionary<Command, float> availableCommands { get; private set; } = new Dictionary<Command, float>();
         public EntityBehaviorReceiveCommand(Entity entity) : base(entity)
         {
+        }
+
+        public override void Initialize(EntityProperties properties, JsonObject attributes)
+        {
+            base.Initialize(properties, attributes);
+
+            JsonObject[] commands = attributes["availableCommands"]?.AsArray();
+            if (commands == null) commands = new JsonObject[0];
+            foreach (var item in commands)
+            {
+                string commandName = item["commandName"].AsString();
+                EnumCommandType type;
+                Enum.TryParse<EnumCommandType>(item["commandType"].AsString(), out type);
+                float minObedience = item["minObedience"].AsFloat(1f);
+
+                availableCommands.Add(new Command(type, commandName), minObedience);
+            }
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -92,6 +129,16 @@ namespace WolfTaming
         public override string PropertyName()
         {
             return "receivecommand";
+        }
+
+        private bool isEntityObedient(Command command)
+        {
+            if(command == null || command.commandName == null) return true;
+            if (entity.HasBehavior<EntityBehaviorTameable>() && availableCommands.ContainsKey(command))
+            {
+                return entity.GetBehavior<EntityBehaviorTameable>().obedience >= availableCommands[command];
+            }
+            return true;
         }
     }
 }
