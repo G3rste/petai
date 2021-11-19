@@ -482,7 +482,7 @@
                         "command": "followmaster",
                         "movespeed": 0.045,
                         "animationSpeed": 2.2,
-                        "maxDistance": 5,
+                        "maxDistance": 8,
                         "searchRange": 40,
                         "animation": "Run"
                     },
@@ -620,7 +620,7 @@
                         "code": "useinventory",
                         "animation": "eat",
                         "animationSpeed": 0.75,
-                        "priority": 1.0,
+                        "priority": 1.25,
                         "priorityForCancel": 1.7,
                         "eatItemCategories": [
                             "Protein"

@@ -332,7 +332,7 @@
                         "entityCode": "player",
                         "movespeed": 0.02,
                         "animationSpeed": 4,
-                        "maxDistance": 5,
+                        "maxDistance": 15,
                         "searchRange": 25,
                         "animation": "Run"
                     },
@@ -342,7 +342,7 @@
                         "entityCode": "tame-wolf-female",
                         "movespeed": 0.02,
                         "animationSpeed": 4,
-                        "maxDistance": 5,
+                        "maxDistance": 15,
                         "searchRange": 25,
                         "animation": "Run"
                     },
