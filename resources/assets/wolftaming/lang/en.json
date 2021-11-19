@@ -54,5 +54,8 @@
     "message-tended-to": "Tended to {0}, current progress is {1}%.",
     "message-not-ready": "{0} is not ready to be tended to again.",
     "message-startet-taming": "Successfully startet taming {0}, current progress is {1}%.",
-    "message-finished-taming":"Successfully tamed {0}."
+    "message-finished-taming": "Successfully tamed {0}.",
+
+    "wolftamingguide-title": "Taming guide: wolfes",
+    "wolftamingguide-text": "<strong>Taming guide: wolfes</strong>\n\nThis guide is an attempt to explain the taming mechanics introduced by the \"Wolf Taming\" mod.\n\nTo tame a wolf, you first need to kidnap a wolfpup. Once in your possession, start taming the pup by feeding it either bones or any type of raw meat. Whenever the pup receives food, you should get a chat message listing the current taming progress. When the taming progress reaches 100%, the wolf transforms into a dog.\nYou will notice a small indicator on how obedient your pet is when looking at it. Most commands will only be executed once a certain amount of obedience is reached.\n\nTo give commands to your newly acquired pet, crouch right-click on it and a dialogue listing all available commands will pop up.\n\nMost commands of the wolf are pretty straight forward. However the \"Stay\" command will not make your dog stay in that same place but instead give him a small circle of around 10 blocks to roam around freely.\n\nOnce tired, your dogs will prefer sleeping in certain spots. Adult dogs will prefer blocks covered by linen or rush mats, whereas pups will prefer beds.\n\nThere is a small variety of different dog collars to aid you in making your dog a little bit more dapper looking."
 }

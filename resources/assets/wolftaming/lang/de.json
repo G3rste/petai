@@ -55,5 +55,8 @@
     "message-tended-to": "Du hast dich um {0} gekümmert, aktueller Zähmfortschritt ist {1}%.",
     "message-not-ready": "{0} ist noch nicht wieder hungrig.",
     "message-startet-taming": "{0} wird jetzt von dir gezähmt, aktueller Zähmfortschritt ist {1}%.",
-    "message-finished-taming":"{0} erfolgreich gezähmt."
+    "message-finished-taming":"{0} erfolgreich gezähmt.",
+
+    "wolftamingguide-title": "Zähmen: Wölfe",
+    "wolftamingguide-text": "<strong>Wölfe zähmen</strong>\n\nUm einen Wolf zu zähmen, muss zunächst ein Wolfsjunges entführt werden. Das Jungtier kann anschließend mit rohem Fleisch oder Knochen gefüttert werden, um den Zähmvorgang einzuleiten. Eine Chatnachricht nach dem füttern gibt den aktuellen Zähmfortschritt an. Sowie der Fortschritt 100% erreicht, wird aus dem wilden Wolfsjungen ein zahmer Hundewelpe.\n\nUm dem Hund Befehle zu erteilen, duck dich und rechtsklicke auf ihn. Ein kleiner Dialog mit allen verfügbaren Befehlen wird erscheinen.\nDie meisten Befehle können allerdings erst ausgeführt werden, wenn dein Hund ein gewisses Gehorsamkeitslevel erreicht hat.\n\nDie meisten Befehle sind ziemlich selbsterklärend, doch der \"Bleib\"-Befehl wird deinen Hund nicht an Ort und stelle festnageln. Er bekommt einen Kreis von etwa 20 Blöcken Durchmesser, in dem er sich frei bewegen kann.\n\nHunde bevorzugen zum schlafen verschiedene Plätze. Erwachsene Hunde werden lieber auf Blöcken mit Matten oder Leinen schlafen, während Welpen Betten bevorzugen.\n\nEs gibt eine kleine Auswahl an Halsbändern, mit denen du deinen Hund personalisieren kannst."
 }
