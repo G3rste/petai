@@ -12,6 +12,10 @@ namespace WolfTaming
         private EntityAgent targetEntity;
 
         private EntityPlayer player;
+        private int currentX = 0;
+        private int currentY = 20;
+
+        List<Command> availableCommands;
         public TaskSelectionGui(ICoreClientAPI capi, EntityPlayer player, EntityAgent targetEntity = null) : base(capi)
         {
             this.targetEntity = targetEntity;
@@ -21,8 +25,8 @@ namespace WolfTaming
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
             bgBounds.BothSizing = ElementSizing.FitToChildren;
 
-            if (targetEntity == null 
-                || !targetEntity.HasBehavior<EntityBehaviorTameable>() 
+            if (targetEntity == null
+                || !targetEntity.HasBehavior<EntityBehaviorTameable>()
                 || targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands.Keys.Count == 0)
             {
                 composeStaticDialogue(dialogBounds, bgBounds);
@@ -35,55 +39,35 @@ namespace WolfTaming
 
         private void composeDynamicDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
         {
-            int currentX = 0;
-            int currentY = 20;
-            var availableCommands = new List<Command>(targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands.Keys);
+            availableCommands = new List<Command>(targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands.Keys);
             SingleComposer = capi.Gui.CreateCompo("CommandDialog-", dialogBounds)
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar(Lang.Get("wolftaming:gui-command-title"), () => TryClose())
                 .BeginChildElements(bgBounds);
 
-            if (availableCommands.Exists(command => command.type == EnumCommandType.SIMPLE))
-            {
-                SingleComposer.AddStaticText(Lang.Get("wolftaming:gui-command-simple"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
-                currentY += 35;
-                currentX = 0;
+            addGuiRow(EnumCommandType.SIMPLE, "wolftaming:gui-command-simple");
+            addGuiRow(EnumCommandType.COMPLEX, "wolftaming:gui-command-complex");
+            addGuiRow(EnumCommandType.AGGRESSIONLEVEL, "wolftaming:gui-command-aggressionlevel");
 
-                foreach (var command in availableCommands.FindAll(command => command.type == EnumCommandType.SIMPLE))
-                {
-                    SingleComposer.AddButton(Lang.Get(string.Format("wolftaming:gui-command-{0}", command.commandName.ToLower())), () => onCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
-                    currentX += 150;
-                }
-                currentY += 50;
-            }
-            if (availableCommands.Exists(command => command.type == EnumCommandType.COMPLEX))
-            {
-                SingleComposer.AddStaticText(Lang.Get("wolftaming:gui-command-complex"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
-                currentY += 35;
-                currentX = 0;
-
-                foreach (var command in availableCommands.FindAll(command => command.type == EnumCommandType.COMPLEX))
-                {
-                    SingleComposer.AddButton(Lang.Get(string.Format("wolftaming:gui-command-{0}", command.commandName.ToLower())), () => onCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
-                    currentX += 150;
-                }
-                currentY += 50;
-            }
-            if (availableCommands.Exists(command => command.type == EnumCommandType.AGGRESSIONLEVEL))
-            {
-                SingleComposer.AddStaticText(Lang.Get("wolftaming:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
-                currentY += 35;
-                currentX = 0;
-
-                foreach (var command in availableCommands.FindAll(command => command.type == EnumCommandType.AGGRESSIONLEVEL))
-                {
-                    SingleComposer.AddButton(Lang.Get(string.Format("wolftaming:gui-command-{0}", command.commandName.ToLower())), () => onCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
-                    currentX += 150;
-                }
-                currentY += 50;
-            }
             SingleComposer.EndChildElements()
             .Compose();
+        }
+
+        private void addGuiRow(EnumCommandType type, string headline)
+        {
+            if (availableCommands.Exists(command => command.type == type))
+            {
+                SingleComposer.AddStaticText(Lang.Get(headline), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
+                currentY += 35;
+                currentX = 0;
+
+                foreach (var command in availableCommands.FindAll(command => command.type == type))
+                {
+                    SingleComposer.AddButton(Lang.Get(string.Format("wolftaming:gui-command-{0}", command.commandName.ToLower())), () => onCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
+                    currentX += 150;
+                }
+                currentY += 50;
+            }
         }
 
         private void composeStaticDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
