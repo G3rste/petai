@@ -50,7 +50,49 @@
                 "code": "nametag"
             },
             {
-                "code": "receivecommand"
+                "code": "receivecommand",
+                "availableCommands": [
+                    {
+                        "commandName": "sit",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "lay",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "speak",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "followmaster",
+                        "commandType": "COMPLEX",
+                        "minObedience": 0.6
+                    },
+                    {
+                        "commandName": "stay",
+                        "commandType": "COMPLEX",
+                        "minObedience": 0.1
+                    },
+                    {
+                        "commandName": "SELFDEFENSE",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0
+                    },
+                    {
+                        "commandName": "PROTECTMASTER",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0.5
+                    },
+                    {
+                        "commandName": "ATTACKTARGET",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0.7
+                    }
+                ]
             },
             {
                 "code": "tameable",
@@ -227,7 +269,49 @@
                 ]
             },
             {
-                "code": "receivecommand"
+                "code": "receivecommand",
+                "availableCommands": [
+                    {
+                        "commandName": "sit",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "lay",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "speak",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "followmaster",
+                        "commandType": "COMPLEX",
+                        "minObedience": 0.6
+                    },
+                    {
+                        "commandName": "stay",
+                        "commandType": "COMPLEX",
+                        "minObedience": 0.1
+                    },
+                    {
+                        "commandName": "SELFDEFENSE",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0
+                    },
+                    {
+                        "commandName": "PROTECTMASTER",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0.5
+                    },
+                    {
+                        "commandName": "ATTACKTARGET",
+                        "commandType": "AGGRESSIONLEVEL",
+                        "minObedience": 0.7
+                    }
+                ]
             },
             {
                 "code": "repulseagents"

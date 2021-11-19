@@ -31,7 +31,24 @@
                 "code": "nametag"
             },
             {
-                "code": "receivecommand"
+                "code": "receivecommand",
+                "availableCommands": [
+                    {
+                        "commandName": "sit",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "lay",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.4
+                    },
+                    {
+                        "commandName": "speak",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.6
+                    }
+                ]
             },
             {
                 "code": "tameable",
@@ -158,7 +175,24 @@
                 "code": "nametag"
             },
             {
-                "code": "receivecommand"
+                "code": "receivecommand",
+                "availableCommands": [
+                    {
+                        "commandName": "sit",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.2
+                    },
+                    {
+                        "commandName": "lay",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.4
+                    },
+                    {
+                        "commandName": "speak",
+                        "commandType": "SIMPLE",
+                        "minObedience": 0.6
+                    }
+                ]
             },
             {
                 "code": "tameable",
@@ -408,18 +442,25 @@
                         "animation": "Walk",
                         "preferredLightLevel": 18
                     },
-					{
-						"code": "useinventory",
-						"animation": "eat",
+                    {
+                        "code": "useinventory",
+                        "animation": "eat",
                         "animationSpeed": 0.75,
-						"priority": 1.0,
-						"priorityForCancel": 1.7,
-						"eatItemCategories": ["Protein"],
-						"eatItemCodes": ["bone", "bushmeat-raw", "redmeat-raw", "poultry-raw"],
-						"useTime": 1.5,
-						"mincooldownHours": 1,
-						"maxcooldownHours": 1.5
-					},
+                        "priority": 1.0,
+                        "priorityForCancel": 1.7,
+                        "eatItemCategories": [
+                            "Protein"
+                        ],
+                        "eatItemCodes": [
+                            "bone",
+                            "bushmeat-raw",
+                            "redmeat-raw",
+                            "poultry-raw"
+                        ],
+                        "useTime": 1.5,
+                        "mincooldownHours": 1,
+                        "maxcooldownHours": 1.5
+                    },
                     {
                         "code": "idle",
                         "priority": 0.9,
