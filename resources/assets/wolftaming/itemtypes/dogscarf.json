@@ -17,6 +17,7 @@
 		{
 			"code": "color",
 			"states": [
+				"blue",
 				"red",
 				"orange",
 				"green",
