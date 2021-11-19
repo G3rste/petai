@@ -23,9 +23,15 @@
     "item-dogcollar-spiked-gold": "Шипованный ошейник (Золото)",
     "item-dogcollar-spiked-silver": "Шипованный ошейник (Серебро)",
     "item-dogcollar-spiked-iron": "Шипованный ошейник (Железо)",
-
-
-
+    "item-dogscarf-orange": "Шарфик (оранжевый)",    
+    "item-dogscarf-green": "Шарфик (зеленый)",  
+    "item-dogscarf-brown": "Шарфик (коричневый)", 
+    "item-dogscarf-black": "Шарфик (черный)", 
+    "item-dogscarf-purple": "Шарфик (фиолетовый)",  
+    "item-dogscarf-pink": "Шарфик (розовый)", 
+    "item-dogscarf-yellow": "Шарфик (желтый)"   
+    "item-dogscarf-red": "Шарфик (красный)",
+        
     "gui-command-title": "Дать команду",
     "gui-command-simple": "Обычные:",
     "gui-command-sit": "Сидеть",
@@ -38,6 +44,8 @@
     "gui-command-attack": "Агрессивный",
     "gui-command-protect": "Оборонительный",
     "gui-command-neutral": "Нейтральный",
+    
+    "gui-pet-obedience":"Послушание: {0}%",
 
     "gui-name-title": "Дайте имя",
     "gui-name-ok": "ОК",
