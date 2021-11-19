@@ -38,12 +38,12 @@
     "gui-command-lay": "Лечь",
     "gui-command-speak": "Голос",
     "gui-command-complex": "Особые:",
-    "gui-command-follow": "Следовать",
+    "gui-command-followmaster": "Следовать",
     "gui-command-stay": "Ждать",
     "gui-command-aggressionlevel": "Уровень агрессии:",
-    "gui-command-attack": "Агрессивный",
-    "gui-command-protect": "Оборонительный",
-    "gui-command-neutral": "Нейтральный",
+    "gui-command-attacktarget": "Агрессивный",
+    "gui-command-protectmaster": "Оборонительный",
+    "gui-command-selfdefense": "Нейтральный",
     
     "gui-pet-obedience":"Послушание: {0}%",
 
