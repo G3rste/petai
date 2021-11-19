@@ -47,7 +47,7 @@
     "gui-command-selfdefense": "Neutral",
 
     "gui-pet-obedience":"Gehorsamkeit: {0}%",
-    "gui-pet-disobey":"Haustier ist nicht Gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
+    "gui-pet-disobey":"Haustier ist nicht gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
 
     "gui-name-title": "Wähle einen Namen",
     "gui-name-ok": "OK",
