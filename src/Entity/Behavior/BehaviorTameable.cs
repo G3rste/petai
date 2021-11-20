@@ -186,7 +186,7 @@ namespace PetAI
                 {
                     domesticationLevel = DomesticationLevel.TAMING;
                     owner = player.Player;
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
@@ -194,7 +194,7 @@ namespace PetAI
             {
                 if (feedEntityIfPossible(itemslot))
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-tended-to", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
+                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-tended-to", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
                 }
                 if (domesticationProgress >= 1f)
                 {
@@ -262,7 +262,7 @@ namespace PetAI
             message.targetEntityUID = tameEntity.EntityId;
             message.oldEntityUID = entity.EntityId;
 
-            (entity.Api as ICoreServerAPI)?.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+            (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
         }
 
         bool isValidTamingItem(TamingItem item, ItemSlot slot)
@@ -303,7 +303,7 @@ namespace PetAI
             }
             else
             {
-                (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("wolftaming:message-not-ready", entity.GetName()));
+                (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-not-ready", entity.GetName()));
             }
             return false;
         }

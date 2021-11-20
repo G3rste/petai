@@ -66,7 +66,7 @@ namespace PetAI
 
             return String.Concat(base.GetInfoText(),
                     "\n",
-                    Lang.Get("wolftaming:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100), 2));
+                    Lang.Get("petai:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100), 2));
         }
 
         private ITreeAttribute getInventoryTree()

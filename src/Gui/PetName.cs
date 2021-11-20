@@ -21,10 +21,10 @@ namespace PetAI
 
             SingleComposer = capi.Gui.CreateCompo("PetNameDialog-", dialogBounds)
                 .AddShadedDialogBG(bgBounds)
-                .AddDialogTitleBar(Lang.Get("wolftaming:gui-name-title"), () => TryClose())
+                .AddDialogTitleBar(Lang.Get("petai:gui-name-title"), () => TryClose())
                 .BeginChildElements(bgBounds)
                     .AddTextInput(ElementBounds.Fixed(0, 20, 200, 40), (name) => petName = name)
-                    .AddButton(Lang.Get("wolftaming:gui-name-ok"), () => onClick(), ElementBounds.Fixed(0, 70, 90, 40))
+                    .AddButton(Lang.Get("petai:gui-name-ok"), () => onClick(), ElementBounds.Fixed(0, 70, 90, 40))
                 .EndChildElements()
                 .Compose();
         }
@@ -34,7 +34,7 @@ namespace PetAI
             message.petName = petName;
             message.targetEntityUID = targetEntityId;
 
-            capi.Network.GetChannel("wolftamingnetwork").SendPacket<PetNameMessage>(message);
+            capi.Network.GetChannel("petainetwork").SendPacket<PetNameMessage>(message);
 
             TryClose();
             return true;

@@ -41,7 +41,7 @@ namespace PetAI
             base.StartClientSide(api);
             this.clientAPI = api;
 
-            api.Network.RegisterChannel("wolftamingnetwork")
+            api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
                 .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
         }
@@ -50,7 +50,7 @@ namespace PetAI
         {
             base.StartServerSide(api);
             this.serverAPI = api;
-            api.Network.RegisterChannel("wolftamingnetwork")
+            api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
                 .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
         }
@@ -82,7 +82,7 @@ namespace PetAI
             if (clientAPI != null)
             {
                 EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
-                if (entity != null) clientAPI.ShowChatMessage(Lang.Get("wolftaming:message-finished-taming", entity.GetName()));
+                if (entity != null) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
                 new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
