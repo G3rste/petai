@@ -3,7 +3,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Config;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class TaskSelectionGui : GuiDialog
     {

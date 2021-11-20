@@ -8,7 +8,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class EntityBehaviorSelfDefense : EntityBehavior
     {

@@ -9,7 +9,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 
-namespace WolfTaming
+namespace PetAI
 {
     public enum DomesticationLevel
     {

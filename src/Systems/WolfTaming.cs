@@ -6,9 +6,9 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 
-namespace WolfTaming
+namespace PetAI
 {
-    public class WolfTaming : ModSystem
+    public class PetAI : ModSystem
     {
 
         ICoreServerAPI serverAPI;

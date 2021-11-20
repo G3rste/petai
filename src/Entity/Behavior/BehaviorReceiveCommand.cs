@@ -6,7 +6,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using System.Collections.Generic;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class EntityBehaviorReceiveCommand : EntityBehavior
     {

@@ -11,7 +11,7 @@ using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 using System.IO;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class EntityPet : EntityAgent
     {

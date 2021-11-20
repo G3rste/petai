@@ -2,7 +2,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.GameContent;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class AiTaskTrick : AiTaskIdle
     {

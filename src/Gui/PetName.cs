@@ -1,7 +1,7 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Config;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class PetNameGUI : GuiDialog
     {

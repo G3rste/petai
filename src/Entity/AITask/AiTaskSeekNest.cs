@@ -9,7 +9,7 @@ using Vintagestory.API.Server;
 using Vintagestory.API.Util;
 using Vintagestory.GameContent;
 
-namespace WolfTaming
+namespace PetAI
 {
     public class AiTaskSeekNest : AiTaskBase
     {

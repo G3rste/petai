@@ -9,7 +9,7 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 
-namespace WolfTaming
+namespace PetAI
 {
     // This is rather stupid design as it just copies the existing Grow-Behavior
     // Maybe there can be done something more clever with harmony patching
