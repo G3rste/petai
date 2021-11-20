@@ -1,12 +1,12 @@
 {
     "type": "code",
-    "modid": "wolftaming",
-    "name": "Wolf taming",
+    "modid": "petai",
+    "name": "Pet AI",
     "side": "universal",
     "author": "G3rste",
-    "description": "Mod that focuses on making wolfes tameable and usable by the player.",
+    "description": "Mod that focuses on implementing various new AI behaviours and tasks centered around taming.",
     "version": "0.0.8",
     "dependency": {
-        "game": "1.15.6"
+        "game": "1.15.9"
     }
 }
