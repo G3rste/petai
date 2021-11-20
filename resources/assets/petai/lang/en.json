@@ -1,37 +1,4 @@
-{
-    "item-creature-tame-wolf-male": "Dog (male)",
-    "item-creature-tame-wolf-female": "Dog (female)",
-    "item-creature-tame-wolf-pup": "Dog (pup)",
-    "item-dead-creature-tame-wolf-male": "Dead dog (male)",
-    "item-dead-creature-tame-wolf-female": "Dead dog (female)",
-    "item-dead-creature-tame-wolf-pup": "Dead dog (pup)",
-    "item-dogcollar-basic-copper": "Simple dog collar (Copper)",
-    "item-dogcollar-basic-tinbronze": "Simple dog collar (Tin bronze)",
-    "item-dogcollar-basic-blackbronze": "Simple dog collar (Black bronze)",
-    "item-dogcollar-basic-gold": "Simple dog collar (Gold)",
-    "item-dogcollar-basic-silver": "Simple dog collar (Silver)",
-    "item-dogcollar-basic-iron": "Simple dog collar (Iron)",
-    "item-dogcollar-chipped-copper": "Chipped dog collar (Copper)",
-    "item-dogcollar-chipped-tinbronze": "Chipped dog collar (Tin bronze)",
-    "item-dogcollar-chipped-blackbronze": "Chipped dog collar (Black bronze)",
-    "item-dogcollar-chipped-gold": "Chipped dog collar (Gold)",
-    "item-dogcollar-chipped-silver": "Chipped dog collar (Silver)",
-    "item-dogcollar-chipped-iron": "Chipped dog collar (Iron)",
-    "item-dogcollar-spiked-copper": "Spiked dog collar (Copper)",
-    "item-dogcollar-spiked-tinbronze": "Spiked dog collar (Tin bronze)",
-    "item-dogcollar-spiked-blackbronze": "Spiked dog collar (Black bronze)",
-    "item-dogcollar-spiked-gold": "Spiked dog collar (Gold)",
-    "item-dogcollar-spiked-silver": "Spiked dog collar (Silver)",
-    "item-dogcollar-spiked-iron": "Spiked dog collar (Iron)",
-    "item-dogscarf-red": "Dog scarf (red)",
-    "item-dogscarf-orange": "Dog scarf (orange)",
-    "item-dogscarf-green": "Dog scarf (green)",
-    "item-dogscarf-brown": "Dog scarf (brown)",
-    "item-dogscarf-black": "Dog scarf (black)",
-    "item-dogscarf-purple": "Dog scarf (purple)",
-    "item-dogscarf-pink": "Dog scarf (pink)",
-    "item-dogscarf-yellow": "Dog scarf (yellow)",
-    
+{ 
     "gui-command-title": "Choose a command!",
     "gui-command-simple": "Simple Commands:",
     "gui-command-sit": "Sit",
@@ -54,8 +21,5 @@
     "message-tended-to": "Tended to {0}, current progress is {1}%.",
     "message-not-ready": "{0} is not ready to be tended to again.",
     "message-startet-taming": "Successfully startet taming {0}, current progress is {1}%.",
-    "message-finished-taming": "Successfully tamed {0}.",
-
-    "wolftamingguide-title": "Taming guide: wolfes",
-    "wolftamingguide-text": "<strong>Taming guide: wolfes</strong>\n\nThis guide is an attempt to explain the taming mechanics introduced by the \"Wolf Taming\" mod.\n\nTo tame a wolf, you first need to kidnap a wolfpup. Once in your possession, start taming the pup by feeding it either bones or any type of raw meat. Whenever the pup receives food, you should get a chat message listing the current taming progress. When the taming progress reaches 100%, the wolf transforms into a dog.\nYou will notice a small indicator on how obedient your pet is when looking at it. Most commands will only be executed once a certain amount of obedience is reached.\n\nTo give commands to your newly acquired pet, crouch right-click on it and a dialogue listing all available commands will pop up.\n\nMost commands of the wolf are pretty straight forward. However the \"Stay\" command will not make your dog stay in that same place but instead give him a small circle of around 10 blocks to roam around freely.\n\nOnce tired, your dogs will prefer sleeping in certain spots. Adult dogs will prefer blocks covered by linen or rush mats, whereas pups will prefer beds.\n\nThere is a small variety of different dog collars to aid you in making your dog a little bit more dapper looking."
+    "message-finished-taming": "Successfully tamed {0}."
 }

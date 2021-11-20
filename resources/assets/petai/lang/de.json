@@ -1,38 +1,4 @@
 {
-    "item-creature-tame-wolf-male": "Hund (männlich)",
-    "item-creature-tame-wolf-female": "Hund (weiblich)",
-    "item-creature-tame-wolf-pup": "Hund (Welpe)",
-    "item-dead-creature-tame-wolf-male": "Toter Hund (männlich)",
-    "item-dead-creature-tame-wolf-female": "Tote Hund (weiblich)",
-    "item-dead-creature-tame-wolf-pup": "Toter Hund (Welpe)",
-    "item-dogcollar-basic-copper": "Schlichtes Hundehalsband (Kupfer)",
-    "item-dogcollar-basic-tinbronze": "Schlichtes Hundehalsband (Zinnbronze)",
-    "item-dogcollar-basic-blackbronze": "Schlichtes Hundehalsband (Schwarzbronze)",
-    "item-dogcollar-basic-gold": "Schlichtes Hundehalsband (Gold)",
-    "item-dogcollar-basic-silver": "Schlichtes Hundehalsband (Silber)",
-    "item-dogcollar-basic-iron": "Schlichtes Hundehalsband (Eisen)",
-    "item-dogcollar-chipped-copper": "Hundehalsband mit Chip (Kupfer)",
-    "item-dogcollar-chipped-tinbronze": "Hundehalsband mit Chip (Zinnbronze)",
-    "item-dogcollar-chipped-blackbronze": "Hundehalsband mit Chip (Schwarzbronze)",
-    "item-dogcollar-chipped-gold": "Hundehalsband mit Chip (Gold)",
-    "item-dogcollar-chipped-silver": "Hundehalsband mit Chip (Silber)",
-    "item-dogcollar-chipped-iron": "Hundehalsband mit Chip (Eisen)",
-    "item-dogcollar-spiked-copper": "Stachelhundehalsband (Kupfer)",
-    "item-dogcollar-spiked-tinbronze": "Stachelhundehalsband (Zinnbronze)",
-    "item-dogcollar-spiked-blackbronze": "Stachelhundehalsband (Schwarzbronze)",
-    "item-dogcollar-spiked-gold": "Stachelhundehalsband (Gold)",
-    "item-dogcollar-spiked-silver": "Stachelhundehalsband (Silber)",
-    "item-dogcollar-spiked-iron": "Stachelhundehalsband (Eisen)",
-    "item-dogscarf-red": "Hundehalstuch (rot)",
-    "item-dogscarf-orange": "Hundehalstuch (orange)",
-    "item-dogscarf-green": "Hundehalstuch (grün)",
-    "item-dogscarf-brown": "Hundehalstuch (braun)",
-    "item-dogscarf-black": "Hundehalstuch (schwarz)",
-    "item-dogscarf-purple": "Hundehalstuch (violett)",
-    "item-dogscarf-pink": "Hundehalstuch (pink)",
-    "item-dogscarf-yellow": "Hundehalstuch (gelb)",
-
-
     "gui-command-title": "Wähle einen Befehl!",
     "gui-command-simple": "Einfache Tricks:",
     "gui-command-sit": "Sitz",
@@ -55,8 +21,5 @@
     "message-tended-to": "Du hast dich um {0} gekümmert, aktueller Zähmfortschritt ist {1}%.",
     "message-not-ready": "{0} ist noch nicht wieder hungrig.",
     "message-startet-taming": "{0} wird jetzt von dir gezähmt, aktueller Zähmfortschritt ist {1}%.",
-    "message-finished-taming":"{0} erfolgreich gezähmt.",
-
-    "wolftamingguide-title": "Zähmen: Wölfe",
-    "wolftamingguide-text": "<strong>Wölfe zähmen</strong>\n\nUm einen Wolf zu zähmen, muss zunächst ein Wolfsjunges entführt werden. Das Jungtier kann anschließend mit rohem Fleisch oder Knochen gefüttert werden, um den Zähmvorgang einzuleiten. Eine Chatnachricht nach dem füttern gibt den aktuellen Zähmfortschritt an. Sowie der Fortschritt 100% erreicht, wird aus dem wilden Wolfsjungen ein zahmer Hundewelpe.\n\nUm dem Hund Befehle zu erteilen, duck dich und rechtsklicke auf ihn. Ein kleiner Dialog mit allen verfügbaren Befehlen wird erscheinen.\nDie meisten Befehle können allerdings erst ausgeführt werden, wenn dein Hund ein gewisses Gehorsamkeitslevel erreicht hat.\n\nDie meisten Befehle sind ziemlich selbsterklärend, doch der \"Bleib\"-Befehl wird deinen Hund nicht an Ort und stelle festnageln. Er bekommt einen Kreis von etwa 20 Blöcken Durchmesser, in dem er sich frei bewegen kann.\n\nHunde bevorzugen zum schlafen verschiedene Plätze. Erwachsene Hunde werden lieber auf Blöcken mit Matten oder Leinen schlafen, während Welpen Betten bevorzugen.\n\nEs gibt eine kleine Auswahl an Halsbändern, mit denen du deinen Hund personalisieren kannst."
+    "message-finished-taming":"{0} erfolgreich gezähmt."
 }
