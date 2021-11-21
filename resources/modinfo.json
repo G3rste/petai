@@ -5,7 +5,7 @@
     "side": "universal",
     "author": "G3rste",
     "description": "Mod that focuses on implementing various new AI behaviours and tasks centered around taming.",
-    "version": "0.0.8",
+    "version": "1.0.0",
     "dependency": {
         "game": "1.15.9"
     }
