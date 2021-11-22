@@ -53,6 +53,38 @@ namespace PetAI
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
                 .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
+
+            try
+            {
+                var Config = api.LoadModConfig<PetConfig>("petconfig.json");
+                if (Config != null)
+                {
+                    api.Logger.Notification("Mod Config successfully loaded.");
+                    PetConfig.Current = Config;
+                }
+                else
+                {
+                    api.Logger.Notification("No Mod Config specified. Falling back to default settings");
+                    PetConfig.Current = PetConfig.getDefault();
+                }
+            }
+            catch
+            {
+                PetConfig.Current = PetConfig.getDefault();
+                api.Logger.Error("Failed to load custom mod configuration. Falling back to default settings!");
+            }
+            finally
+            {
+                if (PetConfig.Current.difficulty.tamingMultiplier <= 0)
+                    PetConfig.Current.difficulty.tamingMultiplier = 1;
+                if (PetConfig.Current.difficulty.obedienceMultiplier <= 0)
+                    PetConfig.Current.difficulty.obedienceMultiplier = 1;
+                if (PetConfig.Current.difficulty.disobedienceMultiplier <= 0)
+                    PetConfig.Current.difficulty.disobedienceMultiplier = 1;
+                if (PetConfig.Current.difficulty.growingMultiplier <= 0)
+                    PetConfig.Current.difficulty.growingMultiplier = 1;
+                api.StoreModConfig(PetConfig.Current, "petconfig.json");
+            }
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -101,5 +133,25 @@ namespace PetAI
         public string petName;
         public long targetEntityUID;
         public long oldEntityUID;
+    }
+    public class PetConfig
+    {
+        public static PetConfig Current { get; set; }
+
+        public Difficulty difficulty { get; set; }
+
+        public static PetConfig getDefault()
+        {
+            var config = new PetConfig();
+            config.difficulty = new Difficulty();
+            return config;
+        }
+    }
+    public class Difficulty
+    {
+        public float tamingMultiplier = 1;
+        public float obedienceMultiplier = 1;
+        public float disobedienceMultiplier = 1;
+        public float growingMultiplier = 1;
     }
 }

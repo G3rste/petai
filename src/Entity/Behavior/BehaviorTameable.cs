@@ -295,8 +295,8 @@ namespace PetAI
                 }
                 if (acceptedItems < 1) return false;
 
-                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress;
-                else domesticationProgress += tamingItem.progress;
+                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.difficulty.obedienceMultiplier;
+                else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier;
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
                 return true;
@@ -335,7 +335,7 @@ namespace PetAI
         {
             double hoursPassed = entity.World.Calendar.TotalHours - disobedienceTime;
 
-            obedience -= disobediencePerDay * ((float)(hoursPassed / 24));
+            obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24));
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
     }

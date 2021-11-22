@@ -19,7 +19,13 @@ namespace PetAI
         JsonObject typeAttributes;
         long callbackId;
 
-        internal float HoursToGrow { get; set; }
+        float _HoursToGrow;
+
+        internal float HoursToGrow
+        {
+            get { return _HoursToGrow * PetConfig.Current.difficulty.growingMultiplier; }
+            set { _HoursToGrow = value; }
+        }
 
         internal AssetLocation[] AdultEntityCodes
         {
