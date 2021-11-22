@@ -269,11 +269,11 @@ namespace PetAI
         {
             if (item.name.EndsWith("*"))
             {
-                return slot.Itemstack.Item.Code.Path.StartsWith(item.name.Remove(item.name.Length - 1));
+                return slot.Itemstack?.Item?.Code.Path.StartsWith(item.name.Remove(item.name.Length - 1)) == true;
             }
             else
             {
-                return slot.Itemstack.Item.Code.Path == item.name;
+                return slot.Itemstack?.Item?.Code.Path == item.name;
             }
         }
 
