@@ -44,6 +44,8 @@ namespace PetAI
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
                 .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
+
+            PetConfig.Current = PetConfig.getDefault();
         }
 
         public override void StartServerSide(ICoreServerAPI api)
