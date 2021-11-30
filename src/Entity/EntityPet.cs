@@ -69,6 +69,14 @@ namespace PetAI
                     Lang.Get("petai:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100), 2));
         }
 
+        public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data)
+        {
+            base.OnReceivedClientPacket(player, packetid, data);
+            if(packetid < 1000){
+                inv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+            }
+        }
+
         private ITreeAttribute getInventoryTree()
         {
             if (!WatchedAttributes.HasAttribute("petinventory"))
