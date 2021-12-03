@@ -16,14 +16,22 @@ namespace PetAI
     public class EntityPet : EntityAgent
     {
 
-        protected InventoryBase inv;
-        public override IInventory GearInventory => inv;
+        protected InventoryBase gearInv;
+
+        public InventorySlotBound backpackInv;
+        public override IInventory GearInventory => gearInv;
         public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
         {
             base.Initialize(properties, api, InChunkIndex3d);
-            if (inv == null) inv = new InventoryPet(Code.Path, "petInv-" + EntityId, api);
-            else inv.Api = api;
-            inv.LateInitialize(inv.InventoryID, api);
+            if (gearInv == null) gearInv = new InventoryPetGear(Code.Path, "petInv-" + EntityId, api);
+            else gearInv.Api = api;
+            gearInv.LateInitialize(gearInv.InventoryID, api);
+            var slots = new ItemSlot[gearInv.Count];
+            for (int i = 0; i < gearInv.Count; i++)
+            {
+                slots[i] = gearInv[i];
+            }
+            backpackInv = new InventorySlotBound("petBackPackInv-", api, slots);
         }
 
         public override void OnTesselation(ref Shape entityShape, string shapePathForLogging)
@@ -39,13 +47,13 @@ namespace PetAI
         {
             base.FromBytes(reader, forClient);
 
-            if (inv == null) { inv = new InventoryPet(Code.Path, "petInv-" + EntityId, null); }
-            inv.FromTreeAttributes(getInventoryTree());
+            if (gearInv == null) { gearInv = new InventoryPetGear(Code.Path, "petInv-" + EntityId, null); }
+            gearInv.FromTreeAttributes(getInventoryTree());
         }
 
         public override void ToBytes(BinaryWriter writer, bool forClient)
         {
-            inv.ToTreeAttributes(getInventoryTree());
+            gearInv.ToTreeAttributes(getInventoryTree());
 
             base.ToBytes(writer, forClient);
         }
@@ -72,8 +80,13 @@ namespace PetAI
         public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data)
         {
             base.OnReceivedClientPacket(player, packetid, data);
-            if(packetid < 1000){
-                inv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+            if (packetid < 1000)
+            {
+                //earInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+                backpackInv.reloadFromSlots();
+                backpackInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
+                Api.Logger.Debug("Itemslot 1 contains: {0}", backpackInv[0].Itemstack?.Item?.Code.Path);
+                backpackInv.saveAllSlots();
             }
         }
 
@@ -82,7 +95,7 @@ namespace PetAI
             if (!WatchedAttributes.HasAttribute("petinventory"))
             {
                 ITreeAttribute tree = new TreeAttribute();
-                inv.ToTreeAttributes(tree);
+                gearInv.ToTreeAttributes(tree);
                 WatchedAttributes.SetAttribute("petinventory", tree);
             }
             return WatchedAttributes.GetTreeAttribute("petinventory");

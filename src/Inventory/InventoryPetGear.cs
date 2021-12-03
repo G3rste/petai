@@ -14,7 +14,7 @@ using Vintagestory.GameContent;
 
 namespace PetAI
 {
-    public class InventoryPet : InventoryBase
+    public class InventoryPetGear : InventoryBase
     {
 
         ItemSlot[] slots;
@@ -24,7 +24,7 @@ namespace PetAI
         public override ItemSlot this[int slotId] { get => slots[slotId]; set => slots[slotId] = value; }
 
         public override int Count => slots.Length;
-        public InventoryPet(string owningEntity, string inventoryID, ICoreAPI api) : base(inventoryID, api)
+        public InventoryPetGear(string owningEntity, string inventoryID, ICoreAPI api) : base(inventoryID, api)
         {
             this.owningEntity = owningEntity;
             slots = new ItemSlotPetAccessory[5] {

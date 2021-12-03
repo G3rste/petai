@@ -29,6 +29,7 @@ namespace PetAI
                 }
             }
         }
+        public int backpackSlots { get { return Attributes["backpackslots"].AsInt(0); } }
         public bool canBeWornBy(string pet)
         {
             return Attributes["validPets"].AsArray<string>(new string[0]).Contains(pet);
