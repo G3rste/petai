@@ -28,7 +28,7 @@ namespace PetAI
 
         public void composeGui()
         {
-            currentY = 0;
+            currentY = 20;
             currentX = 0;
             ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
@@ -66,10 +66,9 @@ namespace PetAI
         private void tryAddPetInventory()
         {
             var pet = targetEntity as EntityPet;
-            if (pet != null)
+            if (pet != null && !pet.GearInventory.Empty)
             {
                 pet.backpackInv.reloadFromSlots();
-                currentY += 20;
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-command-backpackinv"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
                 currentY += 35;
                 SingleComposer.AddButton(Lang.Get("petai:gui-command-dropgear"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "dropgear")), ElementBounds.Fixed(currentX, currentY, 135, 45));
