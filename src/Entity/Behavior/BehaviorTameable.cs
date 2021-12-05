@@ -204,8 +204,9 @@ namespace PetAI
             }
             else if (domesticationLevel == DomesticationLevel.DOMESTICATED)
             {
-                if (!attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot))
-                    feedEntityIfPossible(itemslot);
+                bool next = !attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
+                if (next)
+                    next = !feedEntityIfPossible(itemslot);
             }
         }
 

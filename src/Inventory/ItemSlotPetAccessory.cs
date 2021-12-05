@@ -21,6 +21,11 @@ namespace PetAI
             this.type = type;
             this.owningEntity = owningEntity;
         }
+
+        public ItemSlotPetAccessory(InventoryBase inventory) : base(inventory)
+        {
+        }
+
         public override bool CanTakeFrom(ItemSlot sourceSlot, EnumMergePriority priority = EnumMergePriority.AutoMerge)
         {
             return base.CanTakeFrom(sourceSlot, priority) && isCorrectAccessory(sourceSlot);

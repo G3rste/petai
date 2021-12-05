@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -13,14 +14,22 @@ namespace PetAI
 
         private EntityPlayer player;
         private int currentX = 0;
-        private int currentY = 20;
-
+        private int currentY = 0;
         List<Command> availableCommands;
+
+        private static TaskSelectionGui instance;
+
         public TaskSelectionGui(ICoreClientAPI capi, EntityPlayer player, EntityAgent targetEntity = null) : base(capi)
         {
             this.targetEntity = targetEntity;
             this.player = player;
+            composeGui();
+        }
 
+        public void composeGui()
+        {
+            currentY = 20;
+            currentX = 0;
             ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
             bgBounds.BothSizing = ElementSizing.FitToChildren;
@@ -45,12 +54,29 @@ namespace PetAI
                 .AddDialogTitleBar(Lang.Get("petai:gui-command-title"), () => TryClose())
                 .BeginChildElements(bgBounds);
 
+            tryAddPetInventory();
             addGuiRow(EnumCommandType.SIMPLE, "petai:gui-command-simple");
             addGuiRow(EnumCommandType.COMPLEX, "petai:gui-command-complex");
             addGuiRow(EnumCommandType.AGGRESSIONLEVEL, "petai:gui-command-aggressionlevel");
 
             SingleComposer.EndChildElements()
             .Compose();
+        }
+
+        private void tryAddPetInventory()
+        {
+            var pet = targetEntity as EntityPet;
+            if (pet != null && !pet.GearInventory.Empty)
+            {
+                pet.backpackInv.reloadFromSlots();
+                SingleComposer.AddStaticText(Lang.Get("petai:gui-command-backpackinv"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
+                currentY += 35;
+                SingleComposer.AddButton(Lang.Get("petai:gui-command-dropgear"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "dropgear")), ElementBounds.Fixed(currentX, currentY, 135, 45));
+                double pad = GuiElementItemSlotGrid.unscaledSlotPadding;
+                var slotbounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, pad + 150, currentY, pet.backpackInv.Count, 1).FixedGrow(2 * pad, 2 * pad);
+                SingleComposer.AddItemSlotGrid(pet.backpackInv, SendBackPackPacket, pet.backpackInv.Count, slotbounds, "petBackPackInv");
+                currentY += 55;
+            }
         }
 
         private void addGuiRow(EnumCommandType type, string headline)
@@ -100,16 +126,28 @@ namespace PetAI
 
             if (targetEntity != null
                 && targetEntity.HasBehavior<EntityBehaviorTameable>()
+                && command.commandName != "dropgear"
                 && targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands[command] > targetEntity.GetBehavior<EntityBehaviorTameable>().obedience)
             {
                 capi.ShowChatMessage(Lang.Get("petai:gui-pet-disobey", targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands[command] * 100));
                 return true;
             }
 
+            TryClose();
+
             capi.Network.GetChannel("petainetwork").SendPacket<PetCommandMessage>(message);
 
-            TryClose();
+            if (command.commandName == "dropgear")
+            {
+                (targetEntity as EntityPet).DropInventoryOnGround();
+            }
             return true;
+        }
+
+        private void SendBackPackPacket(object p)
+        {
+            capi.Network.SendEntityPacket(targetEntity.EntityId, p);
+            (targetEntity as EntityPet).backpackInv.saveAllSlots();
         }
     }
 }
