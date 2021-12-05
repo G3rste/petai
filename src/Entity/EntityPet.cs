@@ -77,16 +77,14 @@ namespace PetAI
                     Lang.Get("petai:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100), 2));
         }
 
-        public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data)
+        public void DropInventoryOnGround()
         {
-            base.OnReceivedClientPacket(player, packetid, data);
-            if (packetid < 1000)
+            for (int i = gearInv.Count-1; i >= 0; i--)
             {
-                //earInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
-                backpackInv.reloadFromSlots();
-                backpackInv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
-                Api.Logger.Debug("Itemslot 1 contains: {0}", backpackInv[0].Itemstack?.Item?.Code.Path);
-                backpackInv.saveAllSlots();
+                if (gearInv[i].Empty) { continue; }
+
+                Api.World.SpawnItemEntity(gearInv[i].TakeOutWhole(), ServerPos.XYZ);
+                gearInv.MarkSlotDirty(i);
             }
         }
 

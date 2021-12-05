@@ -29,7 +29,6 @@ namespace PetAI
             {
                 slots.AddRange(getSlotsFromItemStack(slot.Itemstack));
             }
-            Api.Logger.Debug("Slots after reload: {0}", Count);
         }
 
         public void saveAllSlots()
@@ -67,7 +66,6 @@ namespace PetAI
             if (item == null) return new ItemSlotPetBackPack[0];
 
             var potentialItemSlots = new ItemSlotPetBackPack[item.backpackSlots];
-            Api.Logger.Debug("Item {0} has {1} Backpackslots", item.Code.Path, potentialItemSlots.Length);
             for (int i = 0; i < potentialItemSlots.Length; i++)
             {
                 potentialItemSlots[i] = new ItemSlotPetBackPack(this);

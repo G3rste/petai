@@ -32,7 +32,6 @@ namespace PetAI
                     .AddItemSlotGrid(pet.backpackInv, SendBackPackPacket, pet.backpackInv.Count, slotbounds.CopyOffsetedSibling(0, 300), "petBackPackInv")
                 .EndChildElements()
                 .Compose();
-            capi.Logger.Debug("Slots: {0}", pet.backpackInv.Count);
         }
 
         private void SendGearPacket(object p)

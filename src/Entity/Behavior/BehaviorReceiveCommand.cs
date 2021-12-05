@@ -11,6 +11,8 @@ namespace PetAI
     public class EntityBehaviorReceiveCommand : EntityBehavior
     {
         private string _simpleCommand;
+
+        protected TaskSelectionGui gui;
         public string simpleCommand
         {
             get
@@ -89,7 +91,9 @@ namespace PetAI
             {
                 if (entity.Api.Side == EnumAppSide.Client)
                 {
-                    new TaskSelectionGui(entity.Api as ICoreClientAPI, player, entity as EntityAgent).TryOpen();
+                    if (gui == null) { gui = new TaskSelectionGui(entity.Api as ICoreClientAPI, player, entity as EntityAgent); }
+                    else { gui.composeGui(); }
+                    gui.TryOpen();
                 }
             }
         }
@@ -133,7 +137,7 @@ namespace PetAI
 
         private bool isEntityObedient(Command command)
         {
-            if(command == null || command.commandName == null) return true;
+            if (command == null || command.commandName == null) return true;
             if (entity.HasBehavior<EntityBehaviorTameable>() && availableCommands.ContainsKey(command))
             {
                 return entity.GetBehavior<EntityBehaviorTameable>().obedience >= availableCommands[command];

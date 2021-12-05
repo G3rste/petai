@@ -23,6 +23,7 @@ namespace PetAI
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
             api.RegisterEntityBehaviorClass("selfdefence", typeof(EntityBehaviorSelfDefense));
+            api.RegisterEntityBehaviorClass("backpackinventory", typeof(EntityBehaviorBackPackInventory));
 
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
@@ -97,6 +98,12 @@ namespace PetAI
             if (Enum.TryParse<EnumCommandType>(networkMessage.commandType, out commandType))
             {
                 Command command = new Command(commandType, networkMessage.commandName);
+                if (command.type == EnumCommandType.SIMPLE && command.commandName == "dropgear")
+                {
+                    (target as EntityPet)?.DropInventoryOnGround();
+                    return;
+                }
+                
                 if (player != null)
                 {
                     player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand = command;
