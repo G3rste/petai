@@ -50,7 +50,7 @@ namespace PetAI
                 {
                     return level;
                 }
-                return EnumAggressionLevel.SELFDEFENSE;
+                return EnumAggressionLevel.NEUTRAL;
             }
 
             private set

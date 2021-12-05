@@ -204,15 +204,19 @@ namespace PetAI
         public static Entity getEntityToAttack(Entity entity, bool isCommandable)
         {
             Entity victim = entity.GetBehavior<EntityBehaviorSelfDefense>()?.attacker;
-            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTMASTER)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PROTECTIVE)
             {
                 var nullableVictim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
                 if (nullableVictim != null) victim = nullableVictim;
             }
-            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.ATTACKTARGET)
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.AGGRESSIVE)
             {
                 var nullableVictim = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
                 if (nullableVictim != null) victim = nullableVictim;
+            }
+            if (isCommandable && entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel == EnumAggressionLevel.PASSIVE)
+            {
+                victim = null;
             }
             IPlayer owner = entity.GetBehavior<EntityBehaviorTameable>()?.owner;
             if (victim == null

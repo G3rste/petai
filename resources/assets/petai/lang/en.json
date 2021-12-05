@@ -8,9 +8,10 @@
     "gui-command-followmaster": "Follow",
     "gui-command-stay": "Stay",
     "gui-command-aggressionlevel": "Aggression levels:",
-    "gui-command-attacktarget": "Attack",
-    "gui-command-protectmaster": "Protect",
-    "gui-command-selfdefense": "Neutral",
+    "gui-command-aggressive": "Attack",
+    "gui-command-protective": "Protect",
+    "gui-command-neutral": "Neutral",
+    "gui-command-passive": "Passive",
     "gui-command-backpackinv": "Pet Inventory",
     "gui-command-dropgear": "Drop all",
 

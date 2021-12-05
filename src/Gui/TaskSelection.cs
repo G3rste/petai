@@ -110,9 +110,10 @@ namespace PetAI
                     .AddButton(Lang.Get("petai:gui-command-followmaster"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 135, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-stay"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "stay")), ElementBounds.Fixed(150, 135, 135, 45))
                     .AddStaticText(Lang.Get("petai:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 185, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-selfdefense"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.SELFDEFENSE.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-protectmaster"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTMASTER.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-attacktarget"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.ATTACKTARGET.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-passive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-neutral"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.NEUTRAL.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-defensive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-aggressive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
                 .EndChildElements()
                 .Compose();
         }

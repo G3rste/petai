@@ -82,6 +82,6 @@ namespace PetAI
     }
     public enum EnumAggressionLevel
     {
-        SELFDEFENSE, PROTECTMASTER, ATTACKTARGET
+        NEUTRAL, PROTECTIVE, AGGRESSIVE, PASSIVE
     }
 }
