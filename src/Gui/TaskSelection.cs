@@ -69,7 +69,6 @@ namespace PetAI
             if (pet != null)
             {
                 pet.backpackInv.reloadFromSlots();
-                pet.Api.Logger.Debug("Found {0} slots", pet.backpackInv.Count);
                 currentY += 20;
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-command-backpackinv"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
                 currentY += 35;
