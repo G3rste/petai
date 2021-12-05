@@ -207,9 +207,6 @@ namespace PetAI
                 bool next = !attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
                 if (next)
                     next = !feedEntityIfPossible(itemslot);
-
-                if (next && entity.Api.Side == EnumAppSide.Client && entity is EntityPet)
-                    new PetInventoryGUI(entity.Api as ICoreClientAPI, entity as EntityPet).TryOpen();
             }
         }
 
