@@ -78,14 +78,6 @@ namespace PetAI
             }
             finally
             {
-                if (PetConfig.Current.difficulty.tamingMultiplier <= 0)
-                    PetConfig.Current.difficulty.tamingMultiplier = 1;
-                if (PetConfig.Current.difficulty.obedienceMultiplier <= 0)
-                    PetConfig.Current.difficulty.obedienceMultiplier = 1;
-                if (PetConfig.Current.difficulty.disobedienceMultiplier <= 0)
-                    PetConfig.Current.difficulty.disobedienceMultiplier = 1;
-                if (PetConfig.Current.difficulty.growingMultiplier <= 0)
-                    PetConfig.Current.difficulty.growingMultiplier = 1;
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
         }
