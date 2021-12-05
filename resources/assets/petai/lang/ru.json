@@ -11,9 +11,11 @@
     "gui-command-attacktarget": "Агрессивное",
     "gui-command-protectmaster": "Защитное",
     "gui-command-selfdefense": "Спокойное",
+    "gui-command-backpackinv": "Инвентарь питомца",
+    "gui-command-dropgear": "Выбросить все",
     
     "gui-pet-obedience":"Послушание: {0}%",
-	"gui-pet-disobey":"Питомец вредничает. Поднимите его послушание до {0}%.",
+    "gui-pet-disobey":"Питомец вредничает. Поднимите его послушание до {0}%.",
 
     "gui-name-title": "Дайте имя",
     "gui-name-ok": "ОК",
