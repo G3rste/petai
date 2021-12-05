@@ -11,6 +11,8 @@
     "gui-command-attacktarget": "Angriff",
     "gui-command-protectmaster": "Schutz",
     "gui-command-selfdefense": "Neutral",
+    "gui-command-backpackinv": "Haustier Inventar",
+    "gui-command-dropgear": "Fallen lassen",
 
     "gui-pet-obedience":"Gehorsamkeit: {0}%",
     "gui-pet-disobey":"Haustier ist nicht gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
