@@ -8,9 +8,10 @@
     "gui-command-followmaster": "Следовать",
     "gui-command-stay": "Ждать",
     "gui-command-aggressionlevel": "Поведение:",
-    "gui-command-attacktarget": "Агрессивное",
-    "gui-command-protectmaster": "Защитное",
-    "gui-command-selfdefense": "Спокойное",
+    "gui-command-aggressive": "Агрессивное",
+    "gui-command-protective": "Защитное",
+    "gui-command-neutral": "Спокойное",
+    "gui-command-passive": "Пассивное",
     "gui-command-backpackinv": "Инвентарь питомца",
     "gui-command-dropgear": "Выбросить все",
     
