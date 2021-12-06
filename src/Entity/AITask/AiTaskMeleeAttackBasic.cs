@@ -11,7 +11,7 @@ using Vintagestory.GameContent;
 
 namespace PetAI
 {
-    public class AiTaskMeleeAttackBasic : AiTaskBase, IWorldIntersectionSupplier
+    public class AiTaskPetMeleeAttack : AiTaskBase, IWorldIntersectionSupplier
     {
         Entity targetEntity;
 
@@ -38,7 +38,7 @@ namespace PetAI
 
         public Vec3i MapSize { get { return entity.World.BlockAccessor.MapSize; } }
 
-        public AiTaskMeleeAttackBasic(EntityAgent entity) : base(entity)
+        public AiTaskPetMeleeAttack(EntityAgent entity) : base(entity)
         {
         }
 
