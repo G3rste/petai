@@ -229,6 +229,36 @@ namespace PetAI
             }
         }
 
+        public override void OnEntityDeath(DamageSource damageSourceForDeath)
+        {
+            if (owner != null)
+            {
+                entity.Revive();
+                (entity as EntityPet)?.DropInventoryOnGround();
+                Vec3d pos = entity.Pos.XYZ;
+
+                SimpleParticleProperties smoke = new SimpleParticleProperties(
+                        100, 150,
+                        ColorUtil.ToRgba(80, 100, 100, 100),
+                        new Vec3d(),
+                        new Vec3d(2, 1, 2),
+                        new Vec3f(-0.25f, 0f, -0.25f),
+                        new Vec3f(0.25f, 0f, 0.25f),
+                        0.51f,
+                        -0.075f,
+                        0.5f,
+                        3f,
+                        EnumParticleModel.Quad
+                    );
+
+                smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
+                entity.World.SpawnParticles(smoke);
+                owner.Entity.GetBehavior<EntityBehaviorGiveCommand>().savePet(entity);
+                entity.Die(EnumDespawnReason.Removed);
+            } else {
+                base.OnEntityDeath(damageSourceForDeath);
+            }
+        }
         public override string PropertyName()
         {
             return "tameable";

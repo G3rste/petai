@@ -1,6 +1,5 @@
 using Vintagestory.API.Config;
 using System;
-using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
@@ -31,7 +30,7 @@ namespace PetAI
 
             if (api.Side == EnumAppSide.Server)
             {
-                GetBehavior<EntityBehaviorHealth>().onDamaged += (dmg, dmgSource) => handleDamaged(dmg, dmgSource);
+               // GetBehavior<EntityBehaviorHealth>().onDamaged += (dmg, dmgSource) => handleDamaged(dmg, dmgSource);
             }
         }
 
@@ -57,16 +56,6 @@ namespace PetAI
             gearInv.ToTreeAttributes(getInventoryTree());
 
             base.ToBytes(writer, forClient);
-        }
-
-        public override ItemStack[] GetDrops(IWorldAccessor world, BlockPos pos, IPlayer byPlayer)
-        {
-            List<ItemStack> list = new List<ItemStack>(base.GetDrops(world, pos, byPlayer));
-            foreach (ItemSlot slot in GearInventory)
-            {
-                list.Add(slot.Itemstack);
-            }
-            return list.ToArray();
         }
 
         public override string GetInfoText()
@@ -117,7 +106,7 @@ namespace PetAI
                         new Vec3d(2, 1, 2),
                         new Vec3f(-0.25f, 0f, -0.25f),
                         new Vec3f(0.25f, 0f, 0.25f),
-                    0.51f,
+                        0.51f,
                         -0.075f,
                         0.5f,
                         3f,
