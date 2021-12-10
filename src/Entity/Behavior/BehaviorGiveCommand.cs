@@ -3,6 +3,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace PetAI
 {
@@ -76,7 +77,13 @@ namespace PetAI
                     pet.ServerPos.SetPos(entity.ServerPos);
                     pet.Pos.SetPos(entity.Pos);
                     entity.World.SpawnEntity(pet);
-                    entity.Attributes.RemoveAttribute(attr.Key);
+                    
+                    if (pet.HasBehavior<EntityBehaviorHealth>())
+                    {
+                        pet.GetBehavior<EntityBehaviorHealth>().Health = pet.GetBehavior<EntityBehaviorHealth>().MaxHealth;
+                    }
+
+                    entity.Attributes.GetOrAddTreeAttribute("playerpets").RemoveAttribute(attr.Key);
 
                     SimpleParticleProperties smoke = new SimpleParticleProperties(
                             100, 150,
