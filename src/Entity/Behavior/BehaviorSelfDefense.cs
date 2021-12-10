@@ -1,12 +1,6 @@
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Common;
-using System;
-using System.Collections.Generic;
-using Vintagestory.API;
-using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
-using Vintagestory.API.Util;
 
 namespace PetAI
 {
