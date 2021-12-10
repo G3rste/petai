@@ -55,11 +55,6 @@ namespace PetAI
             throw new System.NotImplementedException();
         }
 
-        public override void OnItemSlotModified(ItemSlot slot)
-        {
-            base.OnItemSlotModified(slot);
-        }
-
         private ItemSlot[] getSlotsFromItemStack(ItemStack stack)
         {
             ItemPetAccessory item = stack?.Item as ItemPetAccessory;
