@@ -231,10 +231,10 @@ namespace PetAI
 
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
         {
+            (entity as EntityPet)?.DropInventoryOnGround();
             if (owner != null)
             {
                 entity.Revive();
-                (entity as EntityPet)?.DropInventoryOnGround();
                 Vec3d pos = entity.Pos.XYZ;
 
                 SimpleParticleProperties smoke = new SimpleParticleProperties(
@@ -255,7 +255,9 @@ namespace PetAI
                 entity.World.SpawnParticles(smoke);
                 owner.Entity.GetBehavior<EntityBehaviorGiveCommand>().savePet(entity);
                 entity.Die(EnumDespawnReason.Removed);
-            } else {
+            }
+            else
+            {
                 base.OnEntityDeath(damageSourceForDeath);
             }
         }
