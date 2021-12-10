@@ -95,7 +95,7 @@ namespace PetAI
                     (target as EntityPet)?.DropInventoryOnGround();
                     return;
                 }
-                
+
                 if (player != null)
                 {
                     player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand = command;
@@ -140,6 +140,10 @@ namespace PetAI
         public static PetConfig Current { get; set; }
 
         public Difficulty difficulty { get; set; }
+        public bool petCanDie { get; set; } = false;
+        public bool petCanBeRevived { get; set; } = true;
+
+        public double petRespawnCooldown = 24;
 
         public static PetConfig getDefault()
         {
