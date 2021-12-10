@@ -300,6 +300,13 @@ namespace PetAI
                 {
                     tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = domesticationStatus;
                 }
+
+                //Attempt to keep the growing progress of the entity
+                if (entity.WatchedAttributes.HasAttribute("growTree"))
+                {
+                    tameEntity.WatchedAttributes.SetAttribute("growTree", entity.WatchedAttributes.GetAttribute("growTree"));
+                }
+
                 tameEntity.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
 
                 //Attempt to not change the texture during taming
