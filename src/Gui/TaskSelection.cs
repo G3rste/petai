@@ -17,8 +17,6 @@ namespace PetAI
         private int currentY = 0;
         List<Command> availableCommands;
 
-        private static TaskSelectionGui instance;
-
         public TaskSelectionGui(ICoreClientAPI capi, EntityPlayer player, EntityAgent targetEntity = null) : base(capi)
         {
             this.targetEntity = targetEntity;
