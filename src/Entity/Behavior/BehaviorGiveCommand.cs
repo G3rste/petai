@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
@@ -68,6 +69,7 @@ namespace PetAI
 
         private void checkPetRespawn(float dt)
         {
+            List<string> respawnedEntities = new List<string>();
             foreach (var attr in entity.Attributes.GetOrAddTreeAttribute("playerpets"))
             {
                 Entity pet = PetUtil.EntityFromTree(attr.Value as ITreeAttribute, entity.World);
@@ -77,7 +79,7 @@ namespace PetAI
                     pet.Pos.SetPos(entity.Pos);
                     entity.World.SpawnEntity(pet);
 
-                    entity.Attributes.GetOrAddTreeAttribute("playerpets").RemoveAttribute(attr.Key);
+                    respawnedEntities.Add(attr.Key);
 
                     SimpleParticleProperties smoke = new SimpleParticleProperties(
                             100, 150,
@@ -96,6 +98,10 @@ namespace PetAI
                     smoke.MinPos = entity.ServerPos.XYZ.AddCopy(-1.5, -0.5, -1.5);
                     entity.World.SpawnParticles(smoke);
                 }
+            }
+            foreach (var respawnedEntity in respawnedEntities)
+            {
+                entity.Attributes.GetOrAddTreeAttribute("playerpets").RemoveAttribute(respawnedEntity);
             }
         }
     }
