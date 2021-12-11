@@ -5,6 +5,7 @@ using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
+using System.Collections.Generic;
 
 namespace PetAI
 {
@@ -34,28 +35,7 @@ namespace PetAI
             api.RegisterEntity("EntityPet", typeof(EntityPet));
 
             api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
-        }
-
-        public override void StartClientSide(ICoreClientAPI api)
-        {
-            base.StartClientSide(api);
-            this.clientAPI = api;
-
-            api.Network.RegisterChannel("petainetwork")
-                .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
-
-            PetConfig.Current = PetConfig.getDefault();
-        }
-
-        public override void StartServerSide(ICoreServerAPI api)
-        {
-            base.StartServerSide(api);
-            this.serverAPI = api;
-            api.Network.RegisterChannel("petainetwork")
-                .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
-
+            
             try
             {
                 var Config = api.LoadModConfig<PetConfig>("petconfig.json");
@@ -77,8 +57,34 @@ namespace PetAI
             }
             finally
             {
+                if (PetConfig.Current.difficulty == null)
+                    PetConfig.Current.difficulty = PetConfig.getDefault().difficulty;
+                if (PetConfig.Current.petResurrectors == null)
+                    PetConfig.Current.petResurrectors = PetConfig.getDefault().petResurrectors;
+
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
+        }
+
+        public override void StartClientSide(ICoreClientAPI api)
+        {
+            base.StartClientSide(api);
+            this.clientAPI = api;
+
+            api.Network.RegisterChannel("petainetwork")
+                .RegisterMessageType<PetCommandMessage>()
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
+
+            PetConfig.Current = PetConfig.getDefault();
+        }
+
+        public override void StartServerSide(ICoreServerAPI api)
+        {
+            base.StartServerSide(api);
+            this.serverAPI = api;
+            api.Network.RegisterChannel("petainetwork")
+                .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -139,23 +145,43 @@ namespace PetAI
         public static PetConfig Current { get; set; }
 
         public Difficulty difficulty { get; set; }
-        public bool petCanDie { get; set; } = false;
-        public bool petCanBeRevived { get; set; } = true;
+        public bool petCanDie { get; set; }
+        public List<PetResurrector> petResurrectors { get; set; }
 
         public double petRespawnCooldown = 24;
 
         public static PetConfig getDefault()
         {
             var config = new PetConfig();
-            config.difficulty = new Difficulty();
+
+            config.petCanDie = true;
+
+            var difficulty = new Difficulty();
+            difficulty.tamingMultiplier = 1;
+            difficulty.obedienceMultiplier = 1;
+            difficulty.disobedienceMultiplier = 1;
+            difficulty.growingMultiplier = 1;
+            config.difficulty = difficulty;
+
+            var resurrector = new PetResurrector();
+            resurrector.itemCode = "gear-temporal";
+            resurrector.healingValue = 15;
+            config.petResurrectors = new List<PetResurrector>(new PetResurrector[] { resurrector });
+
             return config;
         }
     }
     public class Difficulty
     {
-        public float tamingMultiplier = 1;
-        public float obedienceMultiplier = 1;
-        public float disobedienceMultiplier = 1;
-        public float growingMultiplier = 1;
+        public float tamingMultiplier;
+        public float obedienceMultiplier;
+        public float disobedienceMultiplier;
+        public float growingMultiplier;
+    }
+
+    public class PetResurrector
+    {
+        public string itemCode;
+        public float healingValue;
     }
 }

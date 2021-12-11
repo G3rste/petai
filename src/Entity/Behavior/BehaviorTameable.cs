@@ -177,6 +177,11 @@ namespace PetAI
             if (player == null) return;
             if (owner != null && owner.PlayerUID != player.PlayerUID) return;
             if (mode != EnumInteractMode.Interact) return;
+            if (!entity.Alive)
+            {
+                tryReviveWith(itemslot);
+                return;
+            }
             if (byEntity.Controls.Sneak) return;
 
             if (domesticationLevel == DomesticationLevel.WILD
@@ -232,7 +237,7 @@ namespace PetAI
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
         {
             (entity as EntityPet)?.DropInventoryOnGround();
-            if (owner != null)
+            if (owner != null && !PetConfig.Current.petCanDie)
             {
                 entity.Revive();
                 Vec3d pos = entity.Pos.XYZ;
@@ -396,6 +401,20 @@ namespace PetAI
 
             obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24));
             disobedienceTime = entity.World.Calendar.TotalHours;
+        }
+
+        private void tryReviveWith(ItemSlot itemslot)
+        {
+            var item = PetConfig.Current.petResurrectors.Find(resurrector => resurrector.itemCode == itemslot?.Itemstack?.Item?.Code?.Path);
+            if (item != null)
+            {
+                entity.Revive();
+                itemslot.TakeOut(1);
+                if (entity.HasBehavior<EntityBehaviorHealth>())
+                {
+                    entity.GetBehavior<EntityBehaviorHealth>().Health = item.healingValue;
+                }
+            }
         }
     }
 
