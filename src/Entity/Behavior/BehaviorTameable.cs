@@ -236,7 +236,6 @@ namespace PetAI
 
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
         {
-            (entity as EntityPet)?.DropInventoryOnGround();
             if (owner != null && !PetConfig.Current.petCanDie)
             {
                 entity.Revive();
