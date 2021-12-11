@@ -152,7 +152,7 @@ namespace PetAI
         {
             var config = new PetConfig();
 
-            config.petCanDie = true;
+            config.petCanDie = false;
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;
