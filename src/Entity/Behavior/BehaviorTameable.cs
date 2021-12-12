@@ -362,6 +362,8 @@ namespace PetAI
                 else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier;
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
+                ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
+                tree.SetFloat("saturation", 1 + tree.GetFloat("saturation", 0));
                 return true;
             }
             else
