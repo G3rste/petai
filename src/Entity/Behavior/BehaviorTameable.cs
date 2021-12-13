@@ -362,8 +362,28 @@ namespace PetAI
                 else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier;
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
-                ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
-                tree.SetFloat("saturation", 1 + tree.GetFloat("saturation", 0));
+
+                // pets need to be fed to be obedient
+                // pets also need to be fed to be multiplied
+                // to prevent pets from infinitely multiplying, we only increase the the saturation for multiplying once fully obedient
+                if (entity.HasBehavior<EntityBehaviorMouthInventory>()
+                    && preventMultiplying()
+                    && entity.Api.Side == EnumAppSide.Server)
+                {
+                    ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
+                    // decrease saturation because AITaskUseInventory will raise it anyway
+                    tree.SetFloat("saturation", Math.Max(tree.GetFloat("saturation", 0) - 1, 0));
+                }
+
+                // if an entity does not implement the mouthinventory, it should still be able to multiply
+                if (!entity.HasBehavior<EntityBehaviorMouthInventory>() && obedience >= 1)
+                {
+                    ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
+                    tree.SetFloat("saturation", tree.GetFloat("saturation", 0) + 1);
+                }
+
+                entity.WatchedAttributes.MarkPathDirty("hunger");
+
                 return true;
             }
             else
@@ -416,6 +436,13 @@ namespace PetAI
                     entity.GetBehavior<EntityBehaviorHealth>().Health = item.healingValue;
                 }
             }
+        }
+
+        private bool preventMultiplying()
+        {
+            return entity.HasBehavior<EntityBehaviorMultiply>()
+                && entity.GetBehavior<EntityBehaviorMultiply>().PortionsLeftToEat < 5
+                && obedience < 1;
         }
     }
 
