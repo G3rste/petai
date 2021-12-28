@@ -400,12 +400,12 @@ namespace PetAI
 
         private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
         {
-            if (owner.PlayerUID != byEntity?.PlayerUID) return false;
+            if (owner == null || owner.PlayerUID != byEntity?.PlayerUID) return false;
             var item = slot?.Itemstack?.Item;
             var pet = entity as EntityPet;
             if (pet != null && item is ItemPetAccessory)
             {
-                return slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot).slot);
+                return slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot)?.slot);
             }
             return false;
         }
