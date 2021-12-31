@@ -10,9 +10,9 @@ namespace PetAI
         public EntityBehaviorSelfDefense(Entity entity) : base(entity)
         {
         }
-        public override void OnEntityReceiveDamage(DamageSource damageSource, float damage)
+        public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
-            base.OnEntityReceiveDamage(damageSource, damage);
+            base.OnEntityReceiveDamage(damageSource, ref damage);
             IPlayer player = (damageSource.SourceEntity as EntityPlayer)?.Player;
             if (player == null
                 || (player.WorldData.CurrentGameMode != EnumGameMode.Creative

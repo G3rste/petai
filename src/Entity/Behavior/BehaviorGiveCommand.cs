@@ -51,9 +51,9 @@ namespace PetAI
             victim = targetEntity;
         }
 
-        public override void OnEntityReceiveDamage(DamageSource damageSource, float damage)
+        public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
-            base.OnEntityReceiveDamage(damageSource, damage);
+            base.OnEntityReceiveDamage(damageSource, ref damage);
             attacker = damageSource.SourceEntity;
         }
 

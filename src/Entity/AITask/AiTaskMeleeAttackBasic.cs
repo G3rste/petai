@@ -126,7 +126,7 @@ namespace PetAI
 
                 if (alive && !targetEntity.Alive)
                 {
-                    this.entity.GetBehavior<EntityBehaviorEmotionStates>()?.TryTriggerState("saturated");
+                    this.entity.GetBehavior<EntityBehaviorEmotionStates>()?.TryTriggerState("saturated", targetEntity.EntityId);
                 }
 
                 damageInflicted = true;
