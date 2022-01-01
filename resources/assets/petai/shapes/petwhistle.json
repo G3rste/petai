@@ -1,0 +1,100 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"bone": "game:block/bone"
+	},
+	"elements": [
+		{
+			"name": "Mouthpiece",
+			"from": [ 7.75, 3.5, 7.75 ], 
+			"to": [ 8.75, 4.5, 8.75 ], 
+			"rotationOrigin": [ 8.0, 0.0, 8.0 ],
+			"faces": {
+				"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 3.5, 7.5 ] },
+				"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 5.0, 3.5 ] },
+				"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 5.0, 3.0 ] },
+				"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 11.0, 9.0 ] },
+				"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.0, 1.0 ] },
+				"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.0, 1.0 ] }
+			},
+			"children": [
+				{
+					"name": "Whistle1",
+					"from": [ -0.25, -0.5, -0.25 ], 
+					"to": [ 1.25, 0.0, 1.25 ], 
+					"rotationOrigin": [ 0.25, -1.5, 0.25 ],
+					"faces": {
+						"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 4.0, 7.0 ] },
+						"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 5.5, 3.0 ] },
+						"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 5.5, 2.5 ] },
+						"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 11.5, 8.5 ] },
+						"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 1.5 ] },
+						"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 1.5 ] }
+					}
+				},
+				{
+					"name": "Whistle2",
+					"from": [ -0.25, -2.0, -0.25 ], 
+					"to": [ 0.25, -0.5, 0.75 ], 
+					"rotationOrigin": [ 0.25, -3.5, 0.25 ],
+					"faces": {
+						"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 3.0, 8.0 ] },
+						"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 5.0, 4.0 ] },
+						"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 4.5, 3.5 ] },
+						"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 11.0, 9.5 ] },
+						"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+						"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
+					}
+				},
+				{
+					"name": "Whistle3",
+					"from": [ 0.75, -2.0, -0.25 ], 
+					"to": [ 1.25, -0.5, 0.75 ], 
+					"rotationOrigin": [ 1.25, -3.5, 0.25 ],
+					"faces": {
+						"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 3.0, 8.0 ] },
+						"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 5.0, 4.0 ] },
+						"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 4.5, 3.5 ] },
+						"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 11.0, 9.5 ] },
+						"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 0.5, 1.0 ] },
+						"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 0.5, 1.0 ] }
+					}
+				},
+				{
+					"name": "Whistle4",
+					"from": [ -0.25, -2.0, 0.75 ], 
+					"to": [ 1.25, -0.5, 1.25 ], 
+					"rotationOrigin": [ 0.25, -3.5, 1.25 ],
+					"faces": {
+						"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 4.0, 8.0 ] },
+						"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 4.5, 4.0 ] },
+						"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 5.5, 3.5 ] },
+						"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 10.5, 9.5 ] },
+						"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 0.5 ] },
+						"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 0.5 ] }
+					}
+				},
+				{
+					"name": "Whistle5",
+					"from": [ -0.25, -2.5, -0.25 ], 
+					"to": [ 1.25, -2.0, 1.25 ], 
+					"rotationOrigin": [ 0.25, -3.5, 0.25 ],
+					"faces": {
+						"north": { "texture": "#bone", "uv": [ 2.5, 6.5, 4.0, 7.0 ] },
+						"east": { "texture": "#bone", "uv": [ 4.0, 2.5, 5.5, 3.0 ] },
+						"south": { "texture": "#bone", "uv": [ 4.0, 2.0, 5.5, 2.5 ] },
+						"west": { "texture": "#bone", "uv": [ 10.0, 8.0, 11.5, 8.5 ] },
+						"up": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 1.5 ] },
+						"down": { "texture": "#bone", "uv": [ 0.0, 0.0, 1.5, 1.5 ] }
+					}
+				}
+			]
+		}
+	]}
