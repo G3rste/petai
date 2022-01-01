@@ -35,7 +35,8 @@ namespace PetAI
             api.RegisterEntity("EntityPet", typeof(EntityPet));
 
             api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
-            
+            api.RegisterItemClass("ItemPetWhistle", typeof(ItemPetWhistle));
+
             try
             {
                 var Config = api.LoadModConfig<PetConfig>("petconfig.json");
