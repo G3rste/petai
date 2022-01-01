@@ -107,10 +107,10 @@ namespace PetAI
                     .AddButton(Lang.Get("petai:gui-command-followmaster"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 135, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-stay"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "stay")), ElementBounds.Fixed(150, 135, 135, 45))
                     .AddStaticText(Lang.Get("petai:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 185, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-passive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-neutral"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.NEUTRAL.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-defensive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-protective"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-aggressive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-passive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(450, 220, 135, 45))
                 .EndChildElements()
                 .Compose();
         }
@@ -120,7 +120,10 @@ namespace PetAI
             message.commandName = command.commandName;
             message.commandType = command.type.ToString();
             message.playerUID = player.PlayerUID;
-            message.targetEntityUID = targetEntity.EntityId;
+            if (targetEntity != null)
+            {
+                message.targetEntityUID = targetEntity.EntityId;
+            }
 
             if (targetEntity != null
                 && targetEntity.HasBehavior<EntityBehaviorTameable>()
@@ -137,7 +140,7 @@ namespace PetAI
 
             if (command.commandName == "dropgear")
             {
-                (targetEntity as EntityPet).DropInventoryOnGround();
+                (targetEntity as EntityPet)?.DropInventoryOnGround();
             }
             return true;
         }
