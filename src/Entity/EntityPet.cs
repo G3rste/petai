@@ -88,37 +88,5 @@ namespace PetAI
             }
             return WatchedAttributes.GetTreeAttribute("petinventory");
         }
-
-        private float handleDamaged(float dmg, DamageSource dmgSource)
-        {
-            if (PetConfig.Current.petCanDie || GetBehavior<EntityBehaviorHealth>().Health > dmg || GetBehavior<EntityBehaviorTameable>().owner == null)
-            {
-                return dmg;
-            }
-            else
-            {
-                Vec3d pos = Pos.XYZ;
-                
-                SimpleParticleProperties smoke = new SimpleParticleProperties(
-                        100, 150,
-                        ColorUtil.ToRgba(80, 100, 100, 100),
-                        new Vec3d(),
-                        new Vec3d(2, 1, 2),
-                        new Vec3f(-0.25f, 0f, -0.25f),
-                        new Vec3f(0.25f, 0f, 0.25f),
-                        0.51f,
-                        -0.075f,
-                        0.5f,
-                        3f,
-                        EnumParticleModel.Quad
-                    );
-
-                smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
-                World.SpawnParticles(smoke);
-                GetBehavior<EntityBehaviorTameable>().owner.Entity.GetBehavior<EntityBehaviorGiveCommand>().savePet(this);
-                Die(EnumDespawnReason.Removed);
-                return 0f;
-            }
-        }
     }
 }

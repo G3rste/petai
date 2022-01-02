@@ -62,6 +62,8 @@ namespace PetAI
                     PetConfig.Current.difficulty = PetConfig.getDefault().difficulty;
                 if (PetConfig.Current.petResurrectors == null)
                     PetConfig.Current.petResurrectors = PetConfig.getDefault().petResurrectors;
+                if (PetConfig.Current.respawningPets == null)
+                    PetConfig.Current.respawningPets = PetConfig.getDefault().respawningPets;
 
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
@@ -144,7 +146,7 @@ namespace PetAI
         public static PetConfig Current { get; set; }
 
         public Difficulty difficulty { get; set; }
-        public bool petCanDie { get; set; }
+        public HashSet<string> respawningPets { get; set; }
         public List<PetResurrector> petResurrectors { get; set; }
 
         public double petRespawnCooldown = 24;
@@ -153,7 +155,7 @@ namespace PetAI
         {
             var config = new PetConfig();
 
-            config.petCanDie = false;
+            config.respawningPets = new HashSet<string>(new string[] {"tame-wolf-male", "tame-wolf-female", "tame-wolf-pup"});
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;

@@ -236,7 +236,7 @@ namespace PetAI
 
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
         {
-            if (owner != null && !PetConfig.Current.petCanDie)
+            if (owner != null && PetConfig.Current.respawningPets.Contains(entity.Code.Path))
             {
                 entity.Revive();
                 Vec3d pos = entity.Pos.XYZ;
