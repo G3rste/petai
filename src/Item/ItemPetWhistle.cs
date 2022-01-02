@@ -1,5 +1,6 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.MathTools;
 
 namespace PetAI
 {
@@ -21,8 +22,8 @@ namespace PetAI
                 if (byEntity.Api?.Side == EnumAppSide.Server)
                 {
                     byEntity.World?.PlaySoundAt(new AssetLocation("petai:sounds/whistling.ogg"), byEntity.ServerPos.X, byEntity.ServerPos.Y, byEntity.ServerPos.Z);
-                    notifyNearbyPets(byEntity);
                 }
+                notifyNearbyPets(byEntity);
             }
         }
 
@@ -32,13 +33,23 @@ namespace PetAI
             if (giveBehavior == null) return;
 
             var command = giveBehavior.activeCommand;
-            var victim = giveBehavior.victim;
-            
+            if(command == null) return;
+
             var petArray = byEntity.World.GetEntitiesAround(byEntity.ServerPos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
 
             foreach (var pet in petArray)
             {
                 pet.GetBehavior<EntityBehaviorReceiveCommand>().setCommand(command, byEntity as EntityPlayer);
+            }
+
+            var player = byEntity as EntityPlayer;
+            if (player != null && command.commandName == "settarget")
+            {
+                EntitySelection entitySel = null;
+                BlockSelection blockSel = null;
+                Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
+                player.World.RayTraceForSelection(pos, player.SidedPos.Pitch, player.SidedPos.Yaw, 50, ref blockSel, ref entitySel);
+                giveBehavior.victim = entitySel?.Entity;
             }
         }
 

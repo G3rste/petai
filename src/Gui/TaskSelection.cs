@@ -111,6 +111,7 @@ namespace PetAI
                     .AddButton(Lang.Get("petai:gui-command-protective"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-aggressive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-passive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(450, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-settarget"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "settarget")), ElementBounds.Fixed(0, 270, 135, 45))
                 .EndChildElements()
                 .Compose();
         }
