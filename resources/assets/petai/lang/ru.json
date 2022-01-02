@@ -1,4 +1,7 @@
 {        
+    "item-petwhistle": "Свисток",
+    "itemdesc-petwhistle": "Позволяет управлять вашим питомцем при помощи звука. Нажмите клавишу Приседания и Правую кнопку мыши для выбора команд. Нажмите Правую кнопку мыши для дачи команды.",
+    
     "gui-command-title": "Дать команду",
     "gui-command-simple": "Обычные:",
     "gui-command-sit": "Сидеть",
@@ -14,6 +17,7 @@
     "gui-command-passive": "Пассивное",
     "gui-command-backpackinv": "Инвентарь питомца",
     "gui-command-dropgear": "Выбросить все",
+    "gui-command-settarget": "Выбрать цель",
     
     "gui-pet-obedience":"Послушание: {0}%",
     "gui-pet-disobey":"Питомец вредничает. Поднимите его послушание до {0}%.",
