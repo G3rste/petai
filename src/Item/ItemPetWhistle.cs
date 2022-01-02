@@ -59,17 +59,5 @@ namespace PetAI
             byEntity.AnimManager?.StopAnimation("PlaceBlock");
             return secondsUsed < 3;
         }
-
-        public override void OnHeldInteractStop(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel)
-        {
-            byEntity.AnimManager?.StopAnimation("eat");
-            base.OnHeldInteractStop(secondsUsed, slot, byEntity, blockSel, entitySel);
-        }
-
-        public override bool OnHeldInteractCancel(float secondsUsed, ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, EnumItemUseCancelReason cancelReason)
-        {
-            byEntity.AnimManager?.StopAnimation("eat");
-            return true;
-        }
     }
 }
