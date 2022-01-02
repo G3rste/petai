@@ -1,4 +1,7 @@
-{ 
+{
+    "item-petwhistle": "Pet whistle",
+    "itemdesc-petwhistle": "Control your pets with acustic commands. Press crouch + rightclick to coose a command. Press rightclick to give the command.",
+    
     "gui-command-title": "Choose a command!",
     "gui-command-simple": "Simple Commands:",
     "gui-command-sit": "Sit",
@@ -14,6 +17,7 @@
     "gui-command-passive": "Passive",
     "gui-command-backpackinv": "Pet Inventory",
     "gui-command-dropgear": "Drop all",
+    "gui-command-settarget": "Set target",
 
     "gui-pet-obedience":"Obedience: {0}%",
     "gui-pet-disobey":"Pet is not obedient enough. Needed obedience is {0}%.",

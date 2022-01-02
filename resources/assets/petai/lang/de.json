@@ -1,4 +1,7 @@
 {
+    "item-petwhistle": "Haustierpfeife",
+    "itemdesc-petwhistle": "Gib deinen Haustieren akustische Befehle. Drücke Ducken + Rechtsklick, um einen Befehl auszuwählen. Drücke Rechtsklick, um den Befehl zu geben.",
+    
     "gui-command-title": "Wähle einen Befehl!",
     "gui-command-simple": "Einfache Tricks:",
     "gui-command-sit": "Sitz",
@@ -14,6 +17,7 @@
     "gui-command-passive": "Passiv",
     "gui-command-backpackinv": "Haustier Inventar",
     "gui-command-dropgear": "Fallen lassen",
+    "gui-command-settarget": "Setze Ziel",
 
     "gui-pet-obedience":"Gehorsamkeit: {0}%",
     "gui-pet-disobey":"Haustier ist nicht gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
