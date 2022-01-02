@@ -1,0 +1,22 @@
+{
+    "ingredientPattern": "K,B",
+    "ingredients": {
+        "K": {
+            "type": "item",
+            "code": "game:knife-*",
+            "isTool": true,
+            "toolDurabilityCost": 10
+        },
+        "B": {
+            "type": "item",
+            "code": "game:bone"
+        }
+    },
+    "width": 1,
+    "height": 2,
+    "output": {
+        "type": "item",
+        "code": "petwhistle",
+        "quantity": 1
+    }
+}
