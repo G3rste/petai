@@ -213,6 +213,13 @@ namespace PetAI
                 if (next)
                     next = !feedEntityIfPossible(itemslot);
             }
+
+            if(itemslot?.Itemstack?.Item?.Code?.Path == "magicbone"){
+                domesticationLevel = DomesticationLevel.DOMESTICATED;
+                obedience = 1;
+                owner = (byEntity as EntityPlayer)?.Player;
+                spawnTameVariant(1f);
+            }
         }
 
         public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data, ref EnumHandling handled)

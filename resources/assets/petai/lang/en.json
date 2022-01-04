@@ -1,6 +1,8 @@
 {
     "item-petwhistle": "Pet whistle",
+    "item-magicbone": "Magic bone",
     "itemdesc-petwhistle": "Control your pets with acustic commands. Press crouch + rightclick to coose a command. Press rightclick to give the command.",
+    "itemdesc-magicbone": "Rightclick to instantly tame the creature in front of you (if at all possible) and make it 100% obedient.",
     
     "gui-command-title": "Choose a command!",
     "gui-command-simple": "Simple Commands:",

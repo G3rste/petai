@@ -1,6 +1,8 @@
 {
     "item-petwhistle": "Haustierpfeife",
+    "item-magicbone": "Magischer Knochen",
     "itemdesc-petwhistle": "Gib deinen Haustieren akustische Befehle. Drücke Ducken + Rechtsklick, um einen Befehl auszuwählen. Drücke Rechtsklick, um den Befehl zu geben.",
+    "itemdesc-magicbone": "Rechtsklick, um dir ein zähmbares Tier sofort Untertan zu machen.",
     
     "gui-command-title": "Wähle einen Befehl!",
     "gui-command-simple": "Einfache Tricks:",
