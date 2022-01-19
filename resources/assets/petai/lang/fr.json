@@ -1,0 +1,34 @@
+{
+    "item-petwhistle": "Sifflet à animaux",
+    "item-magicbone": "Os magique",
+    "itemdesc-petwhistle": "Contrôlez vos animaux avec les commandes accoustiques. Appuyez sur s'accroupir + clic droit pour choisir une commande. Clic droit pour donner un ordre.",
+    "itemdesc-magicbone": "Clic droit pour instantanément apprivoiser la créature en face de vous (si cela est possible) et rendez-le 100% obéissant.",
+    
+    "gui-command-title": "Choisir un ordre!",
+    "gui-command-simple": "Ordres simples:",
+    "gui-command-sit": "Assis",
+    "gui-command-lay": "Couché",
+    "gui-command-speak": "Parle",
+    "gui-command-complex": "Ordres complexes:",
+    "gui-command-followmaster": "Suis-moi",
+    "gui-command-stay": "Reste ici",
+    "gui-command-aggressionlevel": "Niveau d'aggression:",
+    "gui-command-aggressive": "Attaque",
+    "gui-command-protective": "Protection",
+    "gui-command-neutral": "Neutre",
+    "gui-command-passive": "Passif",
+    "gui-command-backpackinv": "Inventaire de l'animal",
+    "gui-command-dropgear": "Tout jeter",
+    "gui-command-settarget": "Définir cible",
+
+    "gui-pet-obedience":"Obéissance: {0}%",
+    "gui-pet-disobey":"L'animal n'est pas assez obéissant. Obéissance nécéssaire: {0}%.",
+
+    "gui-name-title": "Choisissez un nom!",
+    "gui-name-ok": "OK",
+
+    "message-tended-to": "S'occupe de {0}, progrès actuel: {1}%.",
+    "message-not-ready": "{0} n'est pas prêt à être entretenu - soigné à nouveau.",
+    "message-startet-taming": "Début de l'apprivoisement de {0}, progrès actuel: {1}%.",
+    "message-finished-taming": "{0} complètement apprivoisé."
+}
