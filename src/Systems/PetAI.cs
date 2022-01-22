@@ -6,6 +6,7 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
+using Vintagestory.API.Datastructures;
 
 namespace PetAI
 {
@@ -31,8 +32,11 @@ namespace PetAI
             AiTaskRegistry.Register<AiTaskPetMeleeAttack>("petmeleeattack");
             AiTaskRegistry.Register<AiTaskPetSeekEntity>("petseekentity");
             AiTaskRegistry.Register<AiTaskSeekNest>("seeknest");
+            AiTaskRegistry.Register<AiTaskBeAMount>("beamount");
 
             api.RegisterEntity("EntityPet", typeof(EntityPet));
+            api.RegisterEntity("EntityMount", typeof(EntityMount));
+            api.RegisterMountable("EntityMount", EntityMount.GetMountable);
 
             api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
             api.RegisterItemClass("ItemPetWhistle", typeof(ItemPetWhistle));
@@ -76,7 +80,8 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient)
+                .RegisterMessageType<MountControls>();
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -85,7 +90,8 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer)
+                .RegisterMessageType<MountControls>().SetMessageHandler<MountControls>(OnMountControls);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -125,6 +131,14 @@ namespace PetAI
                 new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
+
+        private void OnMountControls(IServerPlayer fromPlayer, MountControls mountControls)
+        {
+            EntityMount mount = serverAPI.World.GetEntityById(mountControls.mountId) as EntityMount;
+            mount.direction = mountControls.direction;
+            mount.isSprinting = mountControls.isSprinting;
+            mount.updateAnims();
+        }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetCommandMessage
@@ -133,6 +147,15 @@ namespace PetAI
         public string commandName;
         public string commandType;
         public long targetEntityUID;
+    }
+
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class MountControls
+    {
+        public long mountId;
+        public EnumMountMovementDirection direction;
+
+        public bool isSprinting;
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetNameMessage
@@ -155,7 +178,7 @@ namespace PetAI
         {
             var config = new PetConfig();
 
-            config.respawningPets = new HashSet<string>(new string[] {"tame-wolf-male", "tame-wolf-female", "tame-wolf-pup"});
+            config.respawningPets = new HashSet<string>(new string[] { "tame-wolf-male", "tame-wolf-female", "tame-wolf-pup" });
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;
