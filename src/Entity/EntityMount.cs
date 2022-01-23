@@ -86,27 +86,36 @@ namespace PetAI
             }
         }
 
-        public void updateAnims()
+        private void updateAnims(EnumEntityAction action, bool on)
         {
-            if (controls.Forward)
+            switch (action)
             {
-                AnimManager.StopAnimation(backwardAnimation.Code);
-                AnimManager.StopAnimation(walkAnimation.Code);
-                AnimManager.StopAnimation(sprintAnimation.Code);
-                AnimManager.StartAnimation(controls.Sprint ? sprintAnimation : walkAnimation);
-            }
-            else if (controls.Backward)
-            {
-                AnimManager.StopAnimation(backwardAnimation.Code);
-                AnimManager.StopAnimation(walkAnimation.Code);
-                AnimManager.StopAnimation(sprintAnimation.Code);
-                AnimManager.StartAnimation(backwardAnimation);
-            }
-            else
-            {
-                AnimManager.StopAnimation(backwardAnimation.Code);
-                AnimManager.StopAnimation(walkAnimation.Code);
-                AnimManager.StopAnimation(sprintAnimation.Code);
+                case EnumEntityAction.Forward:
+                    if (on)
+                    {
+                        if (controls.Sprint) { AnimManager.StartAnimation(sprintAnimation); }
+                        else { AnimManager.StartAnimation(walkAnimation); }
+                    }
+                    else
+                    {
+                        AnimManager.StopAnimation(walkAnimation.Code);
+                        AnimManager.StopAnimation(sprintAnimation.Code);
+                    }
+                    break;
+                case EnumEntityAction.Backward:
+                    if (on) { AnimManager.StartAnimation(backwardAnimation); }
+                    else { AnimManager.StopAnimation(backwardAnimation.Code); }
+                    break;
+                case EnumEntityAction.Sprint:
+                    if (on)
+                    {
+                        if (controls.Forward) { AnimManager.StartAnimation(sprintAnimation); }
+                    }
+                    else
+                    {
+                        AnimManager.StopAnimation(sprintAnimation.Code);
+                    }
+                    break;
             }
         }
 
@@ -141,7 +150,7 @@ namespace PetAI
                 Controls.WalkVector.Mul(0);
                 Controls.StopAllMovement();
             }
-            updateAnims();
+            updateAnims(action, on);
         }
 
         private AnimationMetaData LoadAnimFromJson(JsonObject json) => new AnimationMetaData
