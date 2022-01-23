@@ -19,16 +19,11 @@ namespace PetAI
 
         public string SuggestedAnimation => "sitflooridle";
 
-        public EnumMountMovementDirection direction { get; set; }
-
         private AnimationMetaData walkAnimation;
         private AnimationMetaData sprintAnimation;
         private AnimationMetaData backwardAnimation;
 
         private float mountHeight = 1f;
-
-        public bool isSprinting { get; set; }
-
         public IMountableSupplier MountSupplier => this;
 
         public double RenderOrder => 0;
@@ -50,6 +45,7 @@ namespace PetAI
         public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
         {
             base.Initialize(properties, api, InChunkIndex3d);
+            controls = new EntityControls();
             mountHeight = Properties.Attributes["mountHeight"].AsFloat(1f);
             walkAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["walk"]);
             sprintAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["sprint"]);
@@ -106,9 +102,6 @@ namespace PetAI
 
         private void updateMotion(float dt)
         {
-            // Ignore lag spikes
-            dt = Math.Min(0.2f, dt);
-
             if (rider != null && rider is EntityAgent)
             {
                 float desiredYaw = rider.SidedPos.Yaw + 1.5708f;
@@ -117,15 +110,15 @@ namespace PetAI
                 SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
                 SidedPos.Yaw = SidedPos.Yaw % GameMath.TWOPI;
 
-                if (direction == EnumMountMovementDirection.Forwards)
+                if (controls.Forward)
                 {
-                    float factor = isSprinting ? 0.06f : 0.02f;
+                    float factor = controls.Sprint ? 0.06f : 0.02f;
                     double cosYaw = Math.Cos(SidedPos.Yaw);
                     double sinYaw = Math.Sin(SidedPos.Yaw);
                     Controls.WalkVector.Set(sinYaw, 0, cosYaw);
                     Controls.WalkVector.Mul(factor * GlobalConstants.OverallSpeedMultiplier);
                 }
-                else if (direction == EnumMountMovementDirection.Backwards)
+                else if (controls.Backward)
                 {
                     double cosYaw = Math.Cos(SidedPos.Yaw);
                     double sinYaw = Math.Sin(SidedPos.Yaw);
@@ -141,23 +134,23 @@ namespace PetAI
 
         public void updateAnims()
         {
-            switch (direction)
+            if (controls.Forward)
             {
-                case EnumMountMovementDirection.Forwards:
-                    AnimManager.StopAnimation(backwardAnimation.Code);
-                    AnimManager.StopAnimation(isSprinting ? walkAnimation.Code : sprintAnimation.Code);
-                    AnimManager.StartAnimation(isSprinting ? sprintAnimation : walkAnimation);
-                    break;
-                case EnumMountMovementDirection.Backwards:
-                    AnimManager.StopAnimation(walkAnimation.Code);
-                    AnimManager.StopAnimation(sprintAnimation.Code);
-                    AnimManager.StartAnimation(backwardAnimation);
-                    break;
-                case EnumMountMovementDirection.None:
-                    AnimManager.StopAnimation(backwardAnimation.Code);
-                    AnimManager.StopAnimation(walkAnimation.Code);
-                    AnimManager.StopAnimation(sprintAnimation.Code);
-                    break;
+                AnimManager.StopAnimation(backwardAnimation.Code);
+                AnimManager.StopAnimation(controls.Sprint ? walkAnimation.Code : sprintAnimation.Code);
+                AnimManager.StartAnimation(controls.Sprint ? sprintAnimation : walkAnimation);
+            }
+            else if (controls.Backward)
+            {
+                AnimManager.StopAnimation(walkAnimation.Code);
+                AnimManager.StopAnimation(sprintAnimation.Code);
+                AnimManager.StartAnimation(backwardAnimation);
+            }
+            else
+            {
+                AnimManager.StopAnimation(backwardAnimation.Code);
+                AnimManager.StopAnimation(walkAnimation.Code);
+                AnimManager.StopAnimation(sprintAnimation.Code);
             }
         }
 
@@ -178,29 +171,7 @@ namespace PetAI
                 Controls.WalkVector.Mul(0);
                 Controls.StopAllMovement();
             }
-            else
-            if (Api.Side == EnumAppSide.Client)
-            {
-                switch (action)
-                {
-                    case EnumEntityAction.Forward:
-                        direction = on ? EnumMountMovementDirection.Forwards : EnumMountMovementDirection.None;
-                        break;
-                    case EnumEntityAction.Backward:
-                        direction = on ? EnumMountMovementDirection.Backwards : EnumMountMovementDirection.None;
-                        break;
-                    case EnumEntityAction.Sprint:
-                        isSprinting = on;
-                        break;
-                    default: break;
-                }
-
-                MountControls mountControls = new MountControls();
-                mountControls.mountId = EntityId;
-                mountControls.direction = direction;
-                mountControls.isSprinting = isSprinting;
-                (Api as ICoreClientAPI).Network.GetChannel("petainetwork").SendPacket<MountControls>(mountControls);
-            }
+            updateAnims();
         }
 
         private AnimationMetaData LoadAnimFromJson(JsonObject json) => new AnimationMetaData
@@ -211,10 +182,5 @@ namespace PetAI
             EaseOutSpeed = 1f,
             AnimationSpeed = json["animationSpeed"].AsFloat()
         }.Init();
-    }
-
-    public enum EnumMountMovementDirection
-    {
-        None, Forwards, Backwards
     }
 }

@@ -56,7 +56,7 @@ namespace PetAI
             base.FinishExecute(cancelled);
         }
 
-        private void handleInput(float dt)
+        /*private void handleInput(float dt)
         {
             if (entity.direction == EnumMountMovementDirection.Forwards)
             {
@@ -77,6 +77,6 @@ namespace PetAI
             {
                 entity.Controls.WalkVector.Set(0, 0, 0);
             }
-        }
+        }*/
     }
 }

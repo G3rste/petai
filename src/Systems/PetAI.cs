@@ -80,8 +80,7 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient)
-                .RegisterMessageType<MountControls>();
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -90,8 +89,7 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer)
-                .RegisterMessageType<MountControls>().SetMessageHandler<MountControls>(OnMountControls);
+                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -131,14 +129,6 @@ namespace PetAI
                 new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
-
-        private void OnMountControls(IServerPlayer fromPlayer, MountControls mountControls)
-        {
-            EntityMount mount = serverAPI.World.GetEntityById(mountControls.mountId) as EntityMount;
-            mount.direction = mountControls.direction;
-            mount.isSprinting = mountControls.isSprinting;
-            mount.updateAnims();
-        }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetCommandMessage
@@ -147,15 +137,6 @@ namespace PetAI
         public string commandName;
         public string commandType;
         public long targetEntityUID;
-    }
-
-    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
-    public class MountControls
-    {
-        public long mountId;
-        public EnumMountMovementDirection direction;
-
-        public bool isSprinting;
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetNameMessage
