@@ -313,9 +313,9 @@ namespace PetAI
                 }
 
                 //Attempt to keep the growing progress of the entity
-                if (entity.WatchedAttributes.HasAttribute("growTree"))
+                if (entity.WatchedAttributes.HasAttribute("grow"))
                 {
-                    tameEntity.WatchedAttributes.SetAttribute("growTree", entity.WatchedAttributes.GetAttribute("growTree"));
+                    tameEntity.WatchedAttributes.SetAttribute("grow", entity.WatchedAttributes.GetAttribute("grow"));
                 }
 
                 tameEntity.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
