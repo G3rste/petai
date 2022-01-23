@@ -10,7 +10,9 @@ namespace PetAI
         {
             if (byEntity?.Controls?.Sneak == true)
             {
-                if (byEntity?.Api?.Side == EnumAppSide.Client && byEntity is EntityPlayer)
+                if (byEntity?.Api?.Side == EnumAppSide.Client
+                    && byEntity is EntityPlayer
+                    && entitySel?.Entity?.HasBehavior<EntityBehaviorTameable>() != true)
                 {
                     new TaskSelectionGui(byEntity.Api as ICoreClientAPI, byEntity as EntityPlayer).TryOpen();
                 }
@@ -33,7 +35,7 @@ namespace PetAI
             if (giveBehavior == null) return;
 
             var command = giveBehavior.activeCommand;
-            if(command == null) return;
+            if (command == null) return;
 
             var petArray = byEntity.World.GetEntitiesAround(byEntity.ServerPos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
 
