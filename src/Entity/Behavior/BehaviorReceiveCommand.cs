@@ -86,6 +86,7 @@ namespace PetAI
             EntityPlayer player = byEntity as EntityPlayer;
             if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && player != null
+                && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.PlayerUID
                 && byEntity.Controls.Sneak
                 && mode == EnumInteractMode.Interact)
             {
