@@ -130,11 +130,13 @@ namespace PetAI
             if (controls.Forward)
             {
                 AnimManager.StopAnimation(backwardAnimation.Code);
-                AnimManager.StopAnimation(controls.Sprint ? walkAnimation.Code : sprintAnimation.Code);
+                AnimManager.StopAnimation(walkAnimation.Code);
+                AnimManager.StopAnimation(sprintAnimation.Code);
                 AnimManager.StartAnimation(controls.Sprint ? sprintAnimation : walkAnimation);
             }
             else if (controls.Backward)
             {
+                AnimManager.StopAnimation(backwardAnimation.Code);
                 AnimManager.StopAnimation(walkAnimation.Code);
                 AnimManager.StopAnimation(sprintAnimation.Code);
                 AnimManager.StartAnimation(backwardAnimation);
