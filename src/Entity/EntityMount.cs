@@ -4,13 +4,11 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
-using Vintagestory.GameContent;
 using System.IO;
-using Vintagestory.API.Client;
 
 namespace PetAI
 {
-    public class EntityMount : EntityPet, IMountable, IMountableSupplier, IRenderer
+    public class EntityMount : EntityPet, IMountable, IMountableSupplier
     {
         public EntityAgent rider;
         public Vec3d MountPosition => SidedPos.XYZ.AddCopy(0, mountHeight, 0);
@@ -29,9 +27,7 @@ namespace PetAI
         private float mountRunningSpeed = 0.06f;
         public IMountableSupplier MountSupplier => this;
 
-        public double RenderOrder => 0;
-
-        public int RenderRange => 999;
+        public long riderEntityIdForInit { get; private set; }
 
         public bool IsMountedBy(Entity entity)
         {
@@ -43,11 +39,10 @@ namespace PetAI
             return new Vec3f(0, mountHeight, 0);
         }
 
-        public void Dispose() { }
-
         public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
         {
             base.Initialize(properties, api, InChunkIndex3d);
+            rider = api.World.GetEntityById(riderEntityIdForInit) as EntityAgent;
             controls = new EntityControls();
             mountHeight = Properties.Attributes["mountHeight"].AsFloat(1f);
             mountWalkingSpeed = Properties.Attributes["mountWalkingSpeed"].AsFloat(0.02f);
@@ -98,13 +93,6 @@ namespace PetAI
             }
         }
 
-
-        public void OnRenderFrame(float dt, EnumRenderStage stage)
-        {
-            // Client side we update every frame for smoother turning
-            updateMotion(dt);
-        }
-
         private void updateMotion(float dt)
         {
             if (rider != null && rider is EntityAgent)
@@ -114,7 +102,6 @@ namespace PetAI
                 float yawDist = GameMath.AngleRadDistance(SidedPos.Yaw, desiredYaw);
                 SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
                 SidedPos.Yaw = SidedPos.Yaw % GameMath.TWOPI;
-                SidedPos.Roll = 0;
 
                 if (controls.Forward)
                 {
@@ -158,6 +145,20 @@ namespace PetAI
                 AnimManager.StopAnimation(walkAnimation.Code);
                 AnimManager.StopAnimation(sprintAnimation.Code);
             }
+        }
+
+        public override void ToBytes(BinaryWriter writer, bool forClient)
+        {
+            base.ToBytes(writer, forClient);
+
+                writer.Write(rider?.EntityId ?? (long)0);
+        }
+
+        public override void FromBytes(BinaryReader reader, bool fromServer)
+        {
+            base.FromBytes(reader, fromServer);
+                long entityId = reader.ReadInt64();
+                riderEntityIdForInit = entityId;
         }
 
         internal static IMountable GetMountable(IWorldAccessor world, TreeAttribute tree)
