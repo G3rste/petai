@@ -15,7 +15,7 @@ namespace PetAI
         public EntityAgent rider;
         public Vec3d MountPosition => SidedPos.XYZ.AddCopy(0, mountHeight, 0);
 
-        public float? MountYaw => SidedPos.Yaw - 1.5708f;
+        public float? MountYaw => null;
 
         public string SuggestedAnimation => "sitflooridle";
 
@@ -24,6 +24,9 @@ namespace PetAI
         private AnimationMetaData backwardAnimation;
 
         private float mountHeight = 1f;
+
+        private float mountWalkingSpeed = 0.02f;
+        private float mountRunningSpeed = 0.06f;
         public IMountableSupplier MountSupplier => this;
 
         public double RenderOrder => 0;
@@ -47,6 +50,8 @@ namespace PetAI
             base.Initialize(properties, api, InChunkIndex3d);
             controls = new EntityControls();
             mountHeight = Properties.Attributes["mountHeight"].AsFloat(1f);
+            mountWalkingSpeed = Properties.Attributes["mountWalkingSpeed"].AsFloat(0.02f);
+            mountRunningSpeed = Properties.Attributes["mountRunningSpeed"].AsFloat(0.06f);
             walkAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["walk"]);
             sprintAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["sprint"]);
             backwardAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["backward"]);
@@ -109,10 +114,11 @@ namespace PetAI
                 float yawDist = GameMath.AngleRadDistance(SidedPos.Yaw, desiredYaw);
                 SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
                 SidedPos.Yaw = SidedPos.Yaw % GameMath.TWOPI;
+                SidedPos.Roll = 0;
 
                 if (controls.Forward)
                 {
-                    float factor = controls.Sprint ? 0.06f : 0.02f;
+                    float factor = controls.Sprint ? mountRunningSpeed : mountWalkingSpeed;
                     double cosYaw = Math.Cos(SidedPos.Yaw);
                     double sinYaw = Math.Sin(SidedPos.Yaw);
                     Controls.WalkVector.Set(sinYaw, 0, cosYaw);
