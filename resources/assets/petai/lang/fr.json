@@ -21,6 +21,7 @@
     "gui-command-dropgear": "Tout jeter",
     "gui-command-settarget": "Définir cible",
 
+    "gui-pet-owner": "Propriétaire: {0}",
     "gui-pet-obedience":"Obéissance: {0}%",
     "gui-pet-disobey":"L'animal n'est pas assez obéissant. Obéissance nécéssaire: {0}%.",
 

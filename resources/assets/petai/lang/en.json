@@ -21,6 +21,7 @@
     "gui-command-dropgear": "Drop all",
     "gui-command-settarget": "Set target",
 
+    "gui-pet-owner": "Owner: {0}",
     "gui-pet-obedience":"Obedience: {0}%",
     "gui-pet-disobey":"Pet is not obedient enough. Needed obedience is {0}%.",
 

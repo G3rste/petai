@@ -21,6 +21,7 @@
     "gui-command-dropgear": "Fallen lassen",
     "gui-command-settarget": "Setze Ziel",
 
+    "gui-pet-owner": "Besitzer: {0}",
     "gui-pet-obedience":"Gehorsamkeit: {0}%",
     "gui-pet-disobey":"Haustier ist nicht gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
 
