@@ -9,12 +9,12 @@ namespace PetAI
 {
     public class AiTaskBeAMount : AiTaskBase
     {
-        new EntityMount entity;
+        EntityMount mount;
         private float moveSpeed;
 
         public AiTaskBeAMount(EntityAgent entity) : base(entity)
         {
-            this.entity = entity as EntityMount;
+            this.mount = entity as EntityMount;
         }
 
         public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
@@ -29,29 +29,47 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            return entity?.rider != null;
+            return mount?.rider != null;
         }
 
         public override bool ContinueExecute(float dt)
         {
-            /*if (entity.rider != null && entity.rider is EntityAgent)
+            if (mount.rider != null && mount.rider is EntityAgent)
             {
-                float desiredYaw = entity.rider.ServerPos.Yaw + 1.5708f;
+                float desiredYaw = mount.rider.SidedPos.Yaw + 1.5708f;
 
-                float yawDist = GameMath.AngleRadDistance(entity.ServerPos.Yaw, desiredYaw);
-                entity.ServerPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
-                entity.ServerPos.Yaw = entity.ServerPos.Yaw % GameMath.TWOPI;
+                float yawDist = GameMath.AngleRadDistance(mount.SidedPos.Yaw, desiredYaw);
+                mount.SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
+                mount.SidedPos.Yaw = mount.SidedPos.Yaw % GameMath.TWOPI;
 
-                handleInput(dt);
-            }*/
-            return entity?.rider != null && entity.rider is EntityAgent;
+                if (mount.Controls.Forward)
+                {
+                    float factor = mount.Controls.Sprint ? mount.mountRunningSpeed : mount.mountWalkingSpeed;
+                    double cosYaw = Math.Cos(mount.SidedPos.Yaw);
+                    double sinYaw = Math.Sin(mount.SidedPos.Yaw);
+                    mount.Controls.WalkVector.Set(sinYaw, 0, cosYaw);
+                    mount.Controls.WalkVector.Mul(factor * GlobalConstants.OverallSpeedMultiplier);
+                }
+                else if (mount.Controls.Backward)
+                {
+                    double cosYaw = Math.Cos(mount.SidedPos.Yaw);
+                    double sinYaw = Math.Sin(mount.SidedPos.Yaw);
+                    mount.Controls.WalkVector.Set(-sinYaw, 0, -cosYaw);
+                    mount.Controls.WalkVector.Mul(0.01 * GlobalConstants.OverallSpeedMultiplier);
+                }
+                else
+                {
+                    mount.Controls.WalkVector.Set(0, 0, 0);
+                }
+            }
+            return mount?.rider != null && mount.rider is EntityAgent;
         }
 
         public override void FinishExecute(bool cancelled)
         {
-            if (entity.rider != null)
+            if (mount.rider != null)
             {
-                entity.TryUnmount();
+                mount.TryUnmount();
             }
             base.FinishExecute(cancelled);
         }

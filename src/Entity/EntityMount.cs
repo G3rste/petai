@@ -23,8 +23,8 @@ namespace PetAI
 
         private float mountHeight = 1f;
 
-        private float mountWalkingSpeed = 0.02f;
-        private float mountRunningSpeed = 0.06f;
+        public float mountWalkingSpeed { get; private set; } = 0.02f;
+        public float mountRunningSpeed { get; private set; } = 0.06f;
         public IMountableSupplier MountSupplier => this;
 
         public long riderEntityIdForInit { get; private set; }
@@ -51,13 +51,6 @@ namespace PetAI
             sprintAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["sprint"]);
             backwardAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["backward"]);
         }
-
-        public override void OnGameTick(float dt)
-        {
-            base.OnGameTick(dt);
-            if (Api.Side == EnumAppSide.Server) updateMotion(dt);
-        }
-
         public void DidMount(EntityAgent entityAgent)
         {
             if (rider != null && rider != entityAgent)
@@ -93,38 +86,6 @@ namespace PetAI
             }
         }
 
-        private void updateMotion(float dt)
-        {
-            if (rider != null && rider is EntityAgent)
-            {
-                float desiredYaw = rider.SidedPos.Yaw + 1.5708f;
-
-                float yawDist = GameMath.AngleRadDistance(SidedPos.Yaw, desiredYaw);
-                SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
-                SidedPos.Yaw = SidedPos.Yaw % GameMath.TWOPI;
-
-                if (controls.Forward)
-                {
-                    float factor = controls.Sprint ? mountRunningSpeed : mountWalkingSpeed;
-                    double cosYaw = Math.Cos(SidedPos.Yaw);
-                    double sinYaw = Math.Sin(SidedPos.Yaw);
-                    Controls.WalkVector.Set(sinYaw, 0, cosYaw);
-                    Controls.WalkVector.Mul(factor * GlobalConstants.OverallSpeedMultiplier);
-                }
-                else if (controls.Backward)
-                {
-                    double cosYaw = Math.Cos(SidedPos.Yaw);
-                    double sinYaw = Math.Sin(SidedPos.Yaw);
-                    Controls.WalkVector.Set(-sinYaw, 0, -cosYaw);
-                    Controls.WalkVector.Mul(0.01 * GlobalConstants.OverallSpeedMultiplier);
-                }
-                else
-                {
-                    Controls.WalkVector.Set(0, 0, 0);
-                }
-            }
-        }
-
         public void updateAnims()
         {
             if (controls.Forward)
@@ -153,14 +114,14 @@ namespace PetAI
         {
             base.ToBytes(writer, forClient);
 
-                writer.Write(rider?.EntityId ?? (long)0);
+            writer.Write(rider?.EntityId ?? (long)0);
         }
 
         public override void FromBytes(BinaryReader reader, bool fromServer)
         {
             base.FromBytes(reader, fromServer);
-                long entityId = reader.ReadInt64();
-                riderEntityIdForInit = entityId;
+            long entityId = reader.ReadInt64();
+            riderEntityIdForInit = entityId;
         }
 
         internal static IMountable GetMountable(IWorldAccessor world, TreeAttribute tree)
