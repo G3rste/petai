@@ -6,7 +6,6 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
-using Vintagestory.API.Datastructures;
 
 namespace PetAI
 {
