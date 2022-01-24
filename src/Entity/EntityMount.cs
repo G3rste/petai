@@ -13,13 +13,15 @@ namespace PetAI
 
         public float? MountYaw => null;
 
-        public string SuggestedAnimation => "sitflooridle";
+        public string SuggestedAnimation => riderIdleAnimation;
 
         private AnimationMetaData walkAnimation;
         private AnimationMetaData sprintAnimation;
         private AnimationMetaData backwardAnimation;
 
         private float mountHeight = 1f;
+
+        private string riderIdleAnimation;
 
         public float mountWalkingSpeed { get; private set; } = 0.02f;
         public float mountRunningSpeed { get; private set; } = 0.06f;
@@ -42,6 +44,8 @@ namespace PetAI
             base.Initialize(properties, api, InChunkIndex3d);
             rider = api.World.GetEntityById(riderEntityIdForInit) as EntityAgent;
             controls = new EntityControls();
+            riderIdleAnimation = Properties.Attributes["riderIdleAnimation"].AsString();
+            api.Logger.Debug(riderIdleAnimation);
             mountHeight = Properties.Attributes["mountHeight"].AsFloat(1f);
             mountWalkingSpeed = Properties.Attributes["mountWalkingSpeed"].AsFloat(0.02f);
             mountRunningSpeed = Properties.Attributes["mountRunningSpeed"].AsFloat(0.06f);
