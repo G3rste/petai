@@ -6,5 +6,15 @@
         "code": "givecommand"
       },
       "file": "game:entities/humanoid/player.json"
+    },
+    {
+      "op": "add",
+      "path": "/client/animations/-",
+      "value": {
+        "code": "rideidle",
+				"animation": "rideidle", 
+				"blendMode": "Average" 
+      },
+      "file": "game:entities/humanoid/player.json"
     }
 ]

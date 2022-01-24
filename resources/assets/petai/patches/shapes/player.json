@@ -1,0 +1,45 @@
+[
+    {
+      "op": "add",
+      "path": "/animations/-",
+      "value": 
+      {
+        "name": "rideidle",
+        "code": "rideidle",
+        "quantityframes": 50,
+        "onActivityStopped": "Rewind",
+        "onAnimationEnd": "Repeat",
+        "keyframes": [
+          {
+            "frame": 0,
+            "elements": {
+              "LowerTorso": {  },
+              "UpperTorso": { "offsetX": 0.0, "offsetY": 0.0, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 0.0 },
+              "UpperArmR": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -95.0 },
+              "UpperArmL": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -95.0 },
+              "UpperFootL": { "rotationX": -75.0, "rotationY": 20.0, "rotationZ": -50.0 },
+              "LowerFootL": { "rotationX": 25.0, "rotationY": 30.0, "rotationZ": 65.0 },
+              "UpperFootR": { "rotationX": 75.0, "rotationY": -20.0, "rotationZ": -50.0 },
+              "LowerFootR": { "rotationX": -25.0, "rotationY": -30.0, "rotationZ": 65.0 }
+            }
+          },
+          {
+            "frame": 20,
+            "elements": {
+              "LowerTorso": {  },
+              "UpperTorso": { "offsetX": 0.0, "offsetY": -0.1, "offsetZ": 0.0, "rotationX": 0.0, "rotationY": 0.0, "rotationZ": 1.0 },
+              "UpperArmR": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -90.0 },
+              "LowerArmR": { "rotationX": -20.0, "rotationY": 0.0, "rotationZ": 0.0 },
+              "UpperArmL": { "rotationX": 0.0, "rotationY": 0.0, "rotationZ": -90.0 },
+              "LowerArmL": { "rotationX": 20.0, "rotationY": 0.0, "rotationZ": 0.0 },
+              "UpperFootR": { "rotationX": 80.0, "rotationY": -20.0, "rotationZ": -50.0 },
+              "LowerFootR": { "rotationX": -25.0, "rotationY": -30.0, "rotationZ": 70.0 },
+              "UpperFootL": { "rotationX": -80.0, "rotationY": 20.0, "rotationZ": -50.0 },
+              "LowerFootL": { "rotationX": 25.0, "rotationY": 30.0, "rotationZ": 70.0 }
+            }
+          }
+        ]
+      },
+      "file": "game:shapes/entity/humanoid/seraph-faceless.json"
+    }
+]
