@@ -6,7 +6,7 @@ using System.IO;
 
 namespace PetAI
 {
-    public class EntityMount : EntityPet, IMountable, IMountableSupplier
+    public class EntityMount : EntityPet, IMountable
     {
         public EntityAgent rider;
         public Vec3d MountPosition => SidedPos.XYZ.AddCopy(0, mountHeight, 0);
@@ -25,24 +25,10 @@ namespace PetAI
 
         public float mountWalkingSpeed { get; private set; } = 0.02f;
         public float mountRunningSpeed { get; private set; } = 0.06f;
-        public IMountableSupplier MountSupplier => this;
-
-        public long riderEntityIdForInit { get; private set; }
-
-        public bool IsMountedBy(Entity entity)
-        {
-            return rider?.EntityId == entity.EntityId;
-        }
-
-        public Vec3f GetMountOffset(Entity entity)
-        {
-            return new Vec3f(0, mountHeight, 0);
-        }
-
+        public IMountableSupplier MountSupplier => null;
         public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
         {
             base.Initialize(properties, api, InChunkIndex3d);
-            rider = api.World.GetEntityById(riderEntityIdForInit) as EntityAgent;
             controls = new EntityControls();
             riderIdleAnimation = Properties.Attributes["riderIdleAnimation"].AsString();
             api.Logger.Debug(riderIdleAnimation);
@@ -52,6 +38,10 @@ namespace PetAI
             walkAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["walk"]);
             sprintAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["sprint"]);
             backwardAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["backward"]);
+
+            // For reasons beyond my comprehension this fixes the bug that a player will still be weirdly connected to his horse after rejoining
+            // at least in singleplayer
+            api.World.RegisterCallback(dt => rider?.TryUnmount(), 2000);
         }
         public void DidMount(EntityAgent entityAgent)
         {
@@ -122,21 +112,6 @@ namespace PetAI
                     break;
             }
         }
-
-        public override void ToBytes(BinaryWriter writer, bool forClient)
-        {
-            base.ToBytes(writer, forClient);
-
-            writer.Write(rider?.EntityId ?? (long)0);
-        }
-
-        public override void FromBytes(BinaryReader reader, bool fromServer)
-        {
-            base.FromBytes(reader, fromServer);
-            long entityId = reader.ReadInt64();
-            riderEntityIdForInit = entityId;
-        }
-
         internal static IMountable GetMountable(IWorldAccessor world, TreeAttribute tree)
         {
             if (tree.HasAttribute("mountId"))
