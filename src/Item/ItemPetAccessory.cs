@@ -21,11 +21,10 @@ namespace PetAI
                 }
             }
         }
-        public int backpackSlots { get { return Attributes["backpackslots"].AsInt(0); } }
-        public bool canBeWornBy(string pet)
-        {
-            return Attributes["validPets"].AsArray<string>(new string[0]).Contains(pet);
-        }
+        public int backpackSlots => Attributes["backpackslots"].AsInt(0);
+        public bool canBeWornBy(string pet) => Attributes["validPets"].AsArray<string>(new string[0]).Contains(pet);
+
+        public float damageReduction => Attributes["damageReduction"].AsFloat(0);
     }
     public enum PetAccessoryType
     {

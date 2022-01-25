@@ -4,12 +4,13 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using System.IO;
+using Vintagestory.GameContent;
 
 namespace PetAI
 {
     public class EntityPet : EntityAgent
     {
-        protected InventoryBase gearInv;
+        protected InventoryPetGear gearInv;
 
         public InventorySlotBound backpackInv;
         public override IInventory GearInventory => gearInv;
@@ -28,9 +29,10 @@ namespace PetAI
 
             if (api.Side == EnumAppSide.Server)
             {
-               // GetBehavior<EntityBehaviorHealth>().onDamaged += (dmg, dmgSource) => handleDamaged(dmg, dmgSource);
+                GetBehavior<EntityBehaviorHealth>().onDamaged += (dmg, dmgSource) => applyPetArmor(dmg, dmgSource);
             }
         }
+
 
         public override void OnTesselation(ref Shape entityShape, string shapePathForLogging)
         {
@@ -87,6 +89,20 @@ namespace PetAI
                 WatchedAttributes.SetAttribute("petinventory", tree);
             }
             return WatchedAttributes.GetTreeAttribute("petinventory");
+        }
+        private float applyPetArmor(float dmg, DamageSource dmgSource)
+        {
+            if (dmgSource.SourceEntity != null && dmgSource.Type != EnumDamageType.Heal)
+            {
+                foreach (var slot in GearInventory)
+                {
+                    if (!slot.Empty)
+                    {
+                        dmg *= 1 - (slot.Itemstack.Item as ItemPetAccessory).damageReduction;
+                    }
+                }
+            }
+            return dmg;
         }
     }
 }
