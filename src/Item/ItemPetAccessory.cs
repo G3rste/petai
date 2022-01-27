@@ -48,6 +48,6 @@ namespace PetAI
     }
     public enum PetAccessoryType
     {
-        NECK, HEAD, BACK, TAIL, PAWS
+        NECK, HEAD, BACK, BODY, TAIL, PAWS
     }
 }
