@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -17,13 +18,12 @@ namespace PetAI
         public InventoryPetGear(string owningEntity, string inventoryID, ICoreAPI api) : base(inventoryID, api)
         {
             this.owningEntity = owningEntity;
-            slots = new ItemSlotPetAccessory[5] {
-                new ItemSlotPetAccessory(PetAccessoryType.NECK, owningEntity, this),
-                new ItemSlotPetAccessory(PetAccessoryType.HEAD, owningEntity, this),
-                new ItemSlotPetAccessory(PetAccessoryType.BACK, owningEntity, this),
-                new ItemSlotPetAccessory(PetAccessoryType.PAWS, owningEntity, this),
-                new ItemSlotPetAccessory(PetAccessoryType.TAIL, owningEntity, this)
-            };
+            var accessoryTypes = Enum.GetNames(typeof(PetAccessoryType));
+            slots = new List<string>(accessoryTypes)
+                .ConvertAll<ItemSlotPetAccessory>(
+                    accessoryType => new ItemSlotPetAccessory(
+                        (PetAccessoryType)Enum.Parse(typeof(PetAccessoryType), accessoryType), owningEntity, this))
+                .ToArray();
         }
         public override void FromTreeAttributes(ITreeAttribute tree)
         {
@@ -52,15 +52,7 @@ namespace PetAI
             {
                 var weightedSlot = new WeightedSlot();
                 weightedSlot.weight = 1;
-                switch (accessory.type)
-                {
-                    case PetAccessoryType.NECK: weightedSlot.slot = slots[0]; break;
-                    case PetAccessoryType.HEAD: weightedSlot.slot = slots[1]; break;
-                    case PetAccessoryType.BACK: weightedSlot.slot = slots[2]; break;
-                    case PetAccessoryType.PAWS: weightedSlot.slot = slots[3]; break;
-                    case PetAccessoryType.TAIL: weightedSlot.slot = slots[4]; break;
-                    default: weightedSlot.slot = slots[0]; break;
-                }
+                weightedSlot.slot = slots[(int)accessory.type];
                 return weightedSlot;
             }
             return base.GetBestSuitedSlot(sourceSlot, skipSlots);
