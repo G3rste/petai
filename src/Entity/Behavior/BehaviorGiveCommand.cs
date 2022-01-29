@@ -9,8 +9,32 @@ namespace PetAI
 {
     public class EntityBehaviorGiveCommand : EntityBehavior
     {
-        public Entity victim { get; set; }
-        public Entity attacker { get; set; }
+        private Entity _victim;
+        private Entity _attacker;
+        public Entity victim
+        {
+            get
+            {
+                if (_victim == null || !_victim.Alive || !_victim.IsInteractable || _victim.EntityId == entity.EntityId)
+                {
+                    return null;
+                }
+                return _victim;
+            }
+            set => _victim = value;
+        }
+        public Entity attacker
+        {
+            get
+            {
+                if (_attacker == null || !_attacker.Alive || !_attacker.IsInteractable || _attacker.EntityId == entity.EntityId)
+                {
+                    return null;
+                }
+                return _attacker;
+            }
+            set => _attacker = value;
+        }
         public Command activeCommand
         {
             get
