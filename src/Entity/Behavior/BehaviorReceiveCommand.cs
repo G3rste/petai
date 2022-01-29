@@ -44,6 +44,7 @@ namespace PetAI
         {
             get
             {
+                if (entity.GetBehavior<EntityBehaviorTameable>().domesticationLevel == DomesticationLevel.WILD) { return EnumAggressionLevel.AGGRESSIVE; }
                 EnumAggressionLevel level;
                 string commandName = entity.WatchedAttributes.GetString("aggressionLevel");
                 if (Enum.TryParse<EnumAggressionLevel>(commandName, out level) && (isEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName))))
