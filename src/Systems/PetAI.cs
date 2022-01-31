@@ -23,6 +23,7 @@ namespace PetAI
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
+            api.RegisterEntityBehaviorClass("interpolatemount", typeof(EntityBehaviorInterpolateMount));
 
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");

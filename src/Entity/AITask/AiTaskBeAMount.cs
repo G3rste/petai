@@ -1,6 +1,5 @@
 using System;
 using Vintagestory.API.Common;
-using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Config;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
@@ -39,8 +38,11 @@ namespace PetAI
                 float desiredYaw = mount.rider.SidedPos.Yaw + 1.5708f;
 
                 float yawDist = GameMath.AngleRadDistance(mount.SidedPos.Yaw, desiredYaw);
-                mount.SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
-                mount.SidedPos.Yaw = mount.SidedPos.Yaw % GameMath.TWOPI;
+                if (yawDist < -0.0872665f || yawDist > 0.0872665f)
+                {
+                    mount.SidedPos.Yaw += GameMath.Clamp(yawDist, -1440 * dt, 1440 * dt);
+                    mount.SidedPos.Yaw = mount.SidedPos.Yaw % GameMath.TWOPI;
+                }
 
                 if (mount.Controls.Forward)
                 {
