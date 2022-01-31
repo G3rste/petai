@@ -1,5 +1,5 @@
 {
-    "ingredientPattern": "K,B",
+    "ingredientPattern": "B,K",
     "ingredients": {
         "K": {
             "type": "item",
