@@ -28,6 +28,7 @@ namespace PetAI
                     && targetEntity.IsInteractable
                     && entity.ServerPos.SquareDistanceTo(targetEntity.ServerPos) >= MinDistanceToTarget())
                 {
+                    targetPos = targetEntity.ServerPos.XYZ;
                     return true;
                 }
 
