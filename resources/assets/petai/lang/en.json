@@ -25,8 +25,12 @@
     "gui-pet-obedience":"Obedience: {0}%",
     "gui-pet-disobey":"Pet is not obedient enough. Needed obedience is {0}%.",
 
-    "gui-name-title": "Choose a name!",
-    "gui-name-ok": "OK",
+    "gui-profile-title": "Pet Profile",
+    "gui-profile-name": "Name:",
+    "gui-profile-currenthealth": "Current health: {0}/{1}",
+    "gui-profile-multiply": "Pet reproduces:",
+    "gui-profile-ok": "OK",
+    "gui-profile-cancel": "Cancel",
 
     "message-tended-to": "Tended to {0}, current progress is {1}%.",
     "message-not-ready": "{0} is not ready to be tended to again.",

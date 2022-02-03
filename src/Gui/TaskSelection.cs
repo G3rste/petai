@@ -56,7 +56,8 @@ namespace PetAI
             addGuiRow(EnumCommandType.COMPLEX, "petai:gui-command-complex");
             addGuiRow(EnumCommandType.AGGRESSIONLEVEL, "petai:gui-command-aggressionlevel");
 
-            SingleComposer.EndChildElements()
+            SingleComposer.AddIconButton("necklace", value => new PetProfileGUI(capi, targetEntity.EntityId).TryOpen(), ElementBounds.FixedOffseted(EnumDialogArea.RightTop, 20, 20, 30, 30))
+                .EndChildElements()
             .Compose();
         }
 

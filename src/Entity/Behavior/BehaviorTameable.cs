@@ -90,6 +90,19 @@ namespace PetAI
             }
         }
 
+        public bool multiplyAllowed
+        {
+            get
+            {
+                return domesticationStatus.GetBool("multiplyAllowed", true);
+            }
+            set
+            {
+                domesticationStatus.SetBool("multiplyAllowed", value);
+                entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
+            }
+        }
+
         double cooldown
         {
             get
@@ -214,7 +227,8 @@ namespace PetAI
                     next = !feedEntityIfPossible(itemslot);
             }
 
-            if(itemslot?.Itemstack?.Item?.Code?.Path == "magicbone"){
+            if (itemslot?.Itemstack?.Item?.Code?.Path == "magicbone")
+            {
                 domesticationLevel = DomesticationLevel.DOMESTICATED;
                 obedience = 1;
                 owner = (byEntity as EntityPlayer)?.Player;
@@ -328,11 +342,11 @@ namespace PetAI
                 tameEntity = entity;
             }
 
-            var message = new PetNameMessage();
+            var message = new PetProfileMessage();
             message.targetEntityUID = tameEntity.EntityId;
             message.oldEntityUID = entity.EntityId;
 
-            (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetNameMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+            (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
         }
 
         bool isValidTamingItem(TamingItem item, ItemSlot slot)
@@ -370,11 +384,8 @@ namespace PetAI
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
 
-                // pets need to be fed to be obedient
-                // pets also need to be fed to be multiplied
-                // to prevent pets from infinitely multiplying, we only increase the the saturation for multiplying once fully obedient
                 if (entity.HasBehavior<EntityBehaviorMouthInventory>()
-                    && preventMultiplying()
+                    && !multiplyAllowed
                     && entity.Api.Side == EnumAppSide.Server)
                 {
                     ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
@@ -383,7 +394,7 @@ namespace PetAI
                 }
 
                 // if an entity does not implement the mouthinventory, it should still be able to multiply
-                if (!entity.HasBehavior<EntityBehaviorMouthInventory>() && obedience >= 1)
+                if (!entity.HasBehavior<EntityBehaviorMouthInventory>() && multiplyAllowed)
                 {
                     ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
                     tree.SetFloat("saturation", tree.GetFloat("saturation", 0) + 1);
