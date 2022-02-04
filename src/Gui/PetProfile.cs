@@ -45,7 +45,7 @@ namespace PetAI
             getHealthSat(out health, out maxhealth, targetEntity);
             if (health != null && maxhealth != null)
             {
-                SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-currenthealth", health, maxhealth), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
+                SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-currenthealth", health, maxhealth), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 240, 20));
                 currentY += 50;
             }
             if (targetEntity?.HasBehavior<EntityBehaviorMultiply>() == true)
