@@ -81,7 +81,7 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageClient);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -90,7 +90,7 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetNameMessage>().SetMessageHandler<PetNameMessage>(OnPetNameMessageServer);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer);
         }
 
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
@@ -115,19 +115,22 @@ namespace PetAI
             }
         }
 
-        private void OnPetNameMessageServer(IServerPlayer fromPlayer, PetNameMessage networkMessage)
+        private void OnPetProfileMessageServer(IServerPlayer fromPlayer, PetProfileMessage networkMessage)
         {
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
             target.GetBehavior<EntityBehaviorNameTag>()?.SetName(networkMessage.petName);
+            if(target?.HasBehavior<EntityBehaviorTameable>() == true){
+                target.GetBehavior<EntityBehaviorTameable>().multiplyAllowed = networkMessage.multiplyAllowed;
+            }
         }
 
-        private void OnPetNameMessageClient(PetNameMessage networkMessage)
+        private void OnPetProfileMessageClient(PetProfileMessage networkMessage)
         {
             if (clientAPI != null)
             {
                 EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
                 if (entity != null) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
-                new PetNameGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
+                new PetProfileGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
     }
@@ -140,9 +143,10 @@ namespace PetAI
         public long targetEntityUID;
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
-    public class PetNameMessage
+    public class PetProfileMessage
     {
         public string petName;
+        public bool multiplyAllowed;
         public long targetEntityUID;
         public long oldEntityUID;
     }

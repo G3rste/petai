@@ -25,8 +25,12 @@
     "gui-pet-obedience":"Gehorsamkeit: {0}%",
     "gui-pet-disobey":"Haustier ist nicht gehorsam genug. Benötigt eine Gehorsamkeit von {0}%.",
 
-    "gui-name-title": "Wähle einen Namen",
-    "gui-name-ok": "OK",
+    "gui-profile-title": "Haustier Steckbrief",
+    "gui-profile-name": "Name:",
+    "gui-profile-currenthealth": "Lebenspunkte: {0}/{1}",
+    "gui-profile-multiply": "Haustier vermehrt sich:",
+    "gui-profile-ok": "OK",
+    "gui-profile-cancel": "Abbrechen",
 
     "message-tended-to": "Du hast dich um {0} gekümmert, aktueller Zähmfortschritt ist {1}%.",
     "message-not-ready": "{0} ist noch nicht wieder hungrig.",

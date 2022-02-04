@@ -31,7 +31,6 @@ namespace PetAI
             base.Initialize(properties, api, InChunkIndex3d);
             controls = new EntityControls();
             riderIdleAnimation = Properties.Attributes["riderIdleAnimation"].AsString();
-            api.Logger.Debug(riderIdleAnimation);
             mountHeight = Properties.Attributes["mountHeight"].AsFloat(1f);
             mountWalkingSpeed = Properties.Attributes["mountWalkingSpeed"].AsFloat(0.02f);
             mountRunningSpeed = Properties.Attributes["mountRunningSpeed"].AsFloat(0.06f);

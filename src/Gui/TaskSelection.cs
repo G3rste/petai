@@ -56,7 +56,8 @@ namespace PetAI
             addGuiRow(EnumCommandType.COMPLEX, "petai:gui-command-complex");
             addGuiRow(EnumCommandType.AGGRESSIONLEVEL, "petai:gui-command-aggressionlevel");
 
-            SingleComposer.EndChildElements()
+            SingleComposer.AddIconButton("necklace", onToggleProfile, ElementBounds.FixedOffseted(EnumDialogArea.RightTop, 0, 20, 30, 30))
+                .EndChildElements()
             .Compose();
         }
 
@@ -144,6 +145,14 @@ namespace PetAI
                 (targetEntity as EntityPet)?.DropInventoryOnGround();
             }
             return true;
+        }
+
+        private void onToggleProfile(bool value)
+        {
+            var gui = new PetProfileGUI(capi, targetEntity.EntityId);
+            gui.TryClose();
+            gui.TryOpen();
+            TryClose();
         }
 
         private void SendBackPackPacket(object p)
