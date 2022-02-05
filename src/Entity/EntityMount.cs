@@ -122,7 +122,7 @@ namespace PetAI
 
         private void OnControls(EnumEntityAction action, bool on, ref EnumHandling handled)
         {
-            if (action == EnumEntityAction.Sneak && on)
+            if (action == EnumEntityAction.Sneak && !on)
             {
                 rider?.TryUnmount();
                 Controls.WalkVector.Mul(0);
