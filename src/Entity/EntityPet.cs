@@ -57,7 +57,7 @@ namespace PetAI
             {
                 gearInv.ToTreeAttributes(getInventoryTree());
             }
-            catch (NullReferenceException ex)
+            catch (NullReferenceException)
             {
                 // ignore, better save whats left of it
             }

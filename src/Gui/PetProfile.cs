@@ -13,9 +13,6 @@ namespace PetAI
         public override string ToggleKeyCombinationCode => null;
 
         private long targetEntityId;
-
-        private EntityPlayer player;
-        private int currentX = 0;
         private int currentY = 20;
 
         string petName;
