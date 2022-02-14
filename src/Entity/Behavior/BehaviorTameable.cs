@@ -47,7 +47,7 @@ namespace PetAI
             }
             set
             {
-                domesticationStatus.SetString("owner", value.PlayerUID);
+                domesticationStatus.SetString("owner", value?.PlayerUID);
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }

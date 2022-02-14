@@ -29,6 +29,7 @@
     "gui-profile-name": "Name:",
     "gui-profile-currenthealth": "Current health: {0}/{1}",
     "gui-profile-multiply": "Pet reproduces:",
+    "gui-profile-abandon": "Abandon pet:",
     "gui-profile-ok": "OK",
     "gui-profile-cancel": "Cancel",
 
