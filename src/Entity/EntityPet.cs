@@ -53,7 +53,14 @@ namespace PetAI
 
         public override void ToBytes(BinaryWriter writer, bool forClient)
         {
-            gearInv.ToTreeAttributes(getInventoryTree());
+            try
+            {
+                gearInv.ToTreeAttributes(getInventoryTree());
+            }
+            catch (NullReferenceException)
+            {
+                // ignore, better save whats left of it
+            }
 
             base.ToBytes(writer, forClient);
         }

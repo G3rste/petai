@@ -13,14 +13,13 @@ namespace PetAI
         public override string ToggleKeyCombinationCode => null;
 
         private long targetEntityId;
-
-        private EntityPlayer player;
-        private int currentX = 0;
         private int currentY = 20;
 
         string petName;
 
-        bool multiplyAllowed;
+        bool multiplyAllowed = true;
+
+        bool abandon = false;
 
         public PetProfileGUI(ICoreClientAPI capi, long targetEntityId) : base(capi)
         {
@@ -56,6 +55,9 @@ namespace PetAI
                 SingleComposer.GetSwitch("multiplyAllowed").SetValue(multiply);
                 currentY += 50;
             }
+            SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-abandon"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
+            SingleComposer.AddSwitch(value => abandon = value, ElementBounds.Fixed(150, currentY, 200, 20), "abandon");
+            currentY += 50;
             SingleComposer.AddButton(Lang.Get("petai:gui-profile-ok"), () => onClick(), ElementBounds.Fixed(0, currentY, 90, 40))
                 .AddButton(Lang.Get("petai:gui-profile-cancel"), () => TryClose(), ElementBounds.Fixed(150, currentY, 90, 40))
                 .EndChildElements()
@@ -82,6 +84,7 @@ namespace PetAI
             var message = new PetProfileMessage();
             message.petName = petName;
             message.multiplyAllowed = multiplyAllowed;
+            message.abandon = abandon;
             message.targetEntityUID = targetEntityId;
 
             capi.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message);

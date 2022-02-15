@@ -1,22 +1,46 @@
-{
-    "ingredientPattern": "B,K",
-    "ingredients": {
-        "K": {
-            "type": "item",
-            "code": "game:knife-*",
-            "isTool": true,
-            "toolDurabilityCost": 10
+[
+    {
+        "ingredientPattern": "B,K",
+        "ingredients": {
+            "K": {
+                "type": "item",
+                "code": "game:knife-*",
+                "isTool": true,
+                "toolDurabilityCost": 10
+            },
+            "B": {
+                "type": "item",
+                "code": "game:bone"
+            }
         },
-        "B": {
+        "width": 1,
+        "height": 2,
+        "output": {
             "type": "item",
-            "code": "game:bone"
+            "code": "petwhistle",
+            "quantity": 1
         }
     },
-    "width": 1,
-    "height": 2,
-    "output": {
-        "type": "item",
-        "code": "petwhistle",
-        "quantity": 1
+    {
+        "ingredientPattern": "B,K",
+        "ingredients": {
+            "K": {
+                "type": "item",
+                "code": "game:chisel-*",
+                "isTool": true,
+                "toolDurabilityCost": 1
+            },
+            "B": {
+                "type": "item",
+                "code": "game:bone"
+            }
+        },
+        "width": 1,
+        "height": 2,
+        "output": {
+            "type": "item",
+            "code": "petwhistle",
+            "quantity": 1
+        }
     }
-}
+]

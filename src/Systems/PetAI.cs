@@ -120,7 +120,14 @@ namespace PetAI
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
             target.GetBehavior<EntityBehaviorNameTag>()?.SetName(networkMessage.petName);
             if(target?.HasBehavior<EntityBehaviorTameable>() == true){
-                target.GetBehavior<EntityBehaviorTameable>().multiplyAllowed = networkMessage.multiplyAllowed;
+                var tameable = target.GetBehavior<EntityBehaviorTameable>();
+                tameable.multiplyAllowed = networkMessage.multiplyAllowed;
+
+                if(networkMessage.abandon){
+                    tameable.owner = null;
+                    tameable.domesticationLevel = DomesticationLevel.WILD;
+                    tameable.domesticationProgress = 0f;
+                }
             }
         }
 
@@ -147,6 +154,7 @@ namespace PetAI
     {
         public string petName;
         public bool multiplyAllowed;
+        public bool abandon;
         public long targetEntityUID;
         public long oldEntityUID;
     }
