@@ -29,6 +29,7 @@
     "gui-profile-name": "Кличка:",
     "gui-profile-currenthealth": "Текущее здоровье: {0}/{1}",
     "gui-profile-multiply": "Размножение:",
+    "gui-profile-abandon": "Прогнать:",
     "gui-profile-ok": "ОК",
     "gui-profile-cancel": "Отмена",
 
