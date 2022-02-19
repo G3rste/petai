@@ -37,18 +37,19 @@ namespace PetAI
                     {
                         var behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (ownerAttackedBy != null && ownerAttackedBy.Alive)
+                        if (ownerAttackedBy != null && ownerAttackedBy.Alive && entity.ServerPos.SquareDistanceTo(ownerAttackedBy.ServerPos) < seekingRange * seekingRange * 2)
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (ownerAttacks != null && ownerAttacks.Alive)
+                        if (ownerAttacks != null && ownerAttacks.Alive && entity.ServerPos.SquareDistanceTo(ownerAttacks.ServerPos) < seekingRange * seekingRange * 2)
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (attackedByEntity != null && attackedByEntity.Alive)
+                    if (attackedByEntity != null && attackedByEntity.Alive && entity.ServerPos.SquareDistanceTo(attackedByEntity.ServerPos) < seekingRange * seekingRange * 2
+                        && !(attackedByEntity == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f))
                     {
                         targetEntity = attackedByEntity;
                     }
@@ -69,7 +70,7 @@ namespace PetAI
 
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
         {
-            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
+            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity) { return false; }
 
             if (attackedByEntity == e) { return true; }
 
