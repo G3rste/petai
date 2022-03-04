@@ -15,6 +15,8 @@ namespace PetAI
 
         float _HoursToGrow;
 
+        bool keepTexture;
+
         internal float HoursToGrow
         {
             get { return _HoursToGrow * PetConfig.Current.difficulty.growingMultiplier; }
@@ -52,6 +54,8 @@ namespace PetAI
                 entity.WatchedAttributes.SetAttribute("grow", growTree = new TreeAttribute());
                 TimeSpawned = entity.World.Calendar.TotalHours;
             }
+
+            keepTexture = typeAttributes["keepTexture"].AsBool(false);
 
             callbackId = entity.World.RegisterCallback(CheckGrowth, 3000);
         }
@@ -97,6 +101,11 @@ namespace PetAI
                     adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
                 }
                 adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
+                if (keepTexture)
+                {
+                    //Attempt to not change the texture during growing up
+                    adult.WatchedAttributes.SetInt("textureIndex", entity.WatchedAttributes.GetInt("textureIndex", 0));
+                }
             }
             else
             {
