@@ -6,18 +6,22 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 using System.Collections.Generic;
+using HarmonyLib;
 
 namespace PetAI
 {
     public class PetAI : ModSystem
     {
 
+        Harmony harmony = new Harmony("gerste.petai");
         ICoreServerAPI serverAPI;
 
         ICoreClientAPI clientAPI;
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
+
+            MultiplyPatch.Patch(harmony);
 
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
@@ -93,6 +97,13 @@ namespace PetAI
                 .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer);
         }
 
+        public override void Dispose()
+        {
+            base.Dispose();
+
+            MultiplyPatch.Unpatch(harmony);
+        }
+
         private void OnPetCommandMessage(IServerPlayer fromPlayer, PetCommandMessage networkMessage)
         {
             EntityPlayer player = serverAPI.World.PlayerByUid(networkMessage.playerUID)?.Entity;
@@ -119,11 +130,13 @@ namespace PetAI
         {
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
             target.GetBehavior<EntityBehaviorNameTag>()?.SetName(networkMessage.petName);
-            if(target?.HasBehavior<EntityBehaviorTameable>() == true){
+            if (target?.HasBehavior<EntityBehaviorTameable>() == true)
+            {
                 var tameable = target.GetBehavior<EntityBehaviorTameable>();
                 tameable.multiplyAllowed = networkMessage.multiplyAllowed;
 
-                if(networkMessage.abandon){
+                if (networkMessage.abandon)
+                {
                     tameable.owner = null;
                     tameable.domesticationLevel = DomesticationLevel.WILD;
                     tameable.domesticationProgress = 0f;

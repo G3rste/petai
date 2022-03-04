@@ -384,17 +384,8 @@ namespace PetAI
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
 
-                if (entity.HasBehavior<EntityBehaviorMouthInventory>()
-                    && !multiplyAllowed
-                    && entity.Api.Side == EnumAppSide.Server)
-                {
-                    ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
-                    // decrease saturation because AITaskUseInventory will raise it anyway
-                    tree.SetFloat("saturation", Math.Max(tree.GetFloat("saturation", 0) - 1, 0));
-                }
-
                 // if an entity does not implement the mouthinventory, it should still be able to multiply
-                if (!entity.HasBehavior<EntityBehaviorMouthInventory>() && multiplyAllowed)
+                if (!entity.HasBehavior<EntityBehaviorMouthInventory>())
                 {
                     ITreeAttribute tree = entity.WatchedAttributes.GetOrAddTreeAttribute("hunger");
                     tree.SetFloat("saturation", tree.GetFloat("saturation", 0) + 1);
