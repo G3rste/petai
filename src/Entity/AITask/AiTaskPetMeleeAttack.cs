@@ -24,22 +24,20 @@ namespace PetAI
         {
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
+            var tameable = entity.GetBehavior<EntityBehaviorTameable>();
+            if (e == tameable?.owner?.Entity && tameable.obedience > 0.5f) { return false; }
 
             if (isCommandable && (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
             {
-                var ownerAttackedBy = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.attacker;
-                if (ownerAttackedBy == e) { return true; }
-
-                var ownerAttacks = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>()?.victim;
-                if (ownerAttacks == e) { return true; }
+                var commandBehavior = tameable?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                if (commandBehavior?.attacker == e || commandBehavior?.victim == e)
+                {
+                    return base.IsTargetableEntity(e, range, true);
+                }
             }
-            if (attackedByEntity == e
-                && attackedByEntity.Alive
-                && attackedByEntity.IsInteractable
-                && attackedByEntity != entity.GetBehavior<EntityBehaviorTameable>()?.owner)
+            if (attackedByEntity == e)
             {
-                return true;
+                return base.IsTargetableEntity(e, range, true);
             }
 
             if (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.NEUTRAL) { return false; }

@@ -11,6 +11,8 @@ namespace PetAI
 
         long lastCheck;
 
+        long lastSearch;
+
         public AiTaskPetSeekEntity(EntityAgent entity) : base(entity)
         {
         }
@@ -25,54 +27,60 @@ namespace PetAI
         public override bool ShouldExecute()
         {
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
-            if (lastCheck + 500 < entity.World.ElapsedMilliseconds)
+            var elapsedMs = entity.World.ElapsedMilliseconds;
+            if (lastCheck + 500 < elapsedMs)
             {
-                lastCheck = entity.World.ElapsedMilliseconds;
+                lastCheck = elapsedMs;
                 if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (targetEntity != null && (!targetEntity.Alive || entity.ServerPos.SquareDistanceTo(targetEntity.ServerPos) > seekingRange * seekingRange * 2)) { targetEntity = null; }
+                if (!IsTargetableEntity(targetEntity, seekingRange, true)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (ownerAttackedBy != null && ownerAttackedBy.Alive && entity.ServerPos.SquareDistanceTo(ownerAttackedBy.ServerPos) < seekingRange * seekingRange * 2)
+                        if (IsTargetableEntity(ownerAttackedBy, seekingRange * 2, true))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (ownerAttacks != null && ownerAttacks.Alive && entity.ServerPos.SquareDistanceTo(ownerAttacks.ServerPos) < seekingRange * seekingRange * 2)
+                        if (IsTargetableEntity(ownerAttacks, seekingRange * 2, true))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (attackedByEntity != null && attackedByEntity.Alive && entity.ServerPos.SquareDistanceTo(attackedByEntity.ServerPos) < seekingRange * seekingRange * 2
-                        && !(attackedByEntity == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f))
+                    if (IsTargetableEntity(attackedByEntity, seekingRange * 2, true))
                     {
                         targetEntity = attackedByEntity;
                     }
                 }
 
-                if (targetEntity != null
-                        && targetEntity.Alive
-                        && entity.ServerPos.SquareDistanceTo(targetEntity.ServerPos) >= MinDistanceToTarget()
-                        && entity.ServerPos.SquareDistanceTo(targetEntity.ServerPos) < seekingRange * seekingRange * 2)
+                if (IsTargetableEntity(targetEntity, seekingRange * 2, true))
                 {
                     targetPos = targetEntity.ServerPos.XYZ;
                     return true;
                 }
             }
-            if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE) { return base.ShouldExecute(); }
+            if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE && lastSearch + 5000 < elapsedMs)
+            {
+                lastSearch = elapsedMs;
+                targetEntity = partitionUtil.GetNearestEntity(entity.ServerPos.XYZ, seekingRange, e => IsTargetableEntity(e, seekingRange));
+
+                if (IsTargetableEntity(targetEntity, seekingRange, true))
+                {
+                    targetPos = targetEntity.ServerPos.XYZ;
+                    return true;
+                }
+            }
             return false;
         }
 
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
         {
-            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity) { return false; }
-
-            if (attackedByEntity == e) { return true; }
+            if (e == null) { return false; }
+            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
         }
