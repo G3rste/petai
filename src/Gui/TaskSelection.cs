@@ -71,9 +71,11 @@ namespace PetAI
                 currentY += 35;
                 SingleComposer.AddButton(Lang.Get("petai:gui-command-dropgear"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "dropgear")), ElementBounds.Fixed(currentX, currentY, 135, 45));
                 double pad = GuiElementItemSlotGrid.unscaledSlotPadding;
-                var slotbounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, pad + 150, currentY, pet.backpackInv.Count, 1).FixedGrow(2 * pad, 2 * pad);
-                SingleComposer.AddItemSlotGrid(pet.backpackInv, SendBackPackPacket, pet.backpackInv.Count, slotbounds, "petBackPackInv");
-                currentY += 55;
+                int slotCount = pet.backpackInv.Count;
+                int rows = slotCount % 8 == 0 ? slotCount / 8 : slotCount / 8 + 1;
+                var slotbounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, pad + 150, currentY, 8, rows).FixedGrow(2 * pad, 2 * pad);
+                SingleComposer.AddItemSlotGrid(pet.backpackInv, SendBackPackPacket, 8, slotbounds, "petBackPackInv");
+                currentY += 55 * rows;
             }
         }
 
