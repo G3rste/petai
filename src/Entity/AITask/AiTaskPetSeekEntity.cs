@@ -13,6 +13,21 @@ namespace PetAI
 
         long lastSearch;
 
+        private EntityBehaviorGiveCommand _behaviorGiveCommand;
+        private long lastOwnerLookup;
+        private EntityBehaviorGiveCommand behaviorGiveCommand
+        {
+            get
+            {
+                if (_behaviorGiveCommand == null && lastOwnerLookup + 5000 < entity.World.ElapsedMilliseconds)
+                {
+                    lastOwnerLookup = entity.World.ElapsedMilliseconds;
+                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                }
+                return _behaviorGiveCommand;
+            }
+        }
+
         public AiTaskPetSeekEntity(EntityAgent entity) : base(entity)
         {
         }
@@ -38,7 +53,6 @@ namespace PetAI
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
-                        var behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
                         if (IsTargetableEntity(ownerAttackedBy, seekingRange * 2, true))
                         {
@@ -80,7 +94,7 @@ namespace PetAI
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
         {
             if (e == null) { return false; }
-            if (e == entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
+            if ((e as EntityPlayer)?.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.ownerId && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
         }

@@ -39,18 +39,17 @@ namespace PetAI
             }
         }
 
-        public IPlayer owner
+        public String ownerId
         {
-            get
-            {
-                return entity.World.PlayerByUid(domesticationStatus.GetString("owner"));
-            }
+            get => domesticationStatus.GetString("owner");
             set
             {
-                domesticationStatus.SetString("owner", value?.PlayerUID);
+                domesticationStatus.SetString("owner", value);
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
+
+        public IPlayer owner { get => entity.World.PlayerByUid(ownerId); set => ownerId = value?.PlayerUID; }
 
         public float domesticationProgress
         {

@@ -9,6 +9,21 @@ namespace PetAI
     {
         bool isCommandable = false;
 
+        private EntityBehaviorGiveCommand _behaviorGiveCommand;
+        private long lastOwnerLookup;
+        private EntityBehaviorGiveCommand behaviorGiveCommand
+        {
+            get
+            {
+                if (_behaviorGiveCommand == null && lastOwnerLookup + 5000 < entity.World.ElapsedMilliseconds)
+                {
+                    lastOwnerLookup = entity.World.ElapsedMilliseconds;
+                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                }
+                return _behaviorGiveCommand;
+            }
+        }
+
         public AiTaskPetMeleeAttack(EntityAgent entity) : base(entity)
         {
         }
@@ -25,12 +40,11 @@ namespace PetAI
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
-            if (e == tameable?.owner?.Entity && tameable.obedience > 0.5f) { return false; }
+            if ((e as EntityPlayer)?.PlayerUID == tameable?.ownerId && tameable.obedience > 0.5f) { return false; }
 
             if (isCommandable && (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
             {
-                var commandBehavior = tameable?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
-                if (commandBehavior?.attacker == e || commandBehavior?.victim == e)
+                if (behaviorGiveCommand?.attacker == e || behaviorGiveCommand?.victim == e)
                 {
                     return base.IsTargetableEntity(e, range, true);
                 }
