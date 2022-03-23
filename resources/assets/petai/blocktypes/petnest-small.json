@@ -1,0 +1,82 @@
+{
+    "code": "petnest",
+    "creativeinventory": {
+        "general": [
+            "*"
+        ]
+    },
+    "heldTpIdleAnimation": "holdbothhands",
+    "heldTpHitAnimation": "twohandplaceblock",
+    "behaviors": [
+        {
+            "name": "RightClickPickup"
+        }
+    ],
+    "entityBehaviors": [
+        {
+            "name": "PetNest"
+        }
+    ],
+    "maxstacksize": 8,
+    "variantgroups": [
+        {
+            "code": "size",
+            "states": [
+                "small"
+            ]
+        },
+        {
+            "code": "color",
+            "states": [
+                "blue",
+                "red",
+                "orange",
+                "green",
+                "brown",
+                "black",
+                "purple",
+                "pink",
+                "yellow",
+                "white",
+                "plain",
+                "gray"
+            ]
+        }
+    ],
+    "shape": {
+        "base": "petnest-{size}"
+    },
+    "texture": {
+        "base": "game:block/cloth/linen/{color}"
+    },
+    "selectionBoxes": [
+        {
+            "x1": 0,
+            "y1": 0,
+            "z1": 0,
+            "x2": 1,
+            "y2": 0.1767,
+            "z2": 1
+        }
+    ],
+    "collisionBoxes": [
+        {
+            "empty": true
+        }
+    ],
+    "blockmaterial": "Cloth",
+    "resistance": 1,
+    "materialDensity": 50,
+    "sidesolid": {
+        "all": false
+    },
+    "sideopaque": {
+        "all": false
+    },
+    "sounds": {
+        "place": "game:block/cloth",
+        "hit": "game:block/cloth",
+        "break": "game:block/cloth",
+        "walk": "game:walk/cloth"
+    }
+}
