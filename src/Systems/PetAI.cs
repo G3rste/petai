@@ -31,6 +31,8 @@ namespace PetAI
 
             api.RegisterCollectibleBehaviorClass("considerpetfood", typeof(BehaviorConsiderHumanFoodForPetsToo));
 
+            api.RegisterBlockEntityClass("PetNest", typeof(BlockEntityPetNest));
+
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
             AiTaskRegistry.Register<AiTaskStay>("stay");
