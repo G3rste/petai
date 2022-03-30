@@ -23,6 +23,10 @@ namespace PetAI
 
         public Vec3d Position => Pos.ToVec3d();
 
+        public Vec3d MiddlePostion => Pos.ToVec3d().AddCopy(MiddelOffset);
+
+        public Vec3d MiddelOffset => new Vec3d(Block.Attributes["x"].AsDouble(), Block.Attributes["y"].AsDouble(), Block.Attributes["z"].AsDouble());
+
         public string Type => "petnest";
 
         private PetManager petManager;

@@ -25,8 +25,6 @@ namespace PetAI
 
         int range = 15;
 
-        int maxDistance = 40;
-
         long lastCheck;
 
         bool stuck = false;
@@ -44,7 +42,6 @@ namespace PetAI
                 duringDayTimeFrames.AddRange(taskConfig["duringDayTimeFrames"].AsObject<DayTimeFrame[]>(new DayTimeFrame[0]));
             }
             range = taskConfig["horRange"].AsInt(15);
-            maxDistance = taskConfig["maxDistance"].AsInt(40);
             moveSpeed = taskConfig["movespeed"].AsFloat(0.02f);
         }
 
@@ -61,30 +58,25 @@ namespace PetAI
             {
                 entityNestPos = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.ServerPos.XYZ, range, isValidNest)?.Position?.AsBlockPos;
             }
-            else if(nest == null)
+            else if (nest == null)
             {
                 nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entityNestPos.ToVec3d(), 1, poi => poi is BlockEntityPetNest) as BlockEntityPetNest;
                 nest.petId = entity.EntityId;
             }
-            return nest != null && !nestBlockReached();
+            return nest != null && entity.ServerPos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
         }
 
         public override void StartExecute()
         {
             base.StartExecute();
 
-            pathTraverser.NavigateTo(entityNestPos.Copy().Up().ToVec3d().Add(0.5, 0, 0.5), moveSpeed, () => { }, () => stuck = true, false);
+            pathTraverser.NavigateTo(nest.MiddlePostion, moveSpeed, () => { }, () => stuck = true, false);
 
             stuck = false;
         }
 
         public override bool ContinueExecute(float dt)
         {
-            if (nestBlockReached())
-            {
-                pathTraverser.Stop();
-                return false;
-            }
             return !stuck && pathTraverser.Active;
         }
 

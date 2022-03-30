@@ -6,6 +6,28 @@
             "*-north"
         ]
     },
+    "attributesByType": {
+        "*-north": {
+            "x": 1,
+            "y": 0,
+            "z": 0.5
+        },
+        "*-east": {
+            "x": 0.5,
+            "y": 0,
+            "z": 1
+        },
+        "*-south": {
+            "x": 0,
+            "y": 0,
+            "z": 0.5
+        },
+        "*-west": {
+            "x": 0.5,
+            "y": 0,
+            "z": 0
+        }
+    },
     "heldTpIdleAnimation": "holdbothhands",
     "heldTpHitAnimation": "twohandplaceblock",
     "behaviors": [
