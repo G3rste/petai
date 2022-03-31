@@ -284,8 +284,7 @@ namespace PetAI
             }
             else
             {
-                PetData data;
-                entity.Api.ModLoader.GetModSystem<PetManager>()?.petMap.TryRemove(entity.EntityId, out data);
+                entity.Api.ModLoader.GetModSystem<PetManager>()?.Remove(entity.EntityId);
                 base.OnEntityDeath(damageSourceForDeath);
             }
         }

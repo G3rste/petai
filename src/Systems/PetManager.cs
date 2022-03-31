@@ -15,7 +15,7 @@ namespace PetAI
     public class PetManager : ModSystem
     {
 
-        public ConcurrentDictionary<long, PetData> petMap;
+        private ConcurrentDictionary<long, PetData> petMap;
 
         private ICoreServerAPI sapi;
 
@@ -110,6 +110,35 @@ namespace PetAI
         {
             byte[] data = sapi.WorldManager.SaveGame.GetData("petmanager");
             petMap = data == null ? new ConcurrentDictionary<long, PetData>() : SerializerUtil.Deserialize<ConcurrentDictionary<long, PetData>>(data);
+        }
+
+        public void SetPetNest(long petId, BlockPos nestPos)
+        {
+            if (petMap.ContainsKey(petId))
+            {
+                var data = petMap[petId];
+                data.nestLocation = nestPos;
+            }
+            else
+            {
+                sapi.Logger.Error("A pet with id={0} has been tried to assign to nest at x={1}, y={2}, z={3}, but no pet with this id is known!"
+                    , petId, nestPos.X, nestPos.Y, nestPos.Z);
+            }
+        }
+
+        public void Remove(long petId)
+        {
+            if (petMap.ContainsKey(petId))
+            {
+                petMap.Remove(petId);
+            }
+        }
+
+        public BlockPos GetNestPos(long petId)
+        {
+            PetData data;
+            petMap.TryGetValue(petId, out data);
+            return data?.nestLocation;
         }
     }
 

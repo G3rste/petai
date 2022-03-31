@@ -9,19 +9,7 @@ namespace PetAI
     public class AiTaskSeekNest : AiTaskBase
     {
 
-        private BlockPos entityNestPos
-        {
-            get
-            {
-                var petMap = entity.Api.ModLoader.GetModSystem<PetManager>()?.petMap;
-                if (petMap.ContainsKey(entity.EntityId))
-                {
-                    return petMap[entity.EntityId].nestLocation;
-                }
-                return null;
-            }
-        }
-
+        private BlockPos entityNestPos => entity.Api.ModLoader.GetModSystem<PetManager>().GetNestPos(entity.EntityId);
         private BlockEntityPetNest nest { get; set; }
 
         private List<DayTimeFrame> duringDayTimeFrames = new List<DayTimeFrame>();

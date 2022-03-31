@@ -162,17 +162,7 @@ namespace PetAI
 
         private void OnPetNestMessageServer(IServerPlayer fromPlayer, PetNestMessage networkMessage)
         {
-            var petMap = serverAPI.ModLoader.GetModSystem<PetManager>().petMap;
-            if (petMap.ContainsKey(networkMessage.selectedPet))
-            {
-                var data = petMap[networkMessage.selectedPet];
-                data.nestLocation = networkMessage.selectedNest;
-            }
-            else
-            {
-                serverAPI.Logger.Error("A pet with id={0} has been tried to assign to nest at x={1}, y={2}, z={3}, but no pet with this id is known!"
-                    , networkMessage.selectedPet, networkMessage.selectedNest.X, networkMessage.selectedNest.Y, networkMessage.selectedNest.Z);
-            }
+            serverAPI.ModLoader.GetModSystem<PetManager>().SetPetNest(networkMessage.selectedPet, networkMessage.selectedNest);
         }
 
         private void OnPetNestMessageClient(PetNestMessage networkMessage)
