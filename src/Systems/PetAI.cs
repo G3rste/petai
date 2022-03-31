@@ -7,6 +7,7 @@ using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
+using Vintagestory.API.MathTools;
 
 namespace PetAI
 {
@@ -32,6 +33,7 @@ namespace PetAI
             api.RegisterCollectibleBehaviorClass("considerpetfood", typeof(BehaviorConsiderHumanFoodForPetsToo));
 
             api.RegisterBlockEntityClass("PetNest", typeof(BlockEntityPetNest));
+            api.RegisterBlockClass("PetNest", typeof(BlockPetNest));
 
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
@@ -87,7 +89,8 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient)
+                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -96,7 +99,8 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer)
+                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageServer);
         }
 
         public override void Dispose()
@@ -155,6 +159,26 @@ namespace PetAI
                 new PetProfileGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
+
+        private void OnPetNestMessageServer(IServerPlayer fromPlayer, PetNestMessage networkMessage)
+        {
+            var petMap = serverAPI.ModLoader.GetModSystem<PetManager>().petMap;
+            if (petMap.ContainsKey(networkMessage.selectedPet))
+            {
+                var data = petMap[networkMessage.selectedPet];
+                data.nestLocation = networkMessage.selectedNest;
+            }
+            else
+            {
+                serverAPI.Logger.Error("A pet with id={0} has been tried to assign to nest at x={1}, y={2}, z={3}, but no pet with this id is known!"
+                    , networkMessage.selectedPet, networkMessage.selectedNest.X, networkMessage.selectedNest.Y, networkMessage.selectedNest.Z);
+            }
+        }
+
+        private void OnPetNestMessageClient(PetNestMessage networkMessage)
+        {
+            new PetNestSelect(clientAPI, networkMessage.availablePets, networkMessage.selectedNest).TryOpen();
+        }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class PetCommandMessage
@@ -172,6 +196,13 @@ namespace PetAI
         public bool abandon;
         public long targetEntityUID;
         public long oldEntityUID;
+    }
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class PetNestMessage
+    {
+        public List<PetDataSmall> availablePets;
+        public long selectedPet;
+        public BlockPos selectedNest;
     }
     public class PetConfig
     {

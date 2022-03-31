@@ -1,5 +1,6 @@
 {
     "code": "petnest",
+    "class": "PetNest",
     "entityClass": "PetNest",
     "creativeinventory": {
         "general": [
@@ -13,11 +14,6 @@
     },
     "heldTpIdleAnimation": "holdbothhands",
     "heldTpHitAnimation": "twohandplaceblock",
-    "behaviors": [
-        {
-            "name": "RightClickPickup"
-        }
-    ],
     "maxstacksize": 8,
     "variantgroups": [
         {

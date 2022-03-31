@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -12,10 +11,14 @@ namespace PetAI
 
         private BlockPos entityNestPos
         {
-            get { return entity.WatchedAttributes.GetBlockPos("entityNest"); }
-            set
+            get
             {
-                if (value != null) { entity.WatchedAttributes.SetBlockPos("entityNest", value); }
+                var petMap = entity.Api.ModLoader.GetModSystem<PetManager>()?.petMap;
+                if (petMap.ContainsKey(entity.EntityId))
+                {
+                    return petMap[entity.EntityId].nestLocation;
+                }
+                return null;
             }
         }
 
@@ -54,11 +57,7 @@ namespace PetAI
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
                 if (!duringDayTimeFrames.Exists(frame => frame.Matches(hourOfDay))) return false;
             }
-            if (entityNestPos == null)
-            {
-                entityNestPos = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.ServerPos.XYZ, range, isValidNest)?.Position?.AsBlockPos;
-            }
-            else if (nest == null)
+            if (nest == null && entityNestPos != null)
             {
                 nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entityNestPos.ToVec3d(), 1, poi => poi is BlockEntityPetNest) as BlockEntityPetNest;
                 nest.petId = entity.EntityId;
@@ -83,17 +82,6 @@ namespace PetAI
         public override string ToString()
         {
             return base.ToString();
-        }
-
-        private bool isValidNest(IPointOfInterest poi)
-        {
-            var nest = poi as BlockEntityPetNest;
-            return nest != null && nest.petId == null;
-        }
-
-        bool nestBlockReached()
-        {
-            return entity.ServerPos.SquareDistanceTo(entityNestPos.ToVec3d()) < 2;
         }
     }
 }

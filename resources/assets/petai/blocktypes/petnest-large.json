@@ -1,5 +1,6 @@
 {
     "code": "petnest",
+    "class": "PetNest",
     "entityClass": "PetNest",
     "creativeinventory": {
         "general": [
@@ -78,9 +79,6 @@
                     }
                 }
             }
-        },
-        {
-            "name": "RightClickPickup"
         }
     ],
     "maxstacksize": 4,

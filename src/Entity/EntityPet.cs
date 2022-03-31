@@ -67,11 +67,12 @@ namespace PetAI
 
         public override string GetInfoText()
         {
-            if (!HasBehavior<EntityBehaviorTameable>() || GetBehavior<EntityBehaviorTameable>().owner == null) return base.GetInfoText();
+            var owner = GetBehavior<EntityBehaviorTameable>()?.owner;
+            if (owner == null) return base.GetInfoText();
 
             return String.Concat(base.GetInfoText(),
                     "\n",
-                    Lang.Get("petai:gui-pet-owner", GetBehavior<EntityBehaviorTameable>().owner?.PlayerName),
+                    Lang.Get("petai:gui-pet-owner", owner?.PlayerName),
                     "\n",
                     Lang.Get("petai:gui-pet-obedience", Math.Round(GetBehavior<EntityBehaviorTameable>().obedience * 100, 2)));
         }

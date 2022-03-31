@@ -38,7 +38,7 @@ namespace PetAI
             if (tameable == null || String.IsNullOrEmpty(tameable.ownerId)) { return; }
             if (hasDied == null) { hasDied = !pet.Alive; }
 
-            var petData = new PetData();
+            var petData = petMap.GetOrAdd(pet.EntityId, new PetData());
             petData.alive = !(bool)hasDied;
             petData.lastSeenAt = pet.ServerPos.AsBlockPos;
             petData.ownerId = tameable.ownerId;
@@ -60,7 +60,11 @@ namespace PetAI
                     }
                 }
             }
-            petMap.AddOrUpdate(pet.EntityId, id => petData, (id, oldData) => petData);
+            else
+            {
+                petData.deadPetBytes = null;
+                petData.deadUntil = 0;
+            }
         }
 
         public long RevivePet(long petId, BlockPos pos)
@@ -77,6 +81,24 @@ namespace PetAI
                     return pet.EntityId;
                 }
             }
+        }
+
+        public List<PetDataSmall> GetPetsForPlayer(string playerUID)
+        {
+            List<PetDataSmall> list = new List<PetDataSmall>();
+            foreach (var pet in petMap.Values)
+            {
+                if (pet.ownerId == playerUID)
+                {
+                    var data = new PetDataSmall();
+                    data.ownerId = pet.ownerId;
+                    data.petId = pet.petId;
+                    data.petName = pet.petName;
+                    data.petType = pet.petType;
+                    list.Add(data);
+                }
+            }
+            return list;
         }
 
         private void OnSave()
@@ -102,7 +124,16 @@ namespace PetAI
         public string petClass;
         public bool alive;
         public BlockPos lastSeenAt;
+        public BlockPos nestLocation;
         public double deadUntil;
         public byte[] deadPetBytes;
+    }
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class PetDataSmall
+    {
+        public string ownerId;
+        public long petId;
+        public string petType;
+        public string petName;
     }
 }
