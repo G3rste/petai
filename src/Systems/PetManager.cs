@@ -101,6 +101,12 @@ namespace PetAI
             return list;
         }
 
+        public PetData GetPet(long petId){
+            PetData data = null;
+            petMap.TryGetValue(petId, out data);
+            return data;
+        }
+
         private void OnSave()
         {
             sapi.WorldManager.SaveGame.StoreData("petmanager", SerializerUtil.Serialize(petMap));

@@ -47,9 +47,7 @@ namespace PetAI
         private void RefreshPetStats(float obj)
         {
             if (petId == null) { return; }
-            PetData data = null;
-            petManager?.petMap.TryGetValue((long)petId, out data);
-            cachedPet = data;
+            cachedPet = petManager.GetPet((long)petId);
             if (cachedPet == null) { return; }
             storedPetName = cachedPet.petName;
             storedPetType = cachedPet.petType;
@@ -58,7 +56,7 @@ namespace PetAI
             if (!cachedPet.alive && cachedPet.deadUntil < Api.World.Calendar.TotalHours && cachedPet.deadPetBytes != null)
             {
                 long newPetId = petManager.RevivePet((long)petId, Pos);
-                petManager.petMap.TryRemove(data.petId, out data);
+                petManager.Remove((long)petId);
                 petId = newPetId;
             }
             MarkDirty();
