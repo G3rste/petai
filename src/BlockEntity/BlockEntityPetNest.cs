@@ -16,7 +16,6 @@ namespace PetAI
         public string ownerId { get; set; }
         public string storedPetName { get; private set; }
         public string storedPetType { get; private set; }
-        public BlockPos storedLastSeenAt { get; private set; }
         public PetData cachedPet { get; private set; }
 
         public EntityPlayer cachedOwner { get; private set; }
@@ -39,7 +38,7 @@ namespace PetAI
             if (sapi != null)
             {
                 sapi.ModLoader.GetModSystem<POIRegistry>().AddPOI(this);
-                sapi.World.RegisterGameTickListener(RefreshPetStats, 15000);
+                sapi.World.RegisterGameTickListener(RefreshPetStats, 1000);
                 petManager = sapi.ModLoader.GetModSystem<PetManager>();
             }
         }
@@ -48,14 +47,13 @@ namespace PetAI
         {
             if (petId == null) { return; }
             cachedPet = petManager.GetPet((long)petId);
-            if (cachedPet == null) { return; }
-            storedPetName = cachedPet.petName;
-            storedPetType = cachedPet.petType;
-            storedLastSeenAt = cachedPet.lastSeenAt;
+            if (cachedPet?.nestLocation?.Equals(Pos) == false) { cachedPet = null; }
+            storedPetName = cachedPet?.petName;
+            storedPetType = cachedPet?.petType;
 
-            if (!cachedPet.alive && cachedPet.deadUntil < Api.World.Calendar.TotalHours && cachedPet.deadPetBytes != null)
+            if (cachedPet != null && !cachedPet.alive && cachedPet.deadUntil < Api.World.Calendar.TotalHours)
             {
-                long newPetId = petManager.RevivePet((long)petId, Pos);
+                long? newPetId = petManager.RevivePet((long)petId, Pos);
                 petManager.Remove((long)petId);
                 petId = newPetId;
             }
@@ -84,7 +82,6 @@ namespace PetAI
                 tree.SetLong("petId", (long)petId);
                 tree.SetString("petName", storedPetName);
                 tree.SetString("petType", storedPetType);
-                tree.SetBlockPos("petPos", storedLastSeenAt);
                 tree.SetString("petOnwer", ownerId);
             }
         }
@@ -97,7 +94,6 @@ namespace PetAI
                 petId = tree.GetLong("petId");
                 storedPetName = tree.GetString("petName");
                 storedPetType = tree.GetString("petType");
-                storedLastSeenAt = tree.GetBlockPos("petPos");
                 ownerId = tree.GetString("petOnwer");
             }
         }
@@ -107,9 +103,9 @@ namespace PetAI
             base.GetBlockInfo(forPlayer, dsc);
             if (String.IsNullOrEmpty(storedPetType)) { return; }
             string petDisplay = String.IsNullOrEmpty(storedPetName) ? Lang.Get(storedPetType) : storedPetName;
-            if (!String.IsNullOrEmpty(petDisplay) && storedLastSeenAt != null)
+            if (!String.IsNullOrEmpty(petDisplay))
             {
-                dsc.Append(Lang.Get("petai:blockdesc-petnest-homeof", petDisplay, storedLastSeenAt.X, storedLastSeenAt.Y, storedLastSeenAt.Z));
+                dsc.Append(Lang.Get("petai:blockdesc-petnest-homeof", petDisplay));
             }
         }
     }

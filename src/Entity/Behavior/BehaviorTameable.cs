@@ -180,7 +180,7 @@ namespace PetAI
             disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
             listenerId = entity.World.RegisterGameTickListener(disobey, 60000);
 
-            entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity, !entity.Alive);
+            entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -409,12 +409,11 @@ namespace PetAI
             entity.World.UnregisterCallback(callbackId);
             entity.World.UnregisterGameTickListener(listenerId);
 
-            if (entity.Alive 
-                && (despawn.reason == EnumDespawnReason.Unload
+            if (despawn.reason == EnumDespawnReason.Unload
                 || despawn.reason == EnumDespawnReason.Disconnect
-                || despawn.reason == EnumDespawnReason.OutOfRange))
+                || despawn.reason == EnumDespawnReason.OutOfRange)
             {
-                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity, !entity.Alive);
+                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
             }
         }
 

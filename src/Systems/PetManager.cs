@@ -16,7 +16,6 @@ namespace PetAI
     {
 
         private ConcurrentDictionary<long, PetData> petMap;
-
         private ICoreServerAPI sapi;
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -35,12 +34,15 @@ namespace PetAI
         public void UpdatePet(Entity pet, bool? hasDied = null)
         {
             var tameable = pet.GetBehavior<EntityBehaviorTameable>();
-            if (tameable == null || String.IsNullOrEmpty(tameable.ownerId)) { return; }
+            if (tameable == null || String.IsNullOrEmpty(tameable.ownerId))
+            {
+                Remove(pet.EntityId);
+                return;
+            }
             if (hasDied == null) { hasDied = !pet.Alive; }
 
             var petData = petMap.GetOrAdd(pet.EntityId, new PetData());
             petData.alive = !(bool)hasDied;
-            petData.lastSeenAt = pet.ServerPos.AsBlockPos;
             petData.ownerId = tameable.ownerId;
             petData.petId = pet.EntityId;
             petData.petClass = sapi.World.ClassRegistry.GetEntityClassName(pet.GetType());
@@ -67,9 +69,15 @@ namespace PetAI
             }
         }
 
-        public long RevivePet(long petId, BlockPos pos)
+        public long? RevivePet(long petId, BlockPos pos)
         {
-            var data = petMap[petId];
+            PetData data;
+            petMap.TryGetValue(petId, out data);
+            if (data?.deadPetBytes == null)
+            {
+                sapi.Logger.Warning("Could not revive entity with id={0} because it could not be found.", petId);
+                return null;
+            }
             using (MemoryStream ms = new MemoryStream(data.deadPetBytes))
             {
                 using (BinaryReader reader = new BinaryReader(ms, Encoding.UTF8))
@@ -101,7 +109,8 @@ namespace PetAI
             return list;
         }
 
-        public PetData GetPet(long petId){
+        public PetData GetPet(long petId)
+        {
             PetData data = null;
             petMap.TryGetValue(petId, out data);
             return data;
@@ -158,7 +167,6 @@ namespace PetAI
 
         public string petClass;
         public bool alive;
-        public BlockPos lastSeenAt;
         public BlockPos nestLocation;
         public double deadUntil;
         public byte[] deadPetBytes;

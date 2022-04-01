@@ -147,6 +147,8 @@ namespace PetAI
                     tameable.domesticationLevel = DomesticationLevel.WILD;
                     tameable.domesticationProgress = 0f;
                 }
+
+                serverAPI.ModLoader.GetModSystem<PetManager>().UpdatePet(target);
             }
         }
 
@@ -163,6 +165,8 @@ namespace PetAI
         private void OnPetNestMessageServer(IServerPlayer fromPlayer, PetNestMessage networkMessage)
         {
             serverAPI.ModLoader.GetModSystem<PetManager>().SetPetNest(networkMessage.selectedPet, networkMessage.selectedNest);
+            var nest = serverAPI.World.BlockAccessor.GetBlockEntity(networkMessage.selectedNest) as BlockEntityPetNest;
+            if (nest != null) { nest.petId = networkMessage.selectedPet; }
         }
 
         private void OnPetNestMessageClient(PetNestMessage networkMessage)

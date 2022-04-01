@@ -48,7 +48,6 @@ namespace PetAI
             if (nest == null && entityNestPos != null)
             {
                 nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entityNestPos.ToVec3d(), 1, poi => poi is BlockEntityPetNest) as BlockEntityPetNest;
-                nest.petId = entity.EntityId;
             }
             return nest != null && entity.ServerPos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
         }
