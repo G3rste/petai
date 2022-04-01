@@ -30,6 +30,7 @@ namespace PetAI
 
         private PetManager petManager;
 
+        private long listenerId;
 
         public override void Initialize(ICoreAPI api)
         {
@@ -38,7 +39,7 @@ namespace PetAI
             if (sapi != null)
             {
                 sapi.ModLoader.GetModSystem<POIRegistry>().AddPOI(this);
-                sapi.World.RegisterGameTickListener(RefreshPetStats, 1000);
+                listenerId = sapi.World.RegisterGameTickListener(RefreshPetStats, 1000);
                 petManager = sapi.ModLoader.GetModSystem<PetManager>();
             }
         }
@@ -65,6 +66,7 @@ namespace PetAI
             base.OnBlockBroken(byPlayer);
 
             (Api as ICoreServerAPI)?.ModLoader.GetModSystem<POIRegistry>().RemovePOI(this);
+            (Api as ICoreServerAPI)?.World.UnregisterGameTickListener(listenerId);
         }
 
         public override void OnBlockRemoved()
@@ -72,6 +74,7 @@ namespace PetAI
             base.OnBlockRemoved();
 
             (Api as ICoreServerAPI)?.ModLoader.GetModSystem<POIRegistry>().RemovePOI(this);
+            (Api as ICoreServerAPI)?.World.UnregisterGameTickListener(listenerId);
         }
 
         public override void ToTreeAttributes(ITreeAttribute tree)

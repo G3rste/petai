@@ -144,6 +144,7 @@ namespace PetAI
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
+        public EnumNestSize size { get; set; }
         List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
@@ -176,6 +177,10 @@ namespace PetAI
             {
                 tameEntityCode = AssetLocation.Create(attributes["tameEntityCode"].AsString());
             }
+
+            var nestSize = EnumNestSize.SMALL;
+            Enum.TryParse<EnumNestSize>(attributes["size"]?.AsString()?.ToUpper(), out nestSize);
+            size = nestSize;
 
             disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
             listenerId = entity.World.RegisterGameTickListener(disobey, 60000);

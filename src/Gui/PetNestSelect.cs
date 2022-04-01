@@ -15,7 +15,6 @@ namespace PetAI
 
         public PetNestSelect(ICoreClientAPI capi, List<PetDataSmall> availablePets, BlockPos selectedNest) : base(capi)
         {
-
             ElementBounds dialogBounds = ElementStdBounds.AutosizedMainDialog.WithAlignment(EnumDialogArea.CenterMiddle);
             ElementBounds bgBounds = ElementBounds.Fill.WithFixedPadding(GuiStyle.ElementToDialogPadding);
             bgBounds.BothSizing = ElementSizing.FitToChildren;
@@ -24,11 +23,14 @@ namespace PetAI
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar(Lang.Get("petai:gui-petnest-title"), () => TryClose())
                 .BeginChildElements(bgBounds);
+
+            BlockEntityPetNest nest = capi.World.BlockAccessor.GetBlockEntity(selectedNest) as BlockEntityPetNest;
+            availablePets = availablePets.FindAll(data => data.requiredNestSize <= (nest.Block as BlockPetNest).nestSize);
+            int index = availablePets.FindIndex(data => data.petId == nest.petId);
+            if (index == -1) { index = 0; }
+
             if (availablePets != null && availablePets.Count > 0)
             {
-                BlockEntityPetNest nest = capi.World.BlockAccessor.GetBlockEntity(selectedNest) as BlockEntityPetNest;
-                int index = availablePets.FindIndex(data => data.petId == nest.petId);
-                if (index == -1) { index = 0; }
                 selectedPetId = availablePets[index].petId;
 
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-petnest-name"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 20, 200, 20));

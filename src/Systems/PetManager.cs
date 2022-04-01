@@ -48,6 +48,7 @@ namespace PetAI
             petData.petClass = sapi.World.ClassRegistry.GetEntityClassName(pet.GetType());
             petData.petName = pet.GetBehavior<EntityBehaviorNameTag>()?.DisplayName;
             petData.petType = String.Format("{0}:item-creature-{1}", pet.Code.Domain, pet.Code.Path);
+            petData.requiredNestSize = tameable.size;
 
             if ((bool)hasDied)
             {
@@ -103,6 +104,7 @@ namespace PetAI
                     data.petId = pet.petId;
                     data.petName = pet.petName;
                     data.petType = pet.petType;
+                    data.requiredNestSize = pet.requiredNestSize;
                     list.Add(data);
                 }
             }
@@ -167,6 +169,7 @@ namespace PetAI
 
         public string petClass;
         public bool alive;
+        public EnumNestSize requiredNestSize;
         public BlockPos nestLocation;
         public double deadUntil;
         public byte[] deadPetBytes;
@@ -178,5 +181,6 @@ namespace PetAI
         public long petId;
         public string petType;
         public string petName;
+        public EnumNestSize requiredNestSize;
     }
 }
