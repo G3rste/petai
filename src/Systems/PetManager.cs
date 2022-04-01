@@ -136,7 +136,7 @@ namespace PetAI
             }
             else
             {
-                sapi.Logger.Error("A pet with id={0} has been tried to assign to nest at x={1}, y={2}, z={3}, but no pet with this id is known!"
+                sapi.Logger.Warning("A pet with id={0} has been tried to assign to nest at x={1}, y={2}, z={3}, but no pet with this id is known!"
                     , petId, nestPos.X, nestPos.Y, nestPos.Z);
             }
         }
