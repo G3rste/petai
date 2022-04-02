@@ -147,6 +147,11 @@
             "empty": true
         }
     ],
+    "drops": [
+        {
+            "code": "petai:petnest-{size}-{color}-north"
+        }
+    ],
     "blockmaterial": "Cloth",
     "resistance": 1,
     "materialDensity": 50,
