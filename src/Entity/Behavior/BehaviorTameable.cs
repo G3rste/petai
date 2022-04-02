@@ -144,6 +144,7 @@ namespace PetAI
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
+        private int generation => entity.WatchedAttributes.GetInt("generation", 0);
         public EnumNestSize size { get; set; }
         List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
@@ -387,8 +388,8 @@ namespace PetAI
                 }
                 if (acceptedItems < 1) return false;
 
-                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.difficulty.obedienceMultiplier;
-                else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier;
+                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.difficulty.obedienceMultiplier * (float)Math.Pow(1 + PetConfig.Current.difficulty.obedienceMultiplierIncreasePerGen, generation);
+                else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier * (float)Math.Pow(1 + PetConfig.Current.difficulty.tamingMultiplierIncreasePerGen, generation);
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
 
@@ -444,7 +445,7 @@ namespace PetAI
         {
             double hoursPassed = entity.World.Calendar.TotalHours - disobedienceTime;
 
-            obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24));
+            obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.difficulty.disobedienceMultiplierDecreasePerGen, generation);
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
 

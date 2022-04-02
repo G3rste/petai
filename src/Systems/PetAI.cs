@@ -223,6 +223,9 @@ namespace PetAI
             difficulty.obedienceMultiplier = 1;
             difficulty.disobedienceMultiplier = 1;
             difficulty.growingMultiplier = 1;
+            difficulty.tamingMultiplierIncreasePerGen = 0.05f;
+            difficulty.obedienceMultiplierIncreasePerGen = 0.05f;
+            difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
             config.difficulty = difficulty;
 
             var resurrector = new PetResurrector();
@@ -238,6 +241,9 @@ namespace PetAI
         public float tamingMultiplier;
         public float obedienceMultiplier;
         public float disobedienceMultiplier;
+        public float tamingMultiplierIncreasePerGen;
+        public float obedienceMultiplierIncreasePerGen;
+        public float disobedienceMultiplierDecreasePerGen;
         public float growingMultiplier;
     }
 
