@@ -39,7 +39,7 @@ namespace PetAI
             if (sapi != null)
             {
                 sapi.ModLoader.GetModSystem<POIRegistry>().AddPOI(this);
-                listenerId = sapi.World.RegisterGameTickListener(RefreshPetStats, 1000);
+                listenerId = sapi.World.RegisterGameTickListener(RefreshPetStats, 60000);
                 petManager = sapi.ModLoader.GetModSystem<PetManager>();
             }
         }
