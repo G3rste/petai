@@ -1,0 +1,190 @@
+{
+    "code": "petnest",
+    "class": "PetNest",
+    "entityClass": "PetNest",
+    "creativeinventory": {
+        "general": [
+            "*-north"
+        ]
+    },
+    "attributesByType": {
+        "*-north": {
+            "x": 1,
+            "y": 0,
+            "z": 1,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
+        },
+        "*-east": {
+            "x": 0,
+            "y": 0,
+            "z": 1,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
+        },
+        "*-south": {
+            "x": 0,
+            "y": 0,
+            "z": 0,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
+        },
+        "*-west": {
+            "x": 1,
+            "y": 0,
+            "z": 0,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
+        }
+    },
+    "heldTpIdleAnimation": "holdbothhands",
+    "heldTpHitAnimation": "twohandplaceblock",
+    "behaviors": [
+        {
+            "name": "HorizontalOrientable"
+        },
+        {
+            "name": "Multiblock",
+            "propertiesByType": {
+                "*-north": {
+                    "sizex": 2,
+                    "sizey": 1,
+                    "sizez": 2,
+                    "cposition": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "*-east": {
+                    "sizex": 2,
+                    "sizey": 1,
+                    "sizez": 2,
+                    "cposition": {
+                        "x": 1,
+                        "y": 0,
+                        "z": 0
+                    }
+                },
+                "*-south": {
+                    "sizex": 2,
+                    "sizey": 1,
+                    "sizez": 2,
+                    "cposition": {
+                        "x": 1,
+                        "y": 0,
+                        "z": 1
+                    }
+                },
+                "*-west": {
+                    "sizex": 2,
+                    "sizey": 1,
+                    "sizez": 2,
+                    "cposition": {
+                        "x": 0,
+                        "y": 0,
+                        "z": 1
+                    }
+                }
+            }
+        }
+    ],
+    "maxstacksize": 4,
+    "variantgroups": [
+        {
+            "code": "size",
+            "states": [
+                "large"
+            ]
+        },
+        {
+            "code": "color",
+            "states": [
+                "blue",
+                "red",
+                "orange",
+                "green",
+                "brown",
+                "black",
+                "purple",
+                "pink",
+                "yellow",
+                "white",
+                "plain",
+                "gray"
+            ]
+        },
+        {
+            "code": "side",
+            "loadFromProperties": "abstract/horizontalorientation"
+        }
+    ],
+    "shapeByType": {
+        "*-north": {
+            "base": "petnest-{size}",
+            "rotateY": 0
+        },
+        "*-east": {
+            "base": "petnest-{size}",
+            "rotateY": 270
+        },
+        "*-west": {
+            "base": "petnest-{size}",
+            "rotateY": 90
+        },
+        "*-south": {
+            "base": "petnest-{size}",
+            "rotateY": 180
+        }
+    },
+    "texture": {
+        "base": "game:block/cloth/linen/{color}"
+    },
+    "selectionBoxes": [
+        {
+            "x1": 0,
+            "y1": 0,
+            "z1": 0,
+            "x2": 1,
+            "y2": 0.1767,
+            "z2": 1
+        }
+    ],
+    "collisionBoxes": [
+        {
+            "empty": true
+        }
+    ],
+    "drops": [
+        {
+            "code": "petai:petnest-{size}-{color}-north"
+        }
+    ],
+    "blockmaterial": "Cloth",
+    "resistance": 1,
+    "materialDensity": 50,
+    "sidesolid": {
+        "all": false
+    },
+    "sideopaque": {
+        "all": false
+    },
+    "sounds": {
+        "place": "game:block/cloth",
+        "hit": "game:block/cloth",
+        "break": "game:block/cloth",
+        "walk": "game:walk/cloth"
+    }
+}

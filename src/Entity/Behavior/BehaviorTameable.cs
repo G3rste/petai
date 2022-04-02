@@ -39,18 +39,17 @@ namespace PetAI
             }
         }
 
-        public IPlayer owner
+        public String ownerId
         {
-            get
-            {
-                return entity.World.PlayerByUid(domesticationStatus.GetString("owner"));
-            }
+            get => domesticationStatus.GetString("owner");
             set
             {
-                domesticationStatus.SetString("owner", value?.PlayerUID);
+                domesticationStatus.SetString("owner", value);
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
+
+        public IPlayer owner { get => entity.World.PlayerByUid(ownerId); set => ownerId = value?.PlayerUID; }
 
         public float domesticationProgress
         {
@@ -145,6 +144,7 @@ namespace PetAI
                 entity.WatchedAttributes.MarkPathDirty("domesticationstatus");
             }
         }
+        public EnumNestSize size { get; set; }
         List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
@@ -178,8 +178,14 @@ namespace PetAI
                 tameEntityCode = AssetLocation.Create(attributes["tameEntityCode"].AsString());
             }
 
+            var nestSize = EnumNestSize.SMALL;
+            Enum.TryParse<EnumNestSize>(attributes["size"]?.AsString()?.ToUpper(), out nestSize);
+            size = nestSize;
+
             disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
             listenerId = entity.World.RegisterGameTickListener(disobey, 60000);
+
+            entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -278,11 +284,12 @@ namespace PetAI
 
                 smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
                 entity.World.SpawnParticles(smoke);
-                owner.Entity.GetBehavior<EntityBehaviorGiveCommand>().savePet(entity);
+                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity, true);
                 entity.Die(EnumDespawnReason.Removed);
             }
             else
             {
+                entity.Api.ModLoader.GetModSystem<PetManager>()?.Remove(entity.EntityId);
                 base.OnEntityDeath(damageSourceForDeath);
             }
         }
@@ -326,7 +333,7 @@ namespace PetAI
                     tameEntity.GetBehavior<EntityBehaviorTameable>().domesticationStatus = domesticationStatus;
                 }
 
-                //Attempt to keep the growing progress of the entity
+                //Attempt to keep the growth progress of the entity
                 if (entity.WatchedAttributes.HasAttribute("grow"))
                 {
                     tameEntity.WatchedAttributes.SetAttribute("grow", entity.WatchedAttributes.GetAttribute("grow"));
@@ -347,6 +354,7 @@ namespace PetAI
             message.oldEntityUID = entity.EntityId;
 
             (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+            (entity.Api as ICoreServerAPI)?.ModLoader.GetModSystem<PetManager>().UpdatePet(tameEntity);
         }
 
         bool isValidTamingItem(TamingItem item, ItemSlot slot)
@@ -405,6 +413,13 @@ namespace PetAI
         {
             entity.World.UnregisterCallback(callbackId);
             entity.World.UnregisterGameTickListener(listenerId);
+
+            if (despawn.reason == EnumDespawnReason.Unload
+                || despawn.reason == EnumDespawnReason.Disconnect
+                || despawn.reason == EnumDespawnReason.OutOfRange)
+            {
+                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
+            }
         }
 
         private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
@@ -445,13 +460,6 @@ namespace PetAI
                     entity.GetBehavior<EntityBehaviorHealth>().Health = item.healingValue;
                 }
             }
-        }
-
-        private bool preventMultiplying()
-        {
-            return entity.HasBehavior<EntityBehaviorMultiply>()
-                && entity.GetBehavior<EntityBehaviorMultiply>().PortionsLeftToEat < 5
-                && obedience < 1;
         }
     }
 

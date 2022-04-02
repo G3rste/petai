@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
 
 namespace PetAI
 {
@@ -17,6 +15,7 @@ namespace PetAI
             {
                 if (_victim == null || !_victim.Alive || !_victim.IsInteractable || _victim.EntityId == entity.EntityId)
                 {
+                    _victim = null;
                     return null;
                 }
                 return _victim;
@@ -29,6 +28,7 @@ namespace PetAI
             {
                 if (_attacker == null || !_attacker.Alive || !_attacker.IsInteractable || _attacker.EntityId == entity.EntityId)
                 {
+                    _attacker = null;
                     return null;
                 }
                 return _attacker;
@@ -58,17 +58,6 @@ namespace PetAI
             }
         }
         public EntityBehaviorGiveCommand(Entity entity) : base(entity) { }
-
-        public override void Initialize(EntityProperties properties, JsonObject attributes)
-        {
-            base.Initialize(properties, attributes);
-
-            if (entity.Api.Side == EnumAppSide.Server)
-            {
-                entity.World.RegisterGameTickListener(checkPetRespawn, 120000);
-            }
-        }
-
         public override void DidAttack(DamageSource source, EntityAgent targetEntity, ref EnumHandling handled)
         {
             base.DidAttack(source, targetEntity, ref handled);
@@ -84,49 +73,6 @@ namespace PetAI
         public override string PropertyName()
         {
             return "givecommand";
-        }
-
-        public void savePet(Entity pet)
-        {
-            entity.Attributes.GetOrAddTreeAttribute("playerpets")[String.Format("playerpet-{0}", pet.EntityId)] = PetUtil.EntityToTree(pet);
-        }
-
-        private void checkPetRespawn(float dt)
-        {
-            List<string> respawnedEntities = new List<string>();
-            foreach (var attr in entity.Attributes.GetOrAddTreeAttribute("playerpets"))
-            {
-                Entity pet = PetUtil.EntityFromTree(attr.Value as ITreeAttribute, entity.World);
-                if (pet != null)
-                {
-                    pet.ServerPos.SetPos(entity.ServerPos);
-                    pet.Pos.SetPos(entity.Pos);
-                    entity.World.SpawnEntity(pet);
-
-                    respawnedEntities.Add(attr.Key);
-
-                    SimpleParticleProperties smoke = new SimpleParticleProperties(
-                            100, 150,
-                            ColorUtil.ToRgba(80, 100, 100, 100),
-                            new Vec3d(),
-                            new Vec3d(2, 1, 2),
-                            new Vec3f(-0.25f, 0f, -0.25f),
-                            new Vec3f(0.25f, 0f, 0.25f),
-                            0.51f,
-                            -0.075f,
-                            0.5f,
-                            3f,
-                            EnumParticleModel.Quad
-                        );
-
-                    smoke.MinPos = entity.ServerPos.XYZ.AddCopy(-1.5, -0.5, -1.5);
-                    entity.World.SpawnParticles(smoke);
-                }
-            }
-            foreach (var respawnedEntity in respawnedEntities)
-            {
-                entity.Attributes.GetOrAddTreeAttribute("playerpets").RemoveAttribute(respawnedEntity);
-            }
         }
     }
 

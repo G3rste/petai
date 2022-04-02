@@ -7,6 +7,7 @@ using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
+using Vintagestory.API.MathTools;
 
 namespace PetAI
 {
@@ -30,6 +31,9 @@ namespace PetAI
             api.RegisterEntityBehaviorClass("interpolatemount", typeof(EntityBehaviorInterpolateMount));
 
             api.RegisterCollectibleBehaviorClass("considerpetfood", typeof(BehaviorConsiderHumanFoodForPetsToo));
+
+            api.RegisterBlockEntityClass("PetNest", typeof(BlockEntityPetNest));
+            api.RegisterBlockClass("PetNest", typeof(BlockPetNest));
 
             AiTaskRegistry.Register<AiTaskTrick>("simplecommand");
             AiTaskRegistry.Register<AiTaskFollowMaster>("followmaster");
@@ -85,7 +89,8 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient)
+                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -94,7 +99,8 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer)
+                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageServer);
         }
 
         public override void Dispose()
@@ -141,6 +147,8 @@ namespace PetAI
                     tameable.domesticationLevel = DomesticationLevel.WILD;
                     tameable.domesticationProgress = 0f;
                 }
+
+                serverAPI.ModLoader.GetModSystem<PetManager>().UpdatePet(target);
             }
         }
 
@@ -152,6 +160,22 @@ namespace PetAI
                 if (entity != null) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
                 new PetProfileGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
+        }
+
+        private void OnPetNestMessageServer(IServerPlayer fromPlayer, PetNestMessage networkMessage)
+        {
+            serverAPI.ModLoader.GetModSystem<PetManager>().SetPetNest(networkMessage.selectedPet, networkMessage.selectedNest);
+            var nest = serverAPI.World.BlockAccessor.GetBlockEntity(networkMessage.selectedNest) as BlockEntityPetNest;
+            if (nest != null) { nest.petId = networkMessage.selectedPet; }
+        }
+
+        private void OnPetNestMessageClient(PetNestMessage networkMessage)
+        {
+            if (networkMessage.availablePets == null)
+            {
+                networkMessage.availablePets = new List<PetDataSmall>();
+            }
+            new PetNestSelect(clientAPI, networkMessage.availablePets, networkMessage.selectedNest).TryOpen();
         }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -170,6 +194,13 @@ namespace PetAI
         public bool abandon;
         public long targetEntityUID;
         public long oldEntityUID;
+    }
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+    public class PetNestMessage
+    {
+        public List<PetDataSmall> availablePets;
+        public long selectedPet;
+        public BlockPos selectedNest;
     }
     public class PetConfig
     {

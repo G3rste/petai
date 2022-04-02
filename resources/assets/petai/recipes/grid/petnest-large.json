@@ -1,0 +1,19 @@
+[
+    {
+        "ingredientPattern": "CC",
+        "ingredients": {
+            "C": {
+                "type": "block",
+                "code": "petnest-medium-*-north",
+                "name": "color"
+            }
+        },
+        "width": 2,
+        "height": 1,
+        "output": {
+            "type": "block",
+            "code": "petnest-large-{color}-north",
+            "quantity": 1
+        }
+    }
+]
