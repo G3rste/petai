@@ -146,5 +146,17 @@ namespace PetAI
             }
             return true;
         }
+        public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
+        {
+            return new WorldInteraction[]
+            {
+                new WorldInteraction()
+                {
+                    ActionLangCode = "petai:interact-command",
+                    HotKeyCode = "sneak",
+                    MouseButton = EnumMouseButton.Right,
+                }
+            };
+        }
     }
 }

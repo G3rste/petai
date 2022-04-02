@@ -462,6 +462,34 @@ namespace PetAI
                 }
             }
         }
+        public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
+        {
+            List<ItemStack> treats = new List<ItemStack>();
+            foreach (var treat in treatList)
+            {
+                var item = world.GetItem(new AssetLocation(treat.name));
+                if (item != null)
+                {
+                    treats.Add(new ItemStack(item));
+                }
+            }
+            if (treats.Count > 0)
+            {
+                return new WorldInteraction[]
+                {
+                new WorldInteraction()
+                {
+                    ActionLangCode = "petai:interact-feed",
+                    MouseButton = EnumMouseButton.Right,
+                    Itemstacks = treats.ToArray()
+                }
+                };
+            }
+            else
+            {
+                return base.GetInteractionHelp(world, es, player, ref handled);
+            }
+        }
     }
 
     class TamingItem
