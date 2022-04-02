@@ -171,6 +171,10 @@ namespace PetAI
 
         private void OnPetNestMessageClient(PetNestMessage networkMessage)
         {
+            if (networkMessage.availablePets == null)
+            {
+                networkMessage.availablePets = new List<PetDataSmall>();
+            }
             new PetNestSelect(clientAPI, networkMessage.availablePets, networkMessage.selectedNest).TryOpen();
         }
     }
