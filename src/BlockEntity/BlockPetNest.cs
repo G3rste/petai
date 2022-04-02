@@ -1,4 +1,5 @@
 using System;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Server;
 
@@ -26,6 +27,10 @@ namespace PetAI
                 sapi.Network.GetChannel("petainetwork").SendPacket<PetNestMessage>(message, byPlayer as IServerPlayer);
             }
             return true;
+        }
+        public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection selection, IPlayer forPlayer)
+        {
+            return new WorldInteraction[] { new WorldInteraction() { ActionLangCode = "petai:nest-interaction", MouseButton = EnumMouseButton.Right } };
         }
     }
 
