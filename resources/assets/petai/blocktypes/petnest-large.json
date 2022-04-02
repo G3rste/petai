@@ -11,22 +11,42 @@
         "*-north": {
             "x": 1,
             "y": 0,
-            "z": 1
+            "z": 1,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
         },
         "*-east": {
             "x": 0,
             "y": 0,
-            "z": 1
+            "z": 1,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
         },
         "*-south": {
             "x": 0,
             "y": 0,
-            "z": 0
+            "z": 0,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
         },
         "*-west": {
             "x": 1,
             "y": 0,
-            "z": 0
+            "z": 0,
+            "handbook": {
+                "groupBy": [
+                    "petnest-*"
+                ]
+            }
         }
     },
     "heldTpIdleAnimation": "holdbothhands",

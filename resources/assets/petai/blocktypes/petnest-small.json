@@ -10,7 +10,12 @@
     "attributes": {
         "x": 0.5,
         "y": 0,
-        "z": 0.5
+        "z": 0.5,
+        "handbook": {
+            "groupBy": [
+                "petnest-*"
+            ]
+        }
     },
     "heldTpIdleAnimation": "holdbothhands",
     "heldTpHitAnimation": "twohandplaceblock",
