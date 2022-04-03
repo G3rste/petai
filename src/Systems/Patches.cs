@@ -3,6 +3,7 @@ using System.Reflection;
 using HarmonyLib;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -78,6 +79,24 @@ namespace PetAI
                 slot.TakeOut(1);
                 slot.MarkDirty();
             }
+            Vec3d pos = entitySel.Entity.Pos.XYZ;
+
+            SimpleParticleProperties smoke = new SimpleParticleProperties(
+                    10, 15,
+                    ColorUtil.ToRgba(75, 146, 175, 122),
+                    new Vec3d(),
+                    new Vec3d(2, 1, 2),
+                    new Vec3f(-0.25f, 0f, -0.25f),
+                    new Vec3f(0.25f, 0f, 0.25f),
+                    0.6f,
+                    -0.075f,
+                    0.5f,
+                    3f,
+                    EnumParticleModel.Quad
+                );
+
+            smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
+            entitySel.Entity.World.SpawnParticles(smoke);
             return false;
         }
     }
