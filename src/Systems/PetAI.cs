@@ -209,7 +209,8 @@ namespace PetAI
         public Difficulty difficulty { get; set; }
         public HashSet<string> respawningPets { get; set; }
         public List<PetResurrector> petResurrectors { get; set; }
-
+        public int maxPetsPerPlayer { get; set; }
+        public bool limitPetsPerPlayer { get; set; }
         public double petRespawnCooldown = 24;
 
         public static PetConfig getDefault()
@@ -217,12 +218,17 @@ namespace PetAI
             var config = new PetConfig();
 
             config.respawningPets = new HashSet<string>(new string[] { "tame-wolf-male", "tame-wolf-female", "tame-wolf-pup" });
+            config.limitPetsPerPlayer = false;
+            config.maxPetsPerPlayer = 5;
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;
             difficulty.obedienceMultiplier = 1;
             difficulty.disobedienceMultiplier = 1;
             difficulty.growingMultiplier = 1;
+            difficulty.tamingMultiplierIncreasePerGen = 0.05f;
+            difficulty.obedienceMultiplierIncreasePerGen = 0.05f;
+            difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
             config.difficulty = difficulty;
 
             var resurrector = new PetResurrector();
@@ -238,6 +244,9 @@ namespace PetAI
         public float tamingMultiplier;
         public float obedienceMultiplier;
         public float disobedienceMultiplier;
+        public float tamingMultiplierIncreasePerGen;
+        public float obedienceMultiplierIncreasePerGen;
+        public float disobedienceMultiplierDecreasePerGen;
         public float growingMultiplier;
     }
 

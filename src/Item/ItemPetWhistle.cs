@@ -61,5 +61,23 @@ namespace PetAI
             byEntity.AnimManager?.StopAnimation("PlaceBlock");
             return secondsUsed < 3;
         }
+        public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
+        {
+            
+            return new WorldInteraction[]
+            {
+                new WorldInteraction()
+                {
+                    ActionLangCode = "petai:interact-whistle-select",
+                    HotKeyCode = "sneak",
+                    MouseButton = EnumMouseButton.Right,
+                },
+                new WorldInteraction()
+                {
+                    ActionLangCode = "petai:interact-whistle-command",
+                    MouseButton = EnumMouseButton.Right,
+                }
+            };
+        }
     }
 }
