@@ -69,7 +69,7 @@ namespace PetAI
         {
             if (mode == EnumInteractMode.Interact
                 && slot.Empty
-                && GetBehavior<EntityBehaviorTameable>()?.owner?.Entity == byEntity)
+                && GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity == byEntity)
             {
                 byEntity.TryMount(this);
             }

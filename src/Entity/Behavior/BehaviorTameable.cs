@@ -49,7 +49,21 @@ namespace PetAI
             }
         }
 
-        public IPlayer owner { get => entity.World.PlayerByUid(ownerId); set => ownerId = value?.PlayerUID; }
+        private IPlayer _cachedOwner;
+        public IPlayer cachedOwner
+        {
+            get
+            {
+                if(_cachedOwner?.PlayerUID == ownerId){
+                    return _cachedOwner;
+                }
+                if(String.IsNullOrEmpty(ownerId)){
+                    return null;
+                }
+                _cachedOwner = entity.World.PlayerByUid(ownerId);
+                return _cachedOwner;
+            }
+        }
 
         public float domesticationProgress
         {
@@ -195,7 +209,7 @@ namespace PetAI
             EntityPlayer player = byEntity as EntityPlayer;
 
             if (player == null) return;
-            if (owner != null && owner.PlayerUID != player.PlayerUID) return;
+            if (cachedOwner != null && cachedOwner.PlayerUID != player.PlayerUID) return;
             if (mode != EnumInteractMode.Interact) return;
             if (!entity.Alive)
             {
@@ -212,7 +226,7 @@ namespace PetAI
                     if (!PetConfig.Current.limitPetsPerPlayer || entity.Api.ModLoader.GetModSystem<PetManager>()?.GetPetsForPlayer(player.PlayerUID).Count < PetConfig.Current.maxPetsPerPlayer)
                     {
                         domesticationLevel = DomesticationLevel.TAMING;
-                        owner = player.Player;
+                        ownerId = player.PlayerUID;
                         (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
                     }
                     else
@@ -245,7 +259,7 @@ namespace PetAI
             {
                 domesticationLevel = DomesticationLevel.DOMESTICATED;
                 obedience = 1;
-                owner = (byEntity as EntityPlayer)?.Player;
+                ownerId = (byEntity as EntityPlayer)?.PlayerUID;
                 spawnTameVariant(1f);
             }
         }
@@ -271,7 +285,7 @@ namespace PetAI
 
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
         {
-            if (owner != null && PetConfig.Current.respawningPets.Contains(entity.Code.Path))
+            if (cachedOwner != null && PetConfig.Current.respawningPets.Contains(entity.Code.Path))
             {
                 entity.Revive();
                 Vec3d pos = entity.Pos.XYZ;
@@ -361,7 +375,7 @@ namespace PetAI
             message.targetEntityUID = tameEntity.EntityId;
             message.oldEntityUID = entity.EntityId;
 
-            (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.owner as IServerPlayer);
+            (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner as IServerPlayer);
             (entity.Api as ICoreServerAPI)?.ModLoader.GetModSystem<PetManager>().UpdatePet(tameEntity);
         }
 
@@ -432,7 +446,7 @@ namespace PetAI
 
         private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
         {
-            if (owner == null || owner.PlayerUID != byEntity?.PlayerUID) return false;
+            if (cachedOwner == null || cachedOwner.PlayerUID != byEntity?.PlayerUID) return false;
             var item = slot?.Itemstack?.Item;
             var pet = entity as EntityPet;
             if (pet != null && item is ItemPetAccessory)

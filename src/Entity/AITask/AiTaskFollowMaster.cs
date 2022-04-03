@@ -26,7 +26,7 @@ namespace PetAI
         {
             if (targetEntity == null || !targetEntity.Alive || targetEntity.ShouldDespawn || !targetEntity.IsInteractable)
             {
-                targetEntity = entity?.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity;
+                targetEntity = entity?.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity;
                 return false;
             }
             return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName

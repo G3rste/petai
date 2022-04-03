@@ -67,7 +67,7 @@ namespace PetAI
 
         public override string GetInfoText()
         {
-            var owner = GetBehavior<EntityBehaviorTameable>()?.owner;
+            var owner = GetBehavior<EntityBehaviorTameable>()?.cachedOwner;
             if (owner == null) return base.GetInfoText();
 
             return String.Concat(base.GetInfoText(),

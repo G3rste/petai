@@ -144,7 +144,7 @@ namespace PetAI
 
                 if (networkMessage.abandon)
                 {
-                    tameable.owner = null;
+                    tameable.ownerId = null;
                     tameable.domesticationLevel = DomesticationLevel.WILD;
                     tameable.domesticationProgress = 0f;
                 }

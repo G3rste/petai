@@ -22,7 +22,7 @@ namespace PetAI
                 if (_behaviorGiveCommand == null && lastOwnerLookup + 5000 < entity.World.ElapsedMilliseconds)
                 {
                     lastOwnerLookup = entity.World.ElapsedMilliseconds;
-                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.owner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                 }
                 return _behaviorGiveCommand;
             }
