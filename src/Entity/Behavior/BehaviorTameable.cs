@@ -207,19 +207,26 @@ namespace PetAI
             if (domesticationLevel == DomesticationLevel.WILD
                 && itemslot?.Itemstack?.Item != null)
             {
-                if (feedEntityIfPossible(itemslot))
+                if (feedEntityIfPossible(itemslot, player))
                 {
-                    domesticationLevel = DomesticationLevel.TAMING;
-                    owner = player.Player;
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
+                    if (!PetConfig.Current.limitPetsPerPlayer || entity.Api.ModLoader.GetModSystem<PetManager>()?.GetPetsForPlayer(player.PlayerUID).Count < PetConfig.Current.maxPetsPerPlayer)
+                    {
+                        domesticationLevel = DomesticationLevel.TAMING;
+                        owner = player.Player;
+                        (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
+                    }
+                    else
+                    {
+                        (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-too-many-pets", PetConfig.Current.maxPetsPerPlayer), EnumChatType.Notification);
+                    }
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
                 && itemslot?.Itemstack?.Item != null)
             {
-                if (feedEntityIfPossible(itemslot))
+                if (feedEntityIfPossible(itemslot, player))
                 {
-                    (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-tended-to", entity.GetName(), Math.Round(domesticationProgress * 100, 2)));
+                    (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-tended-to", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
                 }
                 if (domesticationProgress >= 1f)
                 {
@@ -231,7 +238,7 @@ namespace PetAI
             {
                 bool next = !attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
                 if (next)
-                    next = !feedEntityIfPossible(itemslot);
+                    next = !feedEntityIfPossible(itemslot, player);
             }
 
             if (itemslot?.Itemstack?.Item?.Code?.Path == "magicbone")
@@ -370,7 +377,7 @@ namespace PetAI
             }
         }
 
-        bool checkTamingSuccess(TamingItem tamingItem, ItemSlot itemSlot)
+        bool checkTamingSuccess(TamingItem tamingItem, ItemSlot itemSlot, EntityPlayer player)
         {
             if (tamingItem == null) return false;
             if (cooldown <= entity.World.Calendar.TotalHours)
@@ -406,7 +413,7 @@ namespace PetAI
             }
             else
             {
-                (entity.Api as ICoreClientAPI)?.ShowChatMessage(Lang.Get("petai:message-not-ready", entity.GetName()));
+                (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-not-ready", entity.GetName()), EnumChatType.Notification);
             }
             return false;
         }
@@ -435,10 +442,10 @@ namespace PetAI
             return false;
         }
 
-        private bool feedEntityIfPossible(ItemSlot foodsource)
+        private bool feedEntityIfPossible(ItemSlot foodsource, EntityPlayer player)
         {
             var tamingItem = treatList.Find((item) => isValidTamingItem(item, foodsource));
-            return checkTamingSuccess(tamingItem, foodsource);
+            return checkTamingSuccess(tamingItem, foodsource, player);
         }
 
         private void disobey(float intervall)

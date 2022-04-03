@@ -209,7 +209,8 @@ namespace PetAI
         public Difficulty difficulty { get; set; }
         public HashSet<string> respawningPets { get; set; }
         public List<PetResurrector> petResurrectors { get; set; }
-
+        public int maxPetsPerPlayer { get; set; }
+        public bool limitPetsPerPlayer { get; set; }
         public double petRespawnCooldown = 24;
 
         public static PetConfig getDefault()
@@ -217,6 +218,8 @@ namespace PetAI
             var config = new PetConfig();
 
             config.respawningPets = new HashSet<string>(new string[] { "tame-wolf-male", "tame-wolf-female", "tame-wolf-pup" });
+            config.limitPetsPerPlayer = false;
+            config.maxPetsPerPlayer = 5;
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;
