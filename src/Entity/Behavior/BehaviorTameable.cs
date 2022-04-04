@@ -435,13 +435,6 @@ namespace PetAI
         {
             entity.World.UnregisterCallback(callbackId);
             entity.World.UnregisterGameTickListener(listenerId);
-
-            if (despawn.reason == EnumDespawnReason.Unload
-                || despawn.reason == EnumDespawnReason.Disconnect
-                || despawn.reason == EnumDespawnReason.OutOfRange)
-            {
-                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
-            }
         }
 
         private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
