@@ -31,7 +31,7 @@ namespace PetAI
             return forSide == EnumAppSide.Server;
         }
 
-        public void UpdatePet(Entity pet, bool? hasDied = null)
+        public void UpdatePet(Entity pet, bool hasDied = false)
         {
             var tameable = pet.GetBehavior<EntityBehaviorTameable>();
             if (tameable == null || String.IsNullOrEmpty(tameable.ownerId))
@@ -39,7 +39,6 @@ namespace PetAI
                 Remove(pet.EntityId);
                 return;
             }
-            if (hasDied == null) { hasDied = !pet.Alive; }
 
             var petData = petMap.GetOrAdd(pet.EntityId, new PetData());
             petData.alive = !(bool)hasDied;
