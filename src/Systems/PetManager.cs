@@ -6,6 +6,7 @@ using System.Text;
 using ProtoBuf;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
+using Vintagestory.API.Config;
 using Vintagestory.API.MathTools;
 using Vintagestory.API.Server;
 using Vintagestory.API.Util;
@@ -24,6 +25,8 @@ namespace PetAI
             sapi = api;
             api.Event.SaveGameLoaded += OnLoad;
             api.Event.GameWorldSave += OnSave;
+
+            api.RegisterCommand("petmanager", "Admin tool to manage player pets.", "[forcerespawn|delete|list]", onCmdPetManager, Privilege.controlserver);
         }
 
         public override bool ShouldLoad(EnumAppSide forSide)
@@ -52,6 +55,14 @@ namespace PetAI
             if ((bool)hasDied)
             {
                 petData.deadUntil = sapi.World.Calendar.TotalHours + PetConfig.Current.petRespawnCooldown;
+            }
+            else
+            {
+                petData.deadUntil = 0;
+            }
+
+            if (pet.Alive)
+            {
                 using (MemoryStream ms = new MemoryStream())
                 {
                     using (BinaryWriter writer = new BinaryWriter(ms, Encoding.UTF8))
@@ -61,11 +72,6 @@ namespace PetAI
                         petData.deadPetBytes = ms.ToArray();
                     }
                 }
-            }
-            else
-            {
-                petData.deadPetBytes = null;
-                petData.deadUntil = 0;
             }
         }
 
@@ -156,6 +162,58 @@ namespace PetAI
             petMap.TryGetValue(petId, out data);
             return data?.nestLocation;
         }
+
+        private void onCmdPetManager(IServerPlayer player, int groupId, CmdArgs args)
+        {
+            var command = args.PopWord();
+            switch (command)
+            {
+                case "list":
+                    var playerName = args.PopWord();
+                    var pets = GetPetsForPlayer(sapi.PlayerData.GetPlayerDataByLastKnownName(playerName)?.PlayerUID);
+                    StringBuilder builder = new StringBuilder();
+                    foreach (var pet in pets)
+                    {
+                        string name = !String.IsNullOrEmpty(pet.petName) ? pet.petName : pet.petType;
+                        builder.AppendFormat("Pet: {0}, PetId: {1}\n", name, pet.petId);
+                    }
+                    sapi.SendMessage(player, GlobalConstants.GeneralChatGroup, String.Format("Pets for player {0}:\n{1}", playerName, builder.ToString()), EnumChatType.CommandSuccess);
+                    break;
+                case "delete":
+                    Remove((long)args.PopLong(0));
+                    break;
+                case "forcerespawn":
+                    PetData data;
+                    long petId = (long)args.PopLong(0);
+                    petMap.TryGetValue(petId, out data);
+                    if (data == null)
+                    {
+                        sapi.SendMessage(player, GlobalConstants.GeneralChatGroup, String.Format("There is no pet listed with id {0}", petId), EnumChatType.CommandError);
+                        return;
+                    }
+                    if (RevivePet(petId, player.Entity.ServerPos.AsBlockPos) == null)
+                    {
+                        sapi.SendMessage(player, GlobalConstants.GeneralChatGroup, String.Format("Was unable to revive pet with id {0}, going to create a new one. This might will duplicate the old pet, if it has not died but is still out there somewhere.", petId), EnumChatType.CommandSuccess);
+
+                        Entity pet = sapi.World.ClassRegistry.CreateEntity(sapi.World.GetEntityType(new AssetLocation(data.petType.Replace("item-creature-", ""))));
+                        pet.ServerPos.SetPos(player.Entity.ServerPos.XYZ);
+                        pet.ServerPos.Yaw = player.Entity.ServerPos.Yaw + GameMath.PI;
+                        pet.Pos.SetFrom(pet.ServerPos);
+                        sapi.World.SpawnEntity(pet);
+                        var tameable = pet.GetBehavior<EntityBehaviorTameable>();
+                        if (tameable != null)
+                        {
+                            tameable.domesticationLevel = DomesticationLevel.DOMESTICATED;
+                            tameable.obedience = 1;
+                            tameable.ownerId = data.ownerId;
+                        }
+                        pet.GetBehavior<EntityBehaviorNameTag>()?.SetName(data.petName);
+                        UpdatePet(pet);
+                        Remove(petId);
+                    }
+                    break;
+            }
+        }
     }
 
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -181,5 +239,10 @@ namespace PetAI
         public string petType;
         public string petName;
         public EnumNestSize requiredNestSize;
+    }
+
+    public enum EnumPetManagerCommand
+    {
+        forcerespawn, delete, list
     }
 }
