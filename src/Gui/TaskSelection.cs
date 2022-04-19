@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -75,7 +76,7 @@ namespace PetAI
                 int rows = slotCount % 8 == 0 ? slotCount / 8 : slotCount / 8 + 1;
                 var slotbounds = ElementStdBounds.SlotGrid(EnumDialogArea.None, pad + 150, currentY, 8, rows).FixedGrow(2 * pad, 2 * pad);
                 SingleComposer.AddItemSlotGrid(pet.backpackInv, SendBackPackPacket, 8, slotbounds, "petBackPackInv");
-                currentY += 55 * rows;
+                currentY += 55 * Math.Max(rows, 1);
             }
         }
 
