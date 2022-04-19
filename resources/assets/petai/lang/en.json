@@ -65,8 +65,13 @@
     "gui-petnest-nopets": "You have no pets yet.",
 
     "gui-pet-owner": "Owner: {0}",
-    "gui-pet-obedience":"Obedience: {0}%",
-    "gui-pet-disobey":"Pet is not obedient enough. Needed obedience is {0}%.",
+    "gui-pet-obedience": "Obedience: {0}%",
+    "gui-pet-nestsize": "Needs nest size: {0}",
+    "gui-pet-nestsize-small": "small",
+    "gui-pet-nestsize-medium": "medium",
+    "gui-pet-nestsize-large": "large",
+    "gui-pet-nestsize-huge": "huge",
+    "gui-pet-disobey": "Pet is not obedient enough. Needed obedience is {0}%.",
 
     "gui-profile-title": "Pet Profile",
     "gui-profile-name": "Name:",
