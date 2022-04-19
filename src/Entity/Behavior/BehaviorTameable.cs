@@ -54,10 +54,12 @@ namespace PetAI
         {
             get
             {
-                if(_cachedOwner?.PlayerUID == ownerId){
+                if (_cachedOwner?.PlayerUID == ownerId)
+                {
                     return _cachedOwner;
                 }
-                if(String.IsNullOrEmpty(ownerId)){
+                if (String.IsNullOrEmpty(ownerId))
+                {
                     return null;
                 }
                 _cachedOwner = entity.World.PlayerByUid(ownerId);
@@ -457,9 +459,14 @@ namespace PetAI
 
         private void disobey(float intervall)
         {
-            double hoursPassed = entity.World.Calendar.TotalHours - disobedienceTime;
+            // if players are offline for multiple days they should not loose all pet progress
+            double hoursPassed = Math.Min(24, entity.World.Calendar.TotalHours - disobedienceTime);
 
-            obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.difficulty.disobedienceMultiplierDecreasePerGen, generation);
+            // I hope the PlayerEntity is null when the player is offline
+            if (cachedOwner?.Entity != null)
+            {
+                obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.difficulty.disobedienceMultiplierDecreasePerGen, generation);
+            }
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
 
