@@ -100,4 +100,35 @@ namespace PetAI
             return false;
         }
     }
+    public class HarvestablePatch
+    {
+
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(methodInfo()
+                , prefix: new HarmonyMethod(typeof(HarvestablePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
+        }
+
+        public static void Unpatch(Harmony harmony)
+        {
+            harmony.Unpatch(methodInfo()
+                , HarmonyPatchType.Prefix, "gerste.petai");
+        }
+
+        public static MethodInfo methodInfo()
+        {
+            return typeof(EntityBehaviorHarvestable).GetMethod("OnReceivedClientPacket", BindingFlags.Instance | BindingFlags.Public);
+        }
+        public static bool Prefix(EntityBehaviorHarvestable __instance)
+        {
+            if (__instance.entity.Alive)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+    }
 }

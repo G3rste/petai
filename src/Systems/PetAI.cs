@@ -24,6 +24,7 @@ namespace PetAI
 
             MultiplyPatch.Patch(harmony);
             PoulticePatch.Patch(harmony);
+            HarvestablePatch.Patch(harmony);
 
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
