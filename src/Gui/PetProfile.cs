@@ -36,7 +36,15 @@ namespace PetAI
                 .BeginChildElements(bgBounds);
             SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-name"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
             currentY += 35;
-            SingleComposer.AddTextInput(ElementBounds.Fixed(0, currentY, 200, 40), (name) => petName = name, null, "petName");
+            SingleComposer.AddTextInput(ElementBounds.Fixed(0, currentY, 200, 40), (name) =>
+            {
+                if (!String.IsNullOrEmpty(name) && name.Length > 50)
+                {
+                    name = name.Substring(0, 50); // did not think this would be necessary but here we are
+                    SingleComposer.GetTextInput("petName").SetValue(name);
+                }
+                petName = name;
+            }, null, "petName");
             SingleComposer.GetTextInput("petName").SetValue(targetEntity?.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
             currentY += 50;
             float? health;
