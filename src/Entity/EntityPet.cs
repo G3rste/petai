@@ -75,7 +75,7 @@ namespace PetAI
                     "\n",
                     Lang.Get("petai:gui-pet-owner", owner?.PlayerName),
                     "\n",
-                    Lang.Get("petai:gui-pet-obedience", Math.Round(tameable.obedience * 100, 2)),
+                    tameable.domesticationLevel == DomesticationLevel.DOMESTICATED ? Lang.Get("petai:gui-pet-obedience", Math.Round(tameable.obedience * 100, 2)) : Lang.Get("petai:gui-pet-domesticationProgress", Math.Round(tameable.domesticationProgress * 100, 2)),
                     "\n",
                     Lang.Get("petai:gui-pet-nestsize", Lang.Get("petai:gui-pet-nestsize-" + tameable.size.ToString().ToLower())));
         }

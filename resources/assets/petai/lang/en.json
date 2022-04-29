@@ -66,6 +66,7 @@
 
     "gui-pet-owner": "Owner: {0}",
     "gui-pet-obedience": "Obedience: {0}%",
+    "gui-pet-domesticationProgress": "Taming progress: {0}%",
     "gui-pet-nestsize": "Needs nest size: {0}",
     "gui-pet-nestsize-small": "small",
     "gui-pet-nestsize-medium": "medium",
