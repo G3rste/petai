@@ -5,11 +5,8 @@ using Vintagestory.API.Util;
 
 namespace PetAI
 {
-    public class ItemPetAccessory : Item, IRenderer
+    public class ItemPetAccessory : Item
     {
-        public MeshRef inventoryMesh { get; private set; }
-
-        public string inventoryShapePath => Attributes["inventoryShape"].AsString();
         public PetAccessoryType type
         {
             get
@@ -29,35 +26,6 @@ namespace PetAI
         public bool canBeWornBy(string pet) => Attributes["validPets"].AsArray<string>(new string[0]).Contains(pet);
 
         public float damageReduction => Attributes["damageReduction"].AsFloat(0);
-
-        public double RenderOrder => 0;
-
-        public int RenderRange => 999;
-
-        public override void OnBeforeRender(ICoreClientAPI capi, ItemStack itemstack, EnumItemRenderTarget target, ref ItemRenderInfo renderinfo)
-        {
-            if (!String.IsNullOrEmpty(inventoryShapePath))
-            {
-                if (inventoryMesh == null)
-                {
-                    Shape shape = capi.Assets.Get(new AssetLocation(inventoryShapePath)).ToObject<Shape>();
-                    MeshData mesh;
-                    capi.Tesselator.TesselateShape(this, shape, out mesh);
-                    inventoryMesh = capi.Render.UploadMesh(mesh);
-                }
-                renderinfo.ModelRef = inventoryMesh;
-            }
-            base.OnBeforeRender(capi, itemstack, target, ref renderinfo);
-        }
-
-        public void OnRenderFrame(float deltaTime, EnumRenderStage stage)
-        {
-        }
-
-        public void Dispose()
-        {
-            inventoryMesh?.Dispose();
-        }
     }
     public enum PetAccessoryType
     {
