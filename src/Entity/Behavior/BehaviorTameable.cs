@@ -221,7 +221,7 @@ namespace PetAI
             if (byEntity.Controls.Sneak) return;
 
             if (domesticationLevel == DomesticationLevel.WILD
-                && itemslot?.Itemstack?.Item != null)
+                && itemslot?.Itemstack?.Collectible != null)
             {
                 if (feedEntityIfPossible(itemslot, player))
                 {
@@ -238,7 +238,7 @@ namespace PetAI
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
-                && itemslot?.Itemstack?.Item != null)
+                && itemslot?.Itemstack?.Collectible != null)
             {
                 if (feedEntityIfPossible(itemslot, player))
                 {
@@ -257,7 +257,7 @@ namespace PetAI
                     next = !feedEntityIfPossible(itemslot, player);
             }
 
-            if (itemslot?.Itemstack?.Item?.Code?.Path == "magicbone")
+            if (itemslot?.Itemstack?.Collectible?.Code?.Path == "magicbone")
             {
                 domesticationLevel = DomesticationLevel.DOMESTICATED;
                 obedience = 1;
@@ -385,11 +385,11 @@ namespace PetAI
         {
             if (item.name.EndsWith("*"))
             {
-                return slot.Itemstack?.Item?.Code.Path.StartsWith(item.name.Remove(item.name.Length - 1)) == true;
+                return slot.Itemstack?.Collectible?.Code.Path.StartsWith(item.name.Remove(item.name.Length - 1)) == true;
             }
             else
             {
-                return slot.Itemstack?.Item?.Code.Path == item.name;
+                return slot.Itemstack?.Collectible?.Code.Path == item.name;
             }
         }
 
@@ -472,7 +472,7 @@ namespace PetAI
 
         private void tryReviveWith(ItemSlot itemslot)
         {
-            var item = PetConfig.Current.petResurrectors.Find(resurrector => resurrector.itemCode == itemslot?.Itemstack?.Item?.Code?.Path);
+            var item = PetConfig.Current.petResurrectors.Find(resurrector => resurrector.itemCode == itemslot?.Itemstack?.Collectible?.Code?.Path);
             if (item != null)
             {
                 entity.Revive();
@@ -492,6 +492,11 @@ namespace PetAI
                 if (item != null)
                 {
                     treats.Add(new ItemStack(item));
+                }
+                var block = world.GetBlock(new AssetLocation(treat.name));
+                if (block != null)
+                {
+                    treats.Add(new ItemStack(block));
                 }
             }
             if (treats.Count > 0)
