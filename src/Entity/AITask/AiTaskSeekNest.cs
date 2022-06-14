@@ -56,7 +56,7 @@ namespace PetAI
         {
             base.StartExecute();
 
-            pathTraverser.NavigateTo(nest.MiddlePostion, moveSpeed, () => { }, () => stuck = true, false);
+            pathTraverser.NavigateTo(nest.MiddlePostion, moveSpeed, () => { }, () => stuck = true);
 
             stuck = false;
         }

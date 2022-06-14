@@ -31,6 +31,7 @@ namespace PetAI
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
             api.RegisterEntityBehaviorClass("receivecommand", typeof(EntityBehaviorReceiveCommand));
             api.RegisterEntityBehaviorClass("interpolatemount", typeof(EntityBehaviorInterpolateMount));
+            api.RegisterEntityBehaviorClass("pettableextended", typeof(EntityBehaviorPettableExtended));
 
             api.RegisterCollectibleBehaviorClass("considerpetfood", typeof(BehaviorConsiderHumanFoodForPetsToo));
 
