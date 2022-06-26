@@ -88,7 +88,7 @@ namespace PetAI
             if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && player != null
                 && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.PlayerUID
-                && byEntity.Controls.Sneak
+                && byEntity.Controls.Sprint
                 && mode == EnumInteractMode.Interact)
             {
                 if (entity.Api.Side == EnumAppSide.Client)
@@ -153,7 +153,7 @@ namespace PetAI
                 new WorldInteraction()
                 {
                     ActionLangCode = "petai:interact-command",
-                    HotKeyCode = "sneak",
+                    HotKeyCode = "sprint",
                     MouseButton = EnumMouseButton.Right,
                 }
             };
