@@ -100,7 +100,7 @@
 				},
 				"transitionedStack": {
 					"type": "item",
-					"code": "rot"
+					"code": "game:rot"
 				},
 				"transitionRatio": 1
 			}
@@ -116,7 +116,7 @@
 				},
 				"transitionedStack": {
 					"type": "item",
-					"code": "rot"
+					"code": "game:rot"
 				},
 				"transitionRatio": 1
 			}
@@ -132,7 +132,7 @@
 				},
 				"transitionedStack": {
 					"type": "item",
-					"code": "rot"
+					"code": "game:rot"
 				},
 				"transitionRatio": 1
 			}
