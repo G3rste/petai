@@ -1,0 +1,75 @@
+[
+    {
+        "ingredientPattern": "WF,BM",
+        "ingredients": {
+            "W": {
+                "type": "block",
+                "code": "game:woodbucket"
+            },
+            "F": {
+                "type": "item",
+                "code": "game:flour-*"
+            },
+            "M": {
+                "type": "item",
+                "code": "game:*",
+                "allowedVariants": [
+                    "redmeat-raw",
+                    "bushmeat-raw",
+                    "poultry-raw"
+                ]
+            },
+            "B": {
+                "type": "item",
+                "code": "game:bonemeal"
+            }
+        },
+        "width": 2,
+        "height": 2,
+        "attributes": {
+            "liquidContainerProps": {
+                "requiresContent": {
+                    "type": "item",
+                    "code": "waterportion"
+                },
+                "requiresLitres": 1
+            }
+        },
+        "output": {
+            "type": "item",
+            "code": "petcookie-meat-raw"
+        }
+    },
+    {
+        "ingredientPattern": "WF,FV",
+        "ingredients": {
+            "W": {
+                "type": "block",
+                "code": "game:woodbucket"
+            },
+            "F": {
+                "type": "item",
+                "code": "game:flour-*"
+            },
+            "V": {
+                "type": "item",
+                "code": "game:vegetable-*"
+            }
+        },
+        "width": 2,
+        "height": 2,
+        "attributes": {
+            "liquidContainerProps": {
+                "requiresContent": {
+                    "type": "item",
+                    "code": "waterportion"
+                },
+                "requiresLitres": 1
+            }
+        },
+        "output": {
+            "type": "item",
+            "code": "petcookie-veggie-raw"
+        }
+    }
+]

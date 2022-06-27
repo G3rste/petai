@@ -1,8 +1,16 @@
 {
     "item-petwhistle": "Pet whistle",
     "item-magicbone": "Magic bone",
+    "item-petcookie-meat-raw": "Carnivore pet cookie dough",
+    "item-petcookie-veggie-raw": "Herbivore pet cookie dough",
+    "item-petcookie-meat-partbaked": "Carnivore pet cookie (part baked)",
+    "item-petcookie-veggie-partbaked": "Herbivore pet cookie (part baked)",
+    "item-petcookie-meat-perfect": "Carnivore pet cookie",
+    "item-petcookie-veggie-perfect": "Herbivore pet cookie",
     "itemdesc-petwhistle": "Control your pets with acoustic commands. Press crouch + rightclick to choose a command. Press rightclick to give the command.",
     "itemdesc-magicbone": "Rightclick to instantly tame the creature in front of you (if at all possible) and make it 100% obedient.",
+    "itemdesc-petcookie-meat-raw": "Put it in the oven for a while to provide the perfect crunchy experience for your pet.",
+    "itemdesc-petcookie-veggie-raw": "Put it in the oven for a while to provide the perfect crunchy experience for your pet.",
 
     "block-petnest-small-plain": "Small pet cushion",
     "block-petnest-small-blue": "Small pet cushion (blue)",

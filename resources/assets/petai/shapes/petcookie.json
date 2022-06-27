@@ -1,0 +1,93 @@
+{
+	"editor": {
+		"allAngles": false,
+		"entityTextureMode": false
+	},
+	"textureWidth": 16,
+	"textureHeight": 16,
+	"textureSizes": {
+	},
+	"textures": {
+		"cookie": "game:block/food/pie/amaranth1"
+	},
+	"elements": [
+		{
+			"name": "Cube1",
+			"from": [ 6.5, 0.0, 8.0 ], 
+			"to": [ 7.5, 1.0, 12.0 ], 
+			"rotationOrigin": [ 7.0, 0.5, 8.0 ],
+			"rotationY": 90.0,
+			"faces": {
+				"north": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+				"east": { "texture": "#cookie", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "autoUv": false },
+				"south": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+				"west": { "texture": "#cookie", "uv": [ 0.0, 0.0, 8.0, 2.0 ], "autoUv": false },
+				"up": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 8.0 ], "autoUv": false, "windMode": [-1,-1,-1,-1] },
+				"down": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 8.0 ], "autoUv": false }
+			},
+			"children": [
+				{
+					"name": "Cube2",
+					"from": [ -1.5, 0.01, -0.3 ], 
+					"to": [ 0.0, 1.01, 0.7 ], 
+					"rotationOrigin": [ 0.0, 0.0, 0.7 ],
+					"rotationY": -45.0,
+					"faces": {
+						"north": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"east": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"south": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"west": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"up": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"down": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false }
+					}
+				},
+				{
+					"name": "Cube3",
+					"from": [ -0.5, 0.02, 0.7 ], 
+					"to": [ 1.0, 1.02, 1.7 ], 
+					"rotationOrigin": [ 1.0, 0.0, 0.7 ],
+					"rotationY": -135.0,
+					"faces": {
+						"north": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"east": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"south": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"west": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"up": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"down": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false }
+					}
+				},
+				{
+					"name": "Cube5",
+					"from": [ -0.5, 0.01, 2.3 ], 
+					"to": [ 1.0, 1.01, 3.3 ], 
+					"rotationOrigin": [ 1.0, 0.0, 3.3 ],
+					"rotationX": -180.0,
+					"rotationY": 45.0,
+					"rotationZ": -180.0,
+					"faces": {
+						"north": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"east": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"south": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"west": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"up": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"down": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false }
+					}
+				},
+				{
+					"name": "Cube6",
+					"from": [ -1.5, 0.02, 3.3 ], 
+					"to": [ 0.0, 1.02, 4.3 ], 
+					"rotationOrigin": [ 0.0, 0.0, 3.3 ],
+					"rotationY": 45.0,
+					"faces": {
+						"north": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"east": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"south": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"west": { "texture": "#cookie", "uv": [ 0.0, 0.0, 2.0, 2.0 ], "autoUv": false },
+						"up": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false },
+						"down": { "texture": "#cookie", "uv": [ 0.0, 0.0, 3.0, 2.0 ], "autoUv": false }
+					}
+				}
+			]
+		}
+	]}

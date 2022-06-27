@@ -1,0 +1,214 @@
+{
+	"code": "petcookie",
+	"maxstacksizeByType": {
+		"*-charred": 48,
+		"*": 32
+	},
+	"variantgroups": [
+		{
+			"code": "type",
+			"states": [
+				"meat",
+				"veggie"
+			]
+		},
+		{
+			"code": "state",
+			"states": [
+				"raw",
+				"partbaked",
+				"perfect"
+			]
+		}
+	],
+	"shape": {
+		"base": "petcookie"
+	},
+	"texturesbytype": {
+		"*-raw": {
+			"cookie": {
+				"base": "game:block/food/pie/amaranth1"
+			}
+		},
+		"*-partbaked": {
+			"cookie": {
+				"base": "game:block/food/pie/amaranth2"
+			}
+		},
+		"*-perfect": {
+			"cookie": {
+				"base": "game:block/food/pie/amaranth3"
+			}
+		}
+	},
+	"creativeinventory": {
+		"general": [
+			"*"
+		],
+		"items": [
+			"*"
+		]
+	},
+	"attributesByType": {
+		"*-raw": {
+			"displaycaseable": true,
+			"shelvable": true,
+			"bakingProperties": {
+				"temp": 160,
+				"levelFrom": 0.25,
+				"levelTo": 0.5,
+				"startScaleY": 0.95,
+				"endScaleY": 1.10,
+				"resultCode": "petai:petcookie-{type}-partbaked"
+			}
+		},
+		"*-partbaked": {
+			"displaycaseable": true,
+			"shelvable": true,
+			"bakingProperties": {
+				"temp": 160,
+				"levelFrom": 0.25,
+				"levelTo": 0.5,
+				"startScaleY": 0.95,
+				"endScaleY": 1.10,
+				"resultCode": "petai:petcookie-{type}-perfect",
+				"initialCode": "petai:petcookie-{type}-raw"
+			}
+		},
+		"*-perfect": {
+			"displaycaseable": true,
+			"shelvable": true,
+			"bakingProperties": {
+				"temp": 160,
+				"levelFrom": 0.5,
+				"levelTo": 0.75,
+				"startScaleY": 1.10,
+				"endScaleY": 1.13,
+				"initialCode": "petai:petcookie-{type}-partbaked"
+			}
+		}
+	},
+	"transitionablePropsByType": {
+		"*-raw": [
+			{
+				"type": "Perish",
+				"freshHours": {
+					"avg": 24
+				},
+				"transitionHours": {
+					"avg": 24
+				},
+				"transitionedStack": {
+					"type": "item",
+					"code": "game:rot"
+				},
+				"transitionRatio": 1
+			}
+		],
+		"*-partbaked": [
+			{
+				"type": "Perish",
+				"freshHours": {
+					"avg": 240
+				},
+				"transitionHours": {
+					"avg": 24
+				},
+				"transitionedStack": {
+					"type": "item",
+					"code": "game:rot"
+				},
+				"transitionRatio": 1
+			}
+		],
+		"*-perfect": [
+			{
+				"type": "Perish",
+				"freshHours": {
+					"avg": 4800
+				},
+				"transitionHours": {
+					"avg": 240
+				},
+				"transitionedStack": {
+					"type": "item",
+					"code": "game:rot"
+				},
+				"transitionRatio": 1
+			}
+		]
+	},
+	"materialDensity": 200,
+	"guiTransform": {
+		"translation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotation": {
+			"x": 45,
+			"y": 0,
+			"z": 45
+		},
+		"origin": {
+			"x": 0.5,
+			"y": 0,
+			"z": 0.4375
+		},
+		"scale": 4.9
+	},
+	"groundTransform": {
+		"translation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"origin": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"scale": 4.5
+	},
+	"tpHandTransform": {
+		"translation": {
+			"x": -0.375,
+			"y": 0,
+			"z": -0.5
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"origin": {
+			"x": 0.375,
+			"y": 0,
+			"z": 0.5
+		},
+		"scale": 1
+	},
+	"fpHandTransform": {
+		"translation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"rotation": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"origin": {
+			"x": 0,
+			"y": 0,
+			"z": 0
+		},
+		"scale": 2.5
+	}
+}
