@@ -12,7 +12,6 @@ namespace PetAI
         {
             var entityTree = new TreeAttribute();
             entityTree.SetString("class", entity.Api.World.ClassRegistry.GetEntityClassName(entity.GetType()));
-            entityTree.SetDouble("timestamp", entity.World.Calendar.TotalHours);
             using (MemoryStream ms = new MemoryStream())
             {
                 using (BinaryWriter writer = new BinaryWriter(ms, Encoding.UTF8))
@@ -27,7 +26,7 @@ namespace PetAI
 
         public static Entity EntityFromTree(ITreeAttribute entityTree, IWorldAccessor world)
         {
-            if (entityTree == null || entityTree.GetDouble("timestamp") + PetConfig.Current.petRespawnCooldown > world.Calendar.TotalHours)
+            if (entityTree == null)
             {
                 return null;
             }

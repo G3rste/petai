@@ -26,7 +26,7 @@ namespace PetAI
             api.Event.SaveGameLoaded += OnLoad;
             api.Event.GameWorldSave += OnSave;
 
-            api.RegisterCommand("petmanager", "Admin tool to manage player pets.", "[forcerespawn|delete|list]", onCmdPetManager, Privilege.controlserver);
+            api.RegisterCommand("petmanager", "Admin tool to manage player pets.", "[forcerespawn|delete|list|rorateTexture]", onCmdPetManager, Privilege.controlserver);
         }
 
         public override bool ShouldLoad(EnumAppSide forSide)
@@ -210,6 +210,24 @@ namespace PetAI
                         pet.GetBehavior<EntityBehaviorNameTag>()?.SetName(data.petName);
                         UpdatePet(pet);
                         Remove(petId);
+                    }
+                    break;
+                case "rotateTexture":
+                    var textureMorpher = sapi.World.GetEntityById((long)args.PopLong(0));
+                    if (textureMorpher != null)
+                    {
+                        int textures = 1;
+                        var alternates = textureMorpher.Properties.Client.FirstTexture.Alternates;
+                        if (alternates != null)
+                        {
+                            textures += alternates.Length;
+                        }
+                        int oldtexture = textureMorpher.WatchedAttributes.GetInt("textureIndex", 0);
+                        textureMorpher.WatchedAttributes.SetInt("textureIndex", (oldtexture + 1) % textures);
+                        textureMorpher.WatchedAttributes.MarkPathDirty("textureIndex");
+                        sapi.World.SpawnEntity(PetUtil.EntityFromTree(PetUtil.EntityToTree(textureMorpher), sapi.World));
+                        textureMorpher.Die(EnumDespawnReason.Removed);
+                        Remove(textureMorpher.EntityId);
                     }
                     break;
             }
