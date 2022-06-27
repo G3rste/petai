@@ -184,10 +184,17 @@ namespace PetAI
             foreach (var item in treatItems)
             {
                 string name = item["code"].AsString();
+                string domain = item["domain"].AsString("game");
                 float progress = item["progress"].AsFloat(1f);
                 long cooldown = item["cooldown"].AsInt(1);
 
-                treatList.Add(new TamingItem(name, progress, cooldown));
+                treatList.Add(new TamingItem()
+                {
+                    name = name,
+                    domain = domain,
+                    progress = progress,
+                    cooldown = cooldown
+                });
             }
 
             if (!String.IsNullOrEmpty(attributes["tameEntityCode"].AsString()))
@@ -488,12 +495,12 @@ namespace PetAI
             List<ItemStack> treats = new List<ItemStack>();
             foreach (var treat in treatList)
             {
-                var item = world.GetItem(new AssetLocation(treat.name));
+                var item = world.GetItem(new AssetLocation(treat.domain + ":" + treat.name));
                 if (item != null)
                 {
                     treats.Add(new ItemStack(item));
                 }
-                var block = world.GetBlock(new AssetLocation(treat.name));
+                var block = world.GetBlock(new AssetLocation(treat.domain + ":" + treat.name));
                 if (block != null)
                 {
                     treats.Add(new ItemStack(block));
@@ -520,15 +527,10 @@ namespace PetAI
 
     class TamingItem
     {
-        public string name { get; }
-        public float progress { get; }
-        public long cooldown { get; }
+        public string name { get; set; }
 
-        public TamingItem(string name, float progress, long cooldown)
-        {
-            this.name = name;
-            this.progress = progress;
-            this.cooldown = cooldown;
-        }
+        public string domain { get; set; }
+        public float progress { get; set; }
+        public long cooldown { get; set; }
     }
 }
