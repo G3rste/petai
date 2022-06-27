@@ -125,10 +125,10 @@
 			{
 				"type": "Perish",
 				"freshHours": {
-					"avg": 960
+					"avg": 4800
 				},
 				"transitionHours": {
-					"avg": 72
+					"avg": 240
 				},
 				"transitionedStack": {
 					"type": "item",
