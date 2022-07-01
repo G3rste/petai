@@ -26,7 +26,7 @@ namespace PetAI
             api.Event.SaveGameLoaded += OnLoad;
             api.Event.GameWorldSave += OnSave;
 
-            api.RegisterCommand("petmanager", "Admin tool to manage player pets.", "[forcerespawn|delete|list|rorateTexture]", onCmdPetManager, Privilege.controlserver);
+            api.RegisterCommand("petmanager", "Admin tool to manage player pets.", "[forcerespawn|delete|list|rotateTexture]", onCmdPetManager, Privilege.controlserver);
         }
 
         public override bool ShouldLoad(EnumAppSide forSide)
