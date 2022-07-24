@@ -148,15 +148,22 @@ namespace PetAI
         }
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
-            return new WorldInteraction[]
+            if (entity.GetBehavior<EntityBehaviorTameable>()?.ownerId == player.PlayerUID)
             {
-                new WorldInteraction()
+                return new WorldInteraction[]
                 {
-                    ActionLangCode = "petai:interact-command",
-                    HotKeyCode = "sprint",
-                    MouseButton = EnumMouseButton.Right,
-                }
-            };
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = "petai:interact-command",
+                        HotKeyCode = "sprint",
+                        MouseButton = EnumMouseButton.Right,
+                    }
+                };
+            }
+            else
+            {
+                return new WorldInteraction[0];
+            }
         }
     }
 }

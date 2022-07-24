@@ -3,6 +3,8 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
 using System.IO;
+using Vintagestory.API.Client;
+using System.Collections.Generic;
 
 namespace PetAI
 {
@@ -86,6 +88,24 @@ namespace PetAI
                 return false;
             }
             return base.ShouldReceiveDamage(damageSource, damage);
+        }
+
+        public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
+        {
+            var interactions = new List<WorldInteraction>();
+            if (GetBehavior<EntityBehaviorTameable>()?.ownerId == player.PlayerUID)
+            {
+                interactions.Add(new WorldInteraction()
+                {
+                    ActionLangCode = "petai:interact-mount",
+                    // it crashes on an empty Itemstack, so we use an invisible one
+                    Itemstacks = new ItemStack[1] { new ItemStack(World.GetBlock(new AssetLocation("air"))) },
+                    MouseButton = EnumMouseButton.Right
+                });
+            }
+            interactions.AddRange(base.GetInteractionHelp(world, es, player));
+
+            return interactions.ToArray();
         }
 
         private void updateAnims(EnumEntityAction action, bool on)

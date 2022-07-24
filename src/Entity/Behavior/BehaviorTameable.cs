@@ -506,16 +506,16 @@ namespace PetAI
                     treats.Add(new ItemStack(block));
                 }
             }
-            if (treats.Count > 0)
+            if (treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
                 return new WorldInteraction[]
                 {
-                new WorldInteraction()
-                {
-                    ActionLangCode = "petai:interact-feed",
-                    MouseButton = EnumMouseButton.Right,
-                    Itemstacks = treats.ToArray()
-                }
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = "petai:interact-feed",
+                        MouseButton = EnumMouseButton.Right,
+                        Itemstacks = treats.ToArray()
+                    }
                 };
             }
             else
