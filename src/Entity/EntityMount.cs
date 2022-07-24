@@ -79,6 +79,15 @@ namespace PetAI
             }
         }
 
+        public override bool ShouldReceiveDamage(DamageSource damageSource, float damage)
+        {
+            if (rider != null && rider == damageSource?.SourceEntity)
+            {
+                return false;
+            }
+            return base.ShouldReceiveDamage(damageSource, damage);
+        }
+
         private void updateAnims(EnumEntityAction action, bool on)
         {
             switch (action)
