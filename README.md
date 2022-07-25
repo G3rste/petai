@@ -3,23 +3,6 @@ This Vintage Story mod is serving as a library for my other animal taming mods.
 
 <br>
 
-## Admin commands
-There is a small selection of admin commands if any pets end up in a rogue state.
-* /petmanager list "playername"
-  * lists all pets and their ids owned by that player
-* /petmanager delete "petid"
-  * removes a petid from the petmanager
-  * if a pet got corrupted somehow and can not respawn but the server has a limit for maximum pets per player, this command may be helpful
-* /petmanager forcerespawn "petid"
-  * respawns the pet with the given petid
-  * if the selected pet is not dead, this will create a duplicate pet, so be aware (idk who would complain about more pets but anyways)
-  * if the selected pet is corrupted, this will still attempt to respawn a similar pet and assign it to the player
-* /petmanager rotateTexture "petid"
-  * changes the texture of the pet with the given id
-  * increases the texture index by one, so you can use this to cycle through all available textures of your pet
-
-<br>
-
 ## API Information
 
 If you want use this to create your own pets, be sure to check out [wolftaming](https://github.com/G3rste/wolftaming) and [cats](https://github.com/G3rste/cats). 

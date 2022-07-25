@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
@@ -8,8 +9,6 @@ namespace PetAI
 {
     public class AiTaskSeekNest : AiTaskBase
     {
-
-        private BlockPos entityNestPos => entity.Api.ModLoader.GetModSystem<PetManager>().GetNestPos(entity.EntityId);
         private BlockEntityPetNest nest { get; set; }
 
         private List<DayTimeFrame> duringDayTimeFrames = new List<DayTimeFrame>();
@@ -45,20 +44,33 @@ namespace PetAI
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
                 if (!duringDayTimeFrames.Exists(frame => frame.Matches(hourOfDay))) return false;
             }
-            if (nest == null && entityNestPos != null)
+            if (nest == null || entity.ServerPos.SquareDistanceTo(nest.Position) > 50)
             {
-                nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entityNestPos.ToVec3d(), 1, poi => poi is BlockEntityPetNest) as BlockEntityPetNest;
+                nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.ServerPos.XYZ, range, isValidNonOccupiedNest) as BlockEntityPetNest;
             }
             return nest != null && entity.ServerPos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
+        }
+
+        private bool isValidNonOccupiedNest(IPointOfInterest poi)
+        {
+            if (poi is BlockEntityPetNest nest)
+            {
+                if ((nest.Block as BlockPetNest).nestSize < entity.GetBehavior<EntityBehaviorTameable>().size) { return false; }
+                if (entity.World.GetEntitiesAround(nest.Position, 3, 3, occupier => occupier.GetBehavior<EntityBehaviorTaskAI>()?.TaskManager?.GetTask<AiTaskSeekNest>()?.nest == nest).Length == 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override void StartExecute()
         {
             base.StartExecute();
 
-            pathTraverser.NavigateTo(nest.MiddlePostion, moveSpeed, () => { }, () => stuck = true);
-
             stuck = false;
+
+            pathTraverser.NavigateTo_Async(nest.MiddlePostion, moveSpeed, 1f, () => { }, () => stuck = true);
         }
 
         public override bool ContinueExecute(float dt)

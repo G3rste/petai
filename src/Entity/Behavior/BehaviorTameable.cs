@@ -208,8 +208,6 @@ namespace PetAI
 
             disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
             listenerId = entity.World.RegisterGameTickListener(disobey, 60000);
-
-            entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity);
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
@@ -232,16 +230,9 @@ namespace PetAI
             {
                 if (feedEntityIfPossible(itemslot, player))
                 {
-                    if (!PetConfig.Current.limitPetsPerPlayer || entity.Api.ModLoader.GetModSystem<PetManager>()?.GetPetsForPlayer(player.PlayerUID).Count < PetConfig.Current.maxPetsPerPlayer)
-                    {
                         domesticationLevel = DomesticationLevel.TAMING;
                         ownerId = player.PlayerUID;
                         (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
-                    }
-                    else
-                    {
-                        (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-too-many-pets", PetConfig.Current.maxPetsPerPlayer), EnumChatType.Notification);
-                    }
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
@@ -289,39 +280,6 @@ namespace PetAI
 
                     inv.MarkSlotDirty(i);
                 }
-            }
-        }
-
-        public override void OnEntityDeath(DamageSource damageSourceForDeath)
-        {
-            if (cachedOwner != null && PetConfig.Current.respawningPets.Contains(entity.Code.Path))
-            {
-                entity.Revive();
-                Vec3d pos = entity.Pos.XYZ;
-
-                SimpleParticleProperties smoke = new SimpleParticleProperties(
-                        100, 150,
-                        ColorUtil.ToRgba(80, 100, 100, 100),
-                        new Vec3d(),
-                        new Vec3d(2, 1, 2),
-                        new Vec3f(-0.25f, 0f, -0.25f),
-                        new Vec3f(0.25f, 0f, 0.25f),
-                        0.51f,
-                        -0.075f,
-                        0.5f,
-                        3f,
-                        EnumParticleModel.Quad
-                    );
-
-                smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
-                entity.World.SpawnParticles(smoke);
-                entity.Api.ModLoader.GetModSystem<PetManager>()?.UpdatePet(entity, true);
-                entity.Die(EnumDespawnReason.Removed);
-            }
-            else
-            {
-                entity.Api.ModLoader.GetModSystem<PetManager>()?.Remove(entity.EntityId);
-                base.OnEntityDeath(damageSourceForDeath);
             }
         }
         public override string PropertyName()
@@ -385,7 +343,6 @@ namespace PetAI
             message.oldEntityUID = entity.EntityId;
 
             (entity.Api as ICoreServerAPI)?.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message, entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner as IServerPlayer);
-            (entity.Api as ICoreServerAPI)?.ModLoader.GetModSystem<PetManager>().UpdatePet(tameEntity);
         }
 
         bool isValidTamingItem(TamingItem item, ItemSlot slot)
