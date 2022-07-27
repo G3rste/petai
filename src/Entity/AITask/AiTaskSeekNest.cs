@@ -70,7 +70,7 @@ namespace PetAI
 
             stuck = false;
 
-            pathTraverser.NavigateTo_Async(nest.MiddlePostion, moveSpeed, 1f, () => { }, () => stuck = true);
+            pathTraverser.WalkTowards(nest.MiddlePostion, moveSpeed, 0.12f, () => { }, () => stuck = true);
         }
 
         public override bool ContinueExecute(float dt)
