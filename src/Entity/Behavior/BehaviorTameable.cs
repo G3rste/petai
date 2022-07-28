@@ -230,9 +230,9 @@ namespace PetAI
             {
                 if (feedEntityIfPossible(itemslot, player))
                 {
-                        domesticationLevel = DomesticationLevel.TAMING;
-                        ownerId = player.PlayerUID;
-                        (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
+                    domesticationLevel = DomesticationLevel.TAMING;
+                    ownerId = player.PlayerUID;
+                    (player.Player as IServerPlayer)?.SendMessage(GlobalConstants.GeneralChatGroup, Lang.Get("petai:message-startet-taming", entity.GetName(), Math.Round(domesticationProgress * 100, 2)), EnumChatType.Notification);
                 }
             }
             else if (domesticationLevel == DomesticationLevel.TAMING
@@ -436,7 +436,7 @@ namespace PetAI
 
         private void tryReviveWith(ItemSlot itemslot)
         {
-            var item = PetConfig.Current.petResurrectors.Find(resurrector => resurrector.itemCode == itemslot?.Itemstack?.Collectible?.Code?.Path);
+            var item = PetConfig.Current.resurrectors.Find(resurrector => resurrector.name == itemslot?.Itemstack?.Collectible?.Code?.Path);
             if (item != null)
             {
                 entity.Revive();
@@ -463,7 +463,21 @@ namespace PetAI
                     treats.Add(new ItemStack(block));
                 }
             }
-            if (treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
+            List<ItemStack> resurrectors = new List<ItemStack>();
+            foreach (var resurrector in PetConfig.Current.resurrectors)
+            {
+                var item = world.GetItem(new AssetLocation(resurrector.domain + ":" + resurrector.name));
+                if (item != null)
+                {
+                    resurrectors.Add(new ItemStack(item));
+                }
+                var block = world.GetBlock(new AssetLocation(resurrector.domain + ":" + resurrector.name));
+                if (block != null)
+                {
+                    resurrectors.Add(new ItemStack(block));
+                }
+            }
+            if (entity.Alive && treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
                 return new WorldInteraction[]
                 {
@@ -472,6 +486,18 @@ namespace PetAI
                         ActionLangCode = "petai:interact-feed",
                         MouseButton = EnumMouseButton.Right,
                         Itemstacks = treats.ToArray()
+                    }
+                };
+            }
+            else if (!entity.Alive && resurrectors.Count > 0)
+            {
+                return new WorldInteraction[]
+                {
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = "petai:interact-revive",
+                        MouseButton = EnumMouseButton.Right,
+                        Itemstacks = resurrectors.ToArray()
                     }
                 };
             }

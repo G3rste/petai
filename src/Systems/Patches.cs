@@ -66,7 +66,7 @@ namespace PetAI
             {
                 return true;
             }
-            if (secondsUsed > 0.7f && byEntity.World.Side == EnumAppSide.Server)
+            if (secondsUsed > 0.7f && byEntity.World.Side == EnumAppSide.Server && entitySel.Entity.Alive)
             {
                 JsonObject attr = slot.Itemstack.Collectible.Attributes;
                 float health = attr["health"].AsFloat();
@@ -78,6 +78,21 @@ namespace PetAI
 
                 slot.TakeOut(1);
                 slot.MarkDirty();
+            }
+            if (secondsUsed > 0.7f && byEntity.World.Side == EnumAppSide.Server && !entitySel.Entity.Alive)
+            {
+                var resurrector = PetConfig.Current.resurrectors.Find(res => slot.Itemstack.Collectible.Code.Path == res.name);
+                if (resurrector != null)
+                {
+                    slot.TakeOut(1);
+                    slot.MarkDirty();
+
+                    entitySel.Entity.Revive();
+                    if (entitySel.Entity.HasBehavior<EntityBehaviorHealth>())
+                    {
+                        entitySel.Entity.GetBehavior<EntityBehaviorHealth>().Health = resurrector.healingValue;
+                    }
+                }
             }
             Vec3d pos = entitySel.Entity.Pos.XYZ;
 
@@ -96,7 +111,10 @@ namespace PetAI
                 );
 
             smoke.MinPos = pos.AddCopy(-1.5, -0.5, -1.5);
-            entitySel.Entity.World.SpawnParticles(smoke);
+            if (secondsUsed > 0.7f)
+            {
+                entitySel.Entity.World.SpawnParticles(smoke);
+            }
             return false;
         }
     }
