@@ -1,7 +1,5 @@
 using System;
-using Vintagestory.API.Client;
 using Vintagestory.API.Common;
-using Vintagestory.API.Server;
 
 namespace PetAI
 {
@@ -15,22 +13,6 @@ namespace PetAI
                 Enum.TryParse<EnumNestSize>(Variant["size"].ToUpper(), out size);
                 return size;
             }
-        }
-        public override bool OnBlockInteractStart(IWorldAccessor world, IPlayer byPlayer, BlockSelection blockSel)
-        {
-            var sapi = (world.Api as ICoreServerAPI);
-            if (sapi != null)
-            {
-                var message = new PetNestMessage();
-                message.availablePets = sapi.ModLoader.GetModSystem<PetManager>().GetPetsForPlayer(byPlayer.PlayerUID);
-                message.selectedNest = blockSel.Position;
-                sapi.Network.GetChannel("petainetwork").SendPacket<PetNestMessage>(message, byPlayer as IServerPlayer);
-            }
-            return true;
-        }
-        public override WorldInteraction[] GetPlacedBlockInteractionHelp(IWorldAccessor world, BlockSelection selection, IPlayer forPlayer)
-        {
-            return new WorldInteraction[] { new WorldInteraction() { ActionLangCode = "petai:nest-interaction", MouseButton = EnumMouseButton.Right } };
         }
     }
 

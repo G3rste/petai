@@ -76,10 +76,8 @@ namespace PetAI
             {
                 if (PetConfig.Current.difficulty == null)
                     PetConfig.Current.difficulty = PetConfig.getDefault().difficulty;
-                if (PetConfig.Current.petResurrectors == null)
-                    PetConfig.Current.petResurrectors = PetConfig.getDefault().petResurrectors;
-                if (PetConfig.Current.respawningPets == null)
-                    PetConfig.Current.respawningPets = PetConfig.getDefault().respawningPets;
+                if (PetConfig.Current.resurrectors == null)
+                    PetConfig.Current.resurrectors = PetConfig.getDefault().resurrectors;
 
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
@@ -92,8 +90,7 @@ namespace PetAI
 
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient)
-                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageClient);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
         }
 
         public override void StartServerSide(ICoreServerAPI api)
@@ -102,8 +99,7 @@ namespace PetAI
             this.serverAPI = api;
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>().SetMessageHandler<PetCommandMessage>(OnPetCommandMessage)
-                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer)
-                .RegisterMessageType<PetNestMessage>().SetMessageHandler<PetNestMessage>(OnPetNestMessageServer);
+                .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageServer);
         }
 
         public override void Dispose()
@@ -150,8 +146,6 @@ namespace PetAI
                     tameable.domesticationLevel = DomesticationLevel.WILD;
                     tameable.domesticationProgress = 0f;
                 }
-
-                serverAPI.ModLoader.GetModSystem<PetManager>().UpdatePet(target);
             }
         }
 
@@ -163,22 +157,6 @@ namespace PetAI
                 if (entity != null) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
                 new PetProfileGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
-        }
-
-        private void OnPetNestMessageServer(IServerPlayer fromPlayer, PetNestMessage networkMessage)
-        {
-            serverAPI.ModLoader.GetModSystem<PetManager>().SetPetNest(networkMessage.selectedPet, networkMessage.selectedNest);
-            var nest = serverAPI.World.BlockAccessor.GetBlockEntity(networkMessage.selectedNest) as BlockEntityPetNest;
-            if (nest != null) { nest.petId = networkMessage.selectedPet; }
-        }
-
-        private void OnPetNestMessageClient(PetNestMessage networkMessage)
-        {
-            if (networkMessage.availablePets == null)
-            {
-                networkMessage.availablePets = new List<PetDataSmall>();
-            }
-            new PetNestSelect(clientAPI, networkMessage.availablePets, networkMessage.selectedNest).TryOpen();
         }
     }
     [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
@@ -198,31 +176,14 @@ namespace PetAI
         public long targetEntityUID;
         public long oldEntityUID;
     }
-    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
-    public class PetNestMessage
-    {
-        public List<PetDataSmall> availablePets;
-        public long selectedPet;
-        public BlockPos selectedNest;
-    }
     public class PetConfig
     {
         public static PetConfig Current { get; set; }
-
         public Difficulty difficulty { get; set; }
-        public HashSet<string> respawningPets { get; set; }
-        public List<PetResurrector> petResurrectors { get; set; }
-        public int maxPetsPerPlayer { get; set; }
-        public bool limitPetsPerPlayer { get; set; }
-        public double petRespawnCooldown = 24;
-
+        public List<PetResurrector> resurrectors { get; set; }
         public static PetConfig getDefault()
         {
             var config = new PetConfig();
-
-            config.respawningPets = new HashSet<string>(new string[] { "tame-wolf-male", "tame-wolf-female", "tame-wolf-pup" });
-            config.limitPetsPerPlayer = false;
-            config.maxPetsPerPlayer = 5;
 
             var difficulty = new Difficulty();
             difficulty.tamingMultiplier = 1;
@@ -234,10 +195,13 @@ namespace PetAI
             difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
             config.difficulty = difficulty;
 
-            var resurrector = new PetResurrector();
-            resurrector.itemCode = "gear-temporal";
-            resurrector.healingValue = 15;
-            config.petResurrectors = new List<PetResurrector>(new PetResurrector[] { resurrector });
+            config.resurrectors = new List<PetResurrector>(new PetResurrector[] {
+                    new PetResurrector(){name = "bandage-clean", domain ="game", healingValue = 4},
+                    new PetResurrector(){name = "bandage-alcoholed", domain ="game", healingValue = 8},
+                    new PetResurrector(){name = "poultice-reed-horsetail", domain ="game", healingValue = 1},
+                    new PetResurrector(){name = "poultice-reed-honey-sulfur", domain ="game", healingValue = 2},
+                    new PetResurrector(){name = "poultice-linen-horsetail", domain ="game", healingValue = 2},
+                    new PetResurrector(){name = "poultice-linen-honey-sulfur", domain ="game", healingValue = 3}});
 
             return config;
         }
@@ -255,7 +219,8 @@ namespace PetAI
 
     public class PetResurrector
     {
-        public string itemCode;
+        public string name;
+        public string domain;
         public float healingValue;
     }
 }

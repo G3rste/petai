@@ -93,7 +93,7 @@ namespace PetAI
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player)
         {
             var interactions = new List<WorldInteraction>();
-            if (GetBehavior<EntityBehaviorTameable>()?.ownerId == player.PlayerUID)
+            if (Alive && GetBehavior<EntityBehaviorTameable>()?.ownerId == player.PlayerUID)
             {
                 interactions.Add(new WorldInteraction()
                 {
