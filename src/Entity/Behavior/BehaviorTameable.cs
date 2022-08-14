@@ -437,10 +437,11 @@ namespace PetAI
         private void tryReviveWith(ItemSlot itemslot)
         {
             var item = PetConfig.Current.resurrectors.Find(resurrector => resurrector.name == itemslot?.Itemstack?.Collectible?.Code?.Path);
-            if (item != null)
+            if (item != null && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
             {
                 entity.Revive();
                 itemslot.TakeOut(1);
+                itemslot.MarkDirty();
                 if (entity.HasBehavior<EntityBehaviorHealth>())
                 {
                     entity.GetBehavior<EntityBehaviorHealth>().Health = item.healingValue;
@@ -489,7 +490,7 @@ namespace PetAI
                     }
                 };
             }
-            else if (!entity.Alive && resurrectors.Count > 0)
+            else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && resurrectors.Count > 0)
             {
                 return new WorldInteraction[]
                 {
