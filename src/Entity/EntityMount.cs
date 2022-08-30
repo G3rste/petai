@@ -70,6 +70,7 @@ namespace PetAI
         public override void OnInteract(EntityAgent byEntity, ItemSlot slot, Vec3d hitPosition, EnumInteractMode mode)
         {
             if (mode == EnumInteractMode.Interact
+                && !byEntity.Controls.Sprint
                 && slot.Empty
                 && GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity == byEntity)
             {
