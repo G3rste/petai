@@ -71,7 +71,7 @@ namespace PetAI
 
             if (x != null && y != null && z != null)
             {
-                pathTraverser.NavigateTo(new Vec3d((double)x, (double)y, (double)z), moveSpeed, 1f, OnGoalReached, OnStuck, false, 1000);
+                pathTraverser.WalkTowards(new Vec3d((double)x, (double)y, (double)z), moveSpeed, maxDistance / 2, OnGoalReached, OnStuck);
             }
             stuck = false;
         }
