@@ -28,6 +28,26 @@ namespace PetAI
         public float mountWalkingSpeed { get; private set; } = 0.02f;
         public float mountRunningSpeed { get; private set; } = 0.06f;
         public IMountableSupplier MountSupplier => null;
+
+        public bool CanControl => false;
+
+        public Entity MountedBy => rider;
+
+        EntityPos mountPos = new EntityPos();
+        EntityPos IMountable.MountPosition
+        {
+            get
+            {
+                mountPos.SetPos(MountPosition);
+                return mountPos;
+            }
+
+        }
+
+        public EnumMountAngleMode AngleMode => EnumMountAngleMode.PushYaw;
+
+        Vec3f IMountable.LocalEyePos => new Vec3f(0, unchecked((float)Properties.EyeHeight), 0);
+
         public override void Initialize(EntityProperties properties, ICoreAPI api, long InChunkIndex3d)
         {
             base.Initialize(properties, api, InChunkIndex3d);

@@ -9,6 +9,6 @@
     "description": "Mod that focuses on implementing various new AI behaviours and tasks centered around taming.",
     "version": "1.5.5",
     "dependencies": {
-        "game": "1.17.2"
+        "game": "1.18.0-pre"
     }
 }

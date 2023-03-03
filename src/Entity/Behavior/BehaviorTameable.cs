@@ -397,7 +397,8 @@ namespace PetAI
             }
             return false;
         }
-        public override void OnEntityDespawn(EntityDespawnReason despawn)
+
+        public override void OnEntityDespawn(EntityDespawnData despawn)
         {
             entity.World.UnregisterCallback(callbackId);
             entity.World.UnregisterGameTickListener(listenerId);

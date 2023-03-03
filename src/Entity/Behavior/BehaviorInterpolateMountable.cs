@@ -128,7 +128,7 @@ namespace PetAI
         }
 
 
-        public override void OnEntityDespawn(EntityDespawnReason despawn)
+        public override void OnEntityDespawn(EntityDespawnData despawn)
         {
             base.OnEntityDespawn(despawn);
             (entity.Api as ICoreClientAPI).Event.UnregisterRenderer(this, EnumRenderStage.Before);
