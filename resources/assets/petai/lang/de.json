@@ -71,7 +71,7 @@
     "gui-pet-owner": "Besitzer: {0}",
     "gui-pet-obedience": "Gehorsamkeit: {0}%",
     "gui-pet-domesticationProgress": "Zähmungsfortschritt: {0}%",
-    "gui-pet-nestsize": "Benötigt Nestgröße: {0}",
+    "gui-pet-nestsize": "Größe: {0}",
     "gui-pet-nestsize-small": "klein",
     "gui-pet-nestsize-medium": "mittel",
     "gui-pet-nestsize-large": "groß",
