@@ -45,6 +45,7 @@ namespace PetAI
             AiTaskRegistry.Register<AiTaskPetSeekEntity>("petseekentity");
             AiTaskRegistry.Register<AiTaskSeekNest>("seeknest");
             AiTaskRegistry.Register<AiTaskBeAMount>("beamount");
+            AiTaskRegistry.Register<AiTaskHappyDance>("happydance");
 
             api.RegisterEntity("EntityPet", typeof(EntityPet));
             api.RegisterEntity("EntityMount", typeof(EntityMount));

@@ -162,7 +162,7 @@ namespace PetAI
         }
         private int generation => entity.WatchedAttributes.GetInt("generation", 0);
         public EnumNestSize size { get; set; }
-        List<TamingItem> treatList = new List<TamingItem>();
+        public List<TamingItem> treatList = new List<TamingItem>();
         AssetLocation tameEntityCode;
 
         float disobediencePerDay;
@@ -510,7 +510,7 @@ namespace PetAI
         }
     }
 
-    class TamingItem
+    public class TamingItem
     {
         public string name { get; set; }
 
