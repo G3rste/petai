@@ -198,7 +198,7 @@ namespace PetAI
             difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
             config.difficulty = difficulty;
 
-            config.pvpOff = true;
+            config.pvpOff = false;
 
             config.resurrectors = new List<PetResurrector>(new PetResurrector[] {
                     new PetResurrector(){name = "bandage-clean", domain ="game", healingValue = 4},
