@@ -115,5 +115,17 @@ namespace PetAI
             }
             return dmg;
         }
+
+        public override bool ShouldReceiveDamage(DamageSource damageSource, float damage)
+        {
+            if (PetConfig.Current.pvpOff
+                && GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
+                && damageSource.CauseEntity is EntityPlayer player
+                && player.PlayerUID != GetBehavior<EntityBehaviorTameable>()?.ownerId)
+            {
+                return false;
+            }
+            return base.ShouldReceiveDamage(damageSource, damage);
+        }
     }
 }

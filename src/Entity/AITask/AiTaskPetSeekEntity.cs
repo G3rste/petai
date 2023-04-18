@@ -94,7 +94,11 @@ namespace PetAI
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
         {
             if (e == null) { return false; }
-            if ((e as EntityPlayer)?.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.ownerId && entity.HasBehavior<EntityBehaviorTameable>() && entity.GetBehavior<EntityBehaviorTameable>().obedience > 0.5f) { return false; }
+            var player = e as EntityPlayer;
+            var tameable = entity.GetBehavior<EntityBehaviorTameable>();
+            if (player?.PlayerUID == tameable?.ownerId && tameable != null && tameable.obedience > 0.5f) { return false; }
+            if (PetConfig.Current.pvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player?.PlayerUID != tameable?.ownerId) { return false; }
+
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
         }

@@ -183,6 +183,7 @@ namespace PetAI
         public static PetConfig Current { get; set; }
         public Difficulty difficulty { get; set; }
         public List<PetResurrector> resurrectors { get; set; }
+        public bool pvpOff { get; set; }
         public static PetConfig getDefault()
         {
             var config = new PetConfig();
@@ -196,6 +197,8 @@ namespace PetAI
             difficulty.obedienceMultiplierIncreasePerGen = 0.05f;
             difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
             config.difficulty = difficulty;
+
+            config.pvpOff = true;
 
             config.resurrectors = new List<PetResurrector>(new PetResurrector[] {
                     new PetResurrector(){name = "bandage-clean", domain ="game", healingValue = 4},

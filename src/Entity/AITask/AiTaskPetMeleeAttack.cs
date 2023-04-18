@@ -40,7 +40,9 @@ namespace PetAI
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
-            if (tameable != null && (e as EntityPlayer)?.PlayerUID == tameable.ownerId && tameable.obedience > 0.5f) { return false; }
+            var player = e as EntityPlayer;
+            if (tameable != null && player?.PlayerUID == tameable.ownerId && tameable.obedience > 0.5f) { return false; }
+            if (PetConfig.Current.pvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player?.PlayerUID != tameable?.ownerId) { return false; }
 
             if (isCommandable && (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
             {
