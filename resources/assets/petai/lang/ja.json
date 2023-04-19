@@ -1,4 +1,8 @@
 {
+    "comment_description": "Japanese localization file for 'Pet AI'.",
+    "comment_version": "Mod Version: v1.7.0",
+    "comment_author": "Translated By: Macoto Hino",
+    "comment_technical_details": "Machine translation using PCOT and DeepL.",
     "item-petwhistle": "ペットホイッスル",
     "item-magicbone": "魔法のホネ",
 	"item-texturerotator": "Reskinner",
