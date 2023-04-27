@@ -1,8 +1,9 @@
 {
-    "comment_description": "Japanese localization file for 'Pet AI'.",
-    "comment_version": "Mod Version: v1.7.0",
-    "comment_author": "Translated By: Macoto Hino",
-    "comment_technical_details": "Machine translation using PCOT and DeepL.",
+	"comment_description" : "Japanese localization file for 'Pet AI'.",
+	"comment_version" : "Mod Version: v1.7.0",
+    "comment_author" : "Translated By: Macoto Hino",
+    "comment_technical_details" : "Machine translation using PCOT and DeepL.",
+
     "item-petwhistle": "ペットホイッスル",
     "item-magicbone": "魔法のホネ",
 	"item-texturerotator": "Reskinner",
@@ -78,7 +79,7 @@
     "gui-pet-owner": "飼い主: {0}",
     "gui-pet-obedience":"懐き度: {0}%",
     "gui-pet-domesticationProgress": "飼い馴らしの進捗状況: {0}%",	
-    "gui-pet-nestsize": "適切な寢床が必要です: {0}",
+    "gui-pet-nestsize": "サイズ: {0}",
     "gui-pet-nestsize-small": "小型",
     "gui-pet-nestsize-medium": "中型",
     "gui-pet-nestsize-large": "大型",
