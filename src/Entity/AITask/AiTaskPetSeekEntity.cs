@@ -1,6 +1,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -43,35 +44,36 @@ namespace PetAI
         {
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             var elapsedMs = entity.World.ElapsedMilliseconds;
+            float range = NowSeekRange;
             if (lastCheck + 500 < elapsedMs)
             {
                 lastCheck = elapsedMs;
                 if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (!IsTargetableEntity(targetEntity, seekingRange, true)) { targetEntity = null; }
+                if (!IsTargetableEntity(targetEntity, range, true)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (IsTargetableEntity(ownerAttackedBy, seekingRange * 2, true))
+                        if (IsTargetableEntity(ownerAttackedBy, range, true))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (IsTargetableEntity(ownerAttacks, seekingRange * 2, true))
+                        if (IsTargetableEntity(ownerAttacks, range, true))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (IsTargetableEntity(attackedByEntity, seekingRange * 2, true))
+                    if (IsTargetableEntity(attackedByEntity, range, true))
                     {
                         targetEntity = attackedByEntity;
                     }
                 }
 
-                if (IsTargetableEntity(targetEntity, seekingRange * 2, true))
+                if (IsTargetableEntity(targetEntity, range, true))
                 {
                     targetPos = targetEntity.ServerPos.XYZ;
                     return true;
@@ -80,9 +82,9 @@ namespace PetAI
             if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE && lastSearch + 5000 < elapsedMs)
             {
                 lastSearch = elapsedMs;
-                targetEntity = partitionUtil.GetNearestEntity(entity.ServerPos.XYZ, seekingRange, e => IsTargetableEntity(e, seekingRange));
+                targetEntity = partitionUtil.GetNearestEntity(entity.ServerPos.XYZ, range, e => IsTargetableEntity(e, range));
 
-                if (IsTargetableEntity(targetEntity, seekingRange, true))
+                if (IsTargetableEntity(targetEntity, range, true))
                 {
                     targetPos = targetEntity.ServerPos.XYZ;
                     return true;
@@ -98,6 +100,7 @@ namespace PetAI
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
             if (player?.PlayerUID == tameable?.ownerId && tameable != null && tameable.obedience > 0.5f) { return false; }
             if (PetConfig.Current.pvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player?.PlayerUID != tameable?.ownerId) { return false; }
+            if (e.ServerPos.SquareDistanceTo(entity.ServerPos) > range * range) { return false; }
 
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
