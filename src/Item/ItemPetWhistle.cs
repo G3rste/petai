@@ -1,6 +1,8 @@
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace PetAI
 {
@@ -39,12 +41,8 @@ namespace PetAI
 
             var petArray = byEntity.World.GetEntitiesAround(byEntity.ServerPos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
 
-            foreach (var pet in petArray)
-            {
-                pet.GetBehavior<EntityBehaviorReceiveCommand>().setCommand(command, byEntity as EntityPlayer);
-            }
-
             var player = byEntity as EntityPlayer;
+            Entity target = null;
             if (player != null && command.commandName == "settarget")
             {
                 EntitySelection entitySel = null;
@@ -52,6 +50,40 @@ namespace PetAI
                 Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
                 player.World.RayTraceForSelection(pos, player.SidedPos.Pitch, player.SidedPos.Yaw, 50, ref blockSel, ref entitySel);
                 giveBehavior.victim = entitySel?.Entity;
+                target = entitySel?.Entity;
+            }
+            if (command.commandName == "removetarget")
+            {
+                giveBehavior.victim = null;
+                giveBehavior.attacker = null;
+
+            }
+
+            foreach (var pet in petArray)
+            {
+                var receiveBehavior = pet.GetBehavior<EntityBehaviorReceiveCommand>();
+                receiveBehavior.setCommand(command, byEntity as EntityPlayer);
+
+                var taskManager = pet.GetBehavior<EntityBehaviorTaskAI>()?.TaskManager;
+                var seekTask = taskManager?.GetTask<AiTaskPetSeekEntity>();
+                var attackTask = taskManager?.GetTask<AiTaskPetMeleeAttack>();
+
+                if (target != null
+                    && seekTask != null
+                    && attackTask != null
+                    && (receiveBehavior.aggressionLevel == EnumAggressionLevel.PROTECTIVE || receiveBehavior.aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
+                {
+                    seekTask.targetEntity = target;
+                    attackTask.targetEntity = target;
+                }
+
+                if (command.commandName == "removetarget")
+                {
+                    taskManager?.StopTask(typeof(AiTaskPetMeleeAttack));
+                    taskManager?.StopTask(typeof(AiTaskPetSeekEntity));
+                    seekTask.targetEntity = null;
+                    attackTask.targetEntity = null;
+                }
             }
         }
 
@@ -63,7 +95,7 @@ namespace PetAI
         }
         public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
         {
-            
+
             return new WorldInteraction[]
             {
                 new WorldInteraction()

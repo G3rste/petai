@@ -103,7 +103,7 @@ namespace PetAI
     }
     public enum EnumCommandType
     {
-        SIMPLE, COMPLEX, AGGRESSIONLEVEL
+        SIMPLE, COMPLEX, AGGRESSIONLEVEL, ATTACKORDER
     }
     public enum EnumAggressionLevel
     {

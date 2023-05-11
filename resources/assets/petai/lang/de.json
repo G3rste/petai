@@ -66,7 +66,9 @@
     "gui-command-passive": "Passiv",
     "gui-command-backpackinv": "Haustier Inventar",
     "gui-command-dropgear": "Fallen lassen",
+    "gui-command-attackorder": "Angriffsbefehle:",
     "gui-command-settarget": "Setze Ziel",
+    "gui-command-removetarget": "Entferne Ziel",
 
     "gui-pet-owner": "Besitzer: {0}",
     "gui-pet-obedience": "Gehorsamkeit: {0}%",

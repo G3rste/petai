@@ -69,7 +69,9 @@
     "gui-command-passive": "Passive",
     "gui-command-backpackinv": "Pet Inventory",
     "gui-command-dropgear": "Drop all",
+    "gui-command-attackorder": "Attack orders:",
     "gui-command-settarget": "Set target",
+    "gui-command-removetarget": "Remove target",
     
     "gui-pet-owner": "Owner: {0}",
     "gui-pet-obedience": "Obedience: {0}%",
