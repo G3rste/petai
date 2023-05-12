@@ -82,7 +82,9 @@ namespace PetAI
                     taskManager?.StopTask(typeof(AiTaskPetMeleeAttack));
                     taskManager?.StopTask(typeof(AiTaskPetSeekEntity));
                     seekTask.targetEntity = null;
+                    seekTask.ResetAttackedByEntity();
                     attackTask.targetEntity = null;
+                    attackTask.ResetAttackedByEntity();
                 }
             }
         }
