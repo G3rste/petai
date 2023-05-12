@@ -82,7 +82,7 @@ namespace PetAI
             if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE && lastSearch + 5000 < elapsedMs)
             {
                 lastSearch = elapsedMs;
-                targetEntity = partitionUtil.GetNearestEntity(entity.ServerPos.XYZ, range, e => IsTargetableEntity(e, range));
+                targetEntity = partitionUtil.GetNearestInteractableEntity(entity.ServerPos.XYZ, range, e => IsTargetableEntity(e, range));
 
                 if (IsTargetableEntity(targetEntity, range, true))
                 {
