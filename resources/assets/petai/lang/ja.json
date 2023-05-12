@@ -1,6 +1,6 @@
 {
 	"comment_description" : "Japanese localization file for 'Pet AI'.",
-	"comment_version" : "Mod Version: v1.7.0",
+	"comment_version" : "Mod Version: v1.7.3",
     "comment_author" : "Translated By: Macoto Hino",
     "comment_technical_details" : "Machine translation using PCOT and DeepL.",
 
@@ -74,7 +74,9 @@
     "gui-command-passive": "消極的",
     "gui-command-backpackinv": "ペットインベントリー",
     "gui-command-dropgear": "全て回収",
+    "gui-command-attackorder": "攻撃指示:",
     "gui-command-settarget": "目標を設定",
+    "gui-command-removetarget": "目標の削除",
 
     "gui-pet-owner": "飼い主: {0}",
     "gui-pet-obedience":"懐き度: {0}%",
