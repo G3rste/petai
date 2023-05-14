@@ -74,7 +74,6 @@ namespace PetAI
                     && (receiveBehavior.aggressionLevel == EnumAggressionLevel.PROTECTIVE || receiveBehavior.aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
                 {
                     seekTask.targetEntity = target;
-                    attackTask.targetEntity = target;
                 }
 
                 if (command.commandName == "removetarget")
