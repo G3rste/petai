@@ -508,6 +508,33 @@ namespace PetAI
                 return base.GetInteractionHelp(world, es, player, ref handled);
             }
         }
+
+        public override void OnEntityDeath(DamageSource damageSourceForDeath)
+        {
+            base.OnEntityDeath(damageSourceForDeath);
+            if (entity.Api is ICoreServerAPI sapi)
+            {
+                sapi.SendMessage(cachedOwner,
+                GlobalConstants.GeneralChatGroup,
+                Lang.Get("petai:message-pet-dead",
+                entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
+                EnumChatType.Notification);
+
+                if (entity.Api.ModLoader.GetModSystem<WorldMapManager>().MapLayers.Find(ml => ml is WaypointMapLayer) is WaypointMapLayer waypointMap)
+                {
+                    waypointMap.AddWaypoint(new Waypoint()
+                        {
+                            Color = 9044739,
+                            Icon = "gravestone",
+                            Pinned = true,
+                            Position = entity.ServerPos.XYZ,
+                            OwningPlayerUid = ownerId,
+                            Title = Lang.Get("petai:message-pet-dead", entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
+                        }, 
+                        cachedOwner as IServerPlayer);
+                }
+            }
+        }
     }
 
     public class TamingItem

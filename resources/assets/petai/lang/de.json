@@ -92,6 +92,7 @@
     "message-not-ready": "{0} ist noch nicht wieder hungrig.",
     "message-startet-taming": "{0} wird jetzt von dir gezähmt, aktueller Zähmfortschritt ist {1}%.",
     "message-finished-taming":"{0} erfolgreich gezähmt.",
+    "message-pet-dead": "Dein Haustier {0} ist gestorben",
 
     "interact-feed": "Haustier füttern",
     "interact-command": "Haustier befehligen",

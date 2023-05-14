@@ -95,6 +95,7 @@
     "message-not-ready": "{0} is not ready to be tended to again.",
     "message-startet-taming": "Successfully started taming {0}, current progress is {1}%.",
     "message-finished-taming": "Successfully tamed {0}.",
+    "message-pet-dead": "Your pet {0} has died",
 
     "interact-feed": "Feed pet",
     "interact-mount": "Mount pet",
