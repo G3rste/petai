@@ -1,0 +1,17 @@
+[
+    {
+        "op": "add",
+        "path": "/behaviors",
+        "value": [
+            {
+                "name": "considerpetfood"
+            }
+        ],
+        "file": "game:itemtypes/food/poultry.json",
+        "dependsOn": [
+            {
+                "modid": "medieval"
+            }
+        ]
+    }
+]
