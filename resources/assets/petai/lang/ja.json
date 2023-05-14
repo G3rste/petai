@@ -1,6 +1,6 @@
 {
 	"comment_description" : "Japanese localization file for 'Pet AI'.",
-	"comment_version" : "Mod Version: v1.7.3",
+	"comment_version" : "Mod Version: v1.7.5",
     "comment_author" : "Translated By: Macoto Hino",
     "comment_technical_details" : "Machine translation using PCOT and DeepL.",
 
@@ -100,6 +100,7 @@
     "message-not-ready": "{0}は再び世話をする準備が出来ていません。",
     "message-startet-taming": "{0}の飼い馴らしに成功、現在の進捗は{1}%です。",
     "message-finished-taming": "{0}の飼い馴らしに成功しました。",
+    "message-pet-dead": "ペット{0}が死にました。",
 
     "interact-feed": "ペットへ餌をやる",
     "interact-mount": "ペットに乗る",	
