@@ -184,6 +184,7 @@ namespace PetAI
         public Difficulty difficulty { get; set; }
         public List<PetResurrector> resurrectors { get; set; }
         public bool pvpOff { get; set; }
+        public bool falldamageOff { get; set; }
         public static PetConfig getDefault()
         {
             var config = new PetConfig();

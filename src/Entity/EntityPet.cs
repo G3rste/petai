@@ -121,7 +121,9 @@ namespace PetAI
             if (PetConfig.Current.pvpOff
                 && GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && damageSource.CauseEntity is EntityPlayer player
-                && player.PlayerUID != GetBehavior<EntityBehaviorTameable>()?.ownerId)
+                && player.PlayerUID != GetBehavior<EntityBehaviorTameable>()?.ownerId
+                || damageSource.Source == EnumDamageSource.Fall
+                && PetConfig.Current.falldamageOff)
             {
                 return false;
             }
