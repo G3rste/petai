@@ -76,7 +76,9 @@ namespace PetAI
                     seekTask.targetEntity = target;
                 }
 
-                if (command.commandName == "removetarget")
+                if (command.commandName == "removetarget"
+                    && seekTask != null
+                    && attackTask != null)
                 {
                     taskManager?.StopTask(typeof(AiTaskPetMeleeAttack));
                     taskManager?.StopTask(typeof(AiTaskPetSeekEntity));
