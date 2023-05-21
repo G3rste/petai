@@ -67,7 +67,7 @@ namespace PetAI
         public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
             base.OnEntityReceiveDamage(damageSource, ref damage);
-            attacker = damageSource.SourceEntity;
+            attacker = damageSource.GetCauseEntity();
         }
 
         public override string PropertyName()
