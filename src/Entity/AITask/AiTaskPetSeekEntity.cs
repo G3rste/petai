@@ -1,7 +1,6 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
-using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -96,17 +95,26 @@ namespace PetAI
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
         {
             if (e == null) { return false; }
-            var player = e as EntityPlayer;
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
-            if (player?.PlayerUID == tameable?.ownerId && tameable != null && tameable.obedience > 0.5f) { return false; }
-            if (PetConfig.Current.pvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player?.PlayerUID != tameable?.ownerId) { return false; }
+            if (e is EntityPlayer player)
+            {
+                if (player.PlayerUID == tameable?.ownerId && tameable != null && tameable.obedience > 0.5f)
+                {
+                    return false;
+                }
+                if (PetConfig.Current.pvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.ownerId)
+                {
+                    return false;
+                }
+            }
             if (e.ServerPos.SquareDistanceTo(entity.ServerPos) > range * range) { return false; }
 
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
         }
 
-        public void ResetAttackedByEntity(){
+        public void ResetAttackedByEntity()
+        {
             attackedByEntity = null;
         }
     }
