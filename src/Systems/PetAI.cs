@@ -21,9 +21,9 @@ namespace PetAI
         public override void Start(ICoreAPI api)
         {
             base.Start(api);
-
             MultiplyPatch.Patch(harmony);
             PoulticePatch.Patch(harmony);
+            WildcraftPoulticePatch.Patch(harmony);
             HarvestablePatch.Patch(harmony);
 
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
