@@ -121,7 +121,7 @@ namespace PetAI
             {
                 harmony.Patch(methodInfo()
                     , prefix: new HarmonyMethod(typeof(WildcraftPoulticePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
-            } catch(Exception e) { }
+            } catch(Exception) { }
         }
 
         public static void Unpatch(Harmony harmony)
@@ -130,7 +130,7 @@ namespace PetAI
             {
                 harmony.Unpatch(methodInfo()
                 , HarmonyPatchType.Prefix, "gerste.petai");
-            } catch(Exception e) { }
+            } catch(Exception) { }
         }
 
         public static MethodInfo methodInfo()
