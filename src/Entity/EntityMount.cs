@@ -59,10 +59,6 @@ namespace PetAI
             walkAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["walk"]);
             sprintAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["sprint"]);
             backwardAnimation = LoadAnimFromJson(Properties.Attributes["mountAnimations"]["backward"]);
-
-            // For reasons beyond my comprehension this fixes the bug that a player will still be weirdly connected to his horse after rejoining
-            // at least in singleplayer
-            api.World.RegisterCallback(dt => rider?.TryUnmount(), 2000);
         }
         public void DidMount(EntityAgent entityAgent)
         {
