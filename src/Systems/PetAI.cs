@@ -7,7 +7,6 @@ using ProtoBuf;
 using System;
 using System.Collections.Generic;
 using HarmonyLib;
-using Vintagestory.API.MathTools;
 
 namespace PetAI
 {
