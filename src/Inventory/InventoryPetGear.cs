@@ -45,7 +45,7 @@ namespace PetAI
             }
         }
 
-        public override WeightedSlot GetBestSuitedSlot(ItemSlot sourceSlot, List<ItemSlot> skipSlots = null)
+        public override WeightedSlot GetBestSuitedSlot(ItemSlot sourceSlot, ItemStackMoveOperation op, List<ItemSlot> skipSlots = null)
         {
             var accessory = sourceSlot?.Itemstack?.Item as ItemPetAccessory;
             if (accessory != null)
@@ -55,7 +55,7 @@ namespace PetAI
                 weightedSlot.slot = slots[(int)accessory.type];
                 return weightedSlot;
             }
-            return base.GetBestSuitedSlot(sourceSlot, skipSlots);
+            return base.GetBestSuitedSlot(sourceSlot, op, skipSlots);
         }
     }
 }
