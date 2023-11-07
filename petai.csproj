@@ -2,7 +2,7 @@
 	<PropertyGroup>
 		<TargetFramework>Net7.0</TargetFramework>
 	</PropertyGroup>
-	
+
 	<ItemGroup>
 		<Reference Include="VintagestoryAPI">
 			<HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
@@ -29,15 +29,15 @@
 			<Private>false</Private>
 		</Reference>
 	</ItemGroup>
-	
+
 	<ItemGroup Condition="'$(Configuration)' == 'Release'">
 		<None Include="resources/**">
 			<Link>%(RecursiveDir)%(Filename)%(Extension)</Link>
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
-	
 	<Target Name="Package" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+		<Exec Command="C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { .\update-lang.ps1 } &quot;" LogStandardErrorAsError="True" ContinueOnError="False" WorkingDirectory="$(MSBuildProjectDirectory)" />
 		<ZipDirectory DestinationFile="bin/$(TargetName).zip" SourceDirectory="$(TargetDir)" Overwrite="true" />
 	</Target>
 </Project>
