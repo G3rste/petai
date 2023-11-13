@@ -36,11 +36,11 @@ namespace PetAI
 
         public override void OnTesselation(ref Shape entityShape, string shapePathForLogging)
         {
-            base.OnTesselation(ref entityShape, shapePathForLogging);
             foreach (var slot in GearInventory)
             {
                 addGearToShape(slot, entityShape, shapePathForLogging);
             }
+            base.OnTesselation(ref entityShape, shapePathForLogging);
         }
 
         public override void FromBytes(BinaryReader reader, bool forClient)
