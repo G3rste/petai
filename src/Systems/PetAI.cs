@@ -48,6 +48,7 @@ namespace PetAI
 
             api.RegisterEntity("EntityPet", typeof(EntityPet));
             api.RegisterEntity("EntityMount", typeof(EntityMount));
+            api.RegisterEntity("EntityPlayerFix", typeof(EntityPlayerFix));
             api.RegisterMountable("EntityMount", EntityMount.GetMountable);
 
             api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
