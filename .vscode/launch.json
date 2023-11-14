@@ -15,7 +15,7 @@
 		"internalConsoleOptions": "openOnSessionStart",
 	},{
 		"name": "Launch Client (.NET)",
-		"type": "clr",
+		"type": "coreclr",
 		"request": "launch",
 		"preLaunchTask": "Build (Debug)",
 		"program": "${env:VINTAGE_STORY}/Vintagestory.exe",
