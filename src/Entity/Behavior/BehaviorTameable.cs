@@ -375,8 +375,8 @@ namespace PetAI
                 }
                 if (acceptedItems < 1) return false;
 
-                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.difficulty.obedienceMultiplier * (float)Math.Pow(1 + PetConfig.Current.difficulty.obedienceMultiplierIncreasePerGen, generation);
-                else domesticationProgress += tamingItem.progress * PetConfig.Current.difficulty.tamingMultiplier * (float)Math.Pow(1 + PetConfig.Current.difficulty.tamingMultiplierIncreasePerGen, generation);
+                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.Difficulty.obedienceMultiplier * (float)Math.Pow(1 + PetConfig.Current.Difficulty.obedienceMultiplierIncreasePerGen, generation);
+                else domesticationProgress += tamingItem.progress * PetConfig.Current.Difficulty.tamingMultiplier * (float)Math.Pow(1 + PetConfig.Current.Difficulty.tamingMultiplierIncreasePerGen, generation);
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
 
@@ -430,14 +430,14 @@ namespace PetAI
             // I hope the PlayerEntity is null when the player is offline
             if (cachedOwner?.Entity != null)
             {
-                obedience -= PetConfig.Current.difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.difficulty.disobedienceMultiplierDecreasePerGen, generation);
+                obedience -= PetConfig.Current.Difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.Difficulty.disobedienceMultiplierDecreasePerGen, generation);
             }
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
 
         private void tryReviveWith(ItemSlot itemslot)
         {
-            var item = PetConfig.Current.resurrectors.Find(resurrector => resurrector.name == itemslot?.Itemstack?.Collectible?.Code?.Path);
+            var item = PetConfig.Current.Resurrectors.Find(resurrector => resurrector.name == itemslot?.Itemstack?.Collectible?.Code?.Path);
             if (item != null && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
             {
                 entity.Revive();
@@ -466,7 +466,7 @@ namespace PetAI
                 }
             }
             List<ItemStack> resurrectors = new List<ItemStack>();
-            foreach (var resurrector in PetConfig.Current.resurrectors)
+            foreach (var resurrector in PetConfig.Current.Resurrectors)
             {
                 var item = world.GetItem(new AssetLocation(resurrector.domain + ":" + resurrector.name));
                 if (item != null)

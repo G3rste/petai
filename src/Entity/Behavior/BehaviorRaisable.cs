@@ -19,7 +19,7 @@ namespace PetAI
 
         internal float HoursToGrow
         {
-            get { return _HoursToGrow * PetConfig.Current.difficulty.growingMultiplier; }
+            get { return _HoursToGrow * PetConfig.Current.Difficulty.growingMultiplier; }
             set { _HoursToGrow = value; }
         }
 

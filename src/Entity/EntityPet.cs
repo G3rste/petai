@@ -120,12 +120,12 @@ namespace PetAI
 
         public override bool ShouldReceiveDamage(DamageSource damageSource, float damage)
         {
-            if (PetConfig.Current.pvpOff
+            if (PetConfig.Current.PvpOff
                 && GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && damageSource.CauseEntity is EntityPlayer player
                 && player.PlayerUID != GetBehavior<EntityBehaviorTameable>()?.ownerId
                 || damageSource.Source == EnumDamageSource.Fall
-                && PetConfig.Current.falldamageOff)
+                && PetConfig.Current.FalldamageOff)
             {
                 return false;
             }

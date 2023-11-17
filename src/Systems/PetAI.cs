@@ -77,10 +77,10 @@ namespace PetAI
             }
             finally
             {
-                if (PetConfig.Current.difficulty == null)
-                    PetConfig.Current.difficulty = PetConfig.getDefault().difficulty;
-                if (PetConfig.Current.resurrectors == null)
-                    PetConfig.Current.resurrectors = PetConfig.getDefault().resurrectors;
+                if (PetConfig.Current.Difficulty == null)
+                    PetConfig.Current.Difficulty = PetConfig.getDefault().Difficulty;
+                if (PetConfig.Current.Resurrectors == null)
+                    PetConfig.Current.Resurrectors = PetConfig.getDefault().Resurrectors;
 
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
@@ -182,27 +182,32 @@ namespace PetAI
     public class PetConfig
     {
         public static PetConfig Current { get; set; }
-        public Difficulty difficulty { get; set; }
-        public List<PetResurrector> resurrectors { get; set; }
-        public bool pvpOff { get; set; }
-        public bool falldamageOff { get; set; }
+        public Difficulty Difficulty { get; set; }
+        public List<PetResurrector> Resurrectors { get; set; }
+        public bool PvpOff { get; set; }
+        public bool FalldamageOff { get; set; }
+        public bool AllowTeleport { get; set; }
         public static PetConfig getDefault()
         {
             var config = new PetConfig();
 
-            var difficulty = new Difficulty();
-            difficulty.tamingMultiplier = 1;
-            difficulty.obedienceMultiplier = 1;
-            difficulty.disobedienceMultiplier = 1;
-            difficulty.growingMultiplier = 1;
-            difficulty.tamingMultiplierIncreasePerGen = 0.05f;
-            difficulty.obedienceMultiplierIncreasePerGen = 0.05f;
-            difficulty.disobedienceMultiplierDecreasePerGen = 0.05f;
-            config.difficulty = difficulty;
+            var difficulty = new Difficulty
+            {
+                tamingMultiplier = 1,
+                obedienceMultiplier = 1,
+                disobedienceMultiplier = 1,
+                growingMultiplier = 1,
+                tamingMultiplierIncreasePerGen = 0.05f,
+                obedienceMultiplierIncreasePerGen = 0.05f,
+                disobedienceMultiplierDecreasePerGen = 0.05f
+            };
+            config.Difficulty = difficulty;
 
-            config.pvpOff = false;
+            config.PvpOff = false;
+            config.FalldamageOff = false;
+            config.AllowTeleport = false;
 
-            config.resurrectors = new List<PetResurrector>(new PetResurrector[] {
+            config.Resurrectors = new List<PetResurrector>(new PetResurrector[] {
                     new PetResurrector(){name = "bandage-clean", domain ="game", healingValue = 4},
                     new PetResurrector(){name = "bandage-alcoholed", domain ="game", healingValue = 8},
                     new PetResurrector(){name = "poultice-reed-horsetail", domain ="game", healingValue = 1},

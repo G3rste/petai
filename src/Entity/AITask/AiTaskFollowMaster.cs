@@ -20,6 +20,7 @@ namespace PetAI
             {
                 commandName = taskConfig["command"].AsString("followmaster");
             }
+            allowTeleport &= PetConfig.Current.AllowTeleport;
         }
 
         public override bool ShouldExecute()
