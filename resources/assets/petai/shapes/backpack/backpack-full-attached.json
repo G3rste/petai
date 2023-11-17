@@ -1,0 +1,284 @@
+{
+	"editor": {
+		"backDropShape": "E:/Vintagestory/assets/game/shapes/entity/humanoid/seraph-hairless",
+		"allAngles": true,
+		"entityTextureMode": true
+	},
+	"textureWidth": 64,
+	"textureHeight": 64,
+	"textureSizes": {
+	},
+	"textures": {
+		"backpack": "E:/Workspace/vintage_story_mods/wolftaming/resources/assets/wolftaming/textures/backpack/backpack"
+	},
+	"elements": [
+		{
+			"name": "backpack root",
+			"stepParentName": "UpperTorso",
+			"from": [ 5.0, -6.0, -1.0 ],
+			"to": [ 12.0, 5.0, 7.2 ],
+			"uv": [ 0.0, 45.0 ],
+			"rotationOrigin": [ 5.0, -6.0, -1.0 ],
+			"faces": {
+				"north": { "texture": "#backpack", "uv": [ 0.0, 53.0, 7.0, 64.0 ] },
+				"east": { "texture": "#backpack", "uv": [ 7.0, 53.0, 15.0, 64.0 ] },
+				"south": { "texture": "#backpack", "uv": [ 15.0, 53.0, 22.0, 64.0 ] },
+				"west": { "texture": "#backpack", "uv": [ 22.0, 53.0, 30.0, 64.0 ] },
+				"up": { "texture": "#backpack", "uv": [ 0.0, 45.0, 7.0, 53.0 ] },
+				"down": { "texture": "#backpack", "uv": [ 7.0, 45.0, 14.0, 53.0 ] }
+			},
+			"children": [
+				{
+					"name": "backpack right pocket",
+					"from": [ 0.5, 0.5, -2.0 ],
+					"to": [ 6.5, 4.0, 0.0 ],
+					"uv": [ 48.0, 37.0 ],
+					"rotationOrigin": [ 0.0, 0.0, -2.0 ],
+					"faces": {
+						"north": { "texture": "#backpack", "uv": [ 48.0, 39.0, 54.0, 42.5 ] },
+						"east": { "texture": "#backpack", "uv": [ 54.0, 39.0, 56.0, 42.5 ] },
+						"south": { "texture": "#backpack", "uv": [ 56.0, 39.0, 62.0, 42.5 ] },
+						"west": { "texture": "#backpack", "uv": [ 62.0, 39.0, 64.0, 42.5 ] },
+						"up": { "texture": "#backpack", "uv": [ 48.0, 37.0, 54.0, 39.0 ] },
+						"down": { "texture": "#backpack", "uv": [ 54.0, 37.0, 60.0, 39.0 ] }
+					}
+				},
+				{
+					"name": "backpack left pocket",
+					"from": [ 0.5, 0.5, 8.2 ],
+					"to": [ 6.5, 4.0, 10.2 ],
+					"uv": [ 48.0, 46.0 ],
+					"rotationOrigin": [ 0.0, 0.0, 8.0 ],
+					"faces": {
+						"north": { "texture": "#backpack", "uv": [ 48.0, 48.0, 54.0, 51.5 ] },
+						"east": { "texture": "#backpack", "uv": [ 54.0, 48.0, 56.0, 51.5 ] },
+						"south": { "texture": "#backpack", "uv": [ 56.0, 48.0, 62.0, 51.5 ] },
+						"west": { "texture": "#backpack", "uv": [ 62.0, 48.0, 64.0, 51.5 ] },
+						"up": { "texture": "#backpack", "uv": [ 48.0, 46.0, 54.0, 48.0 ] },
+						"down": { "texture": "#backpack", "uv": [ 54.0, 46.0, 60.0, 48.0 ] }
+					}
+				},
+				{
+					"name": "backpack back pocket",
+					"from": [ 7.0, 0.5, 0.5 ],
+					"to": [ 9.0, 4.5, 7.7 ],
+					"uv": [ 46.0, 53.0 ],
+					"rotationOrigin": [ 7.0, 0.0, 0.0 ],
+					"faces": {
+						"north": { "texture": "#backpack", "uv": [ 46.0, 60.0, 48.0, 64.0 ] },
+						"east": { "texture": "#backpack", "uv": [ 48.0, 60.0, 55.0, 64.0 ] },
+						"south": { "texture": "#backpack", "uv": [ 55.0, 60.0, 57.0, 64.0 ] },
+						"west": { "texture": "#backpack", "uv": [ 57.0, 60.0, 64.0, 64.0 ] },
+						"up": { "texture": "#backpack", "uv": [ 46.0, 53.0, 48.0, 60.0 ] },
+						"down": { "texture": "#backpack", "uv": [ 48.0, 53.0, 50.0, 60.0 ] }
+					}
+				},
+				{
+					"name": "backpack top",
+					"from": [ 1.0, 12.0, 1.5 ],
+					"to": [ 5.0, 15.0, 6.7 ],
+					"uv": [ 46.0, 18.0 ],
+					"rotationOrigin": [ 1.0, 12.0, 1.0 ],
+					"faces": {
+						"north": { "texture": "#backpack", "uv": [ 46.0, 23.0, 50.0, 26.0 ] },
+						"east": { "texture": "#backpack", "uv": [ 50.0, 23.0, 55.0, 26.0 ] },
+						"south": { "texture": "#backpack", "uv": [ 55.0, 23.0, 59.0, 26.0 ] },
+						"west": { "texture": "#backpack", "uv": [ 59.0, 23.0, 64.0, 26.0 ] },
+						"up": { "texture": "#backpack", "uv": [ 46.0, 18.0, 50.0, 23.0 ] },
+						"down": { "texture": "#backpack", "uv": [ 50.0, 18.0, 54.0, 23.0 ] }
+					},
+					"children": [
+						{
+							"name": "backpack top back",
+							"from": [ 1.0, 0.0, 0.0 ],
+							"to": [ 4.0, 3.0, 5.2 ],
+							"uv": [ 0.0, 9.5 ],
+							"rotationOrigin": [ 4.0, 3.0, 0.0 ],
+							"rotationZ": 69.0,
+							"faces": {
+								"north": { "texture": "#backpack", "uv": [ 0.0, 14.5, 3.0, 17.5 ] },
+								"east": { "texture": "#backpack", "uv": [ 3.0, 14.5, 8.0, 17.5 ] },
+								"south": { "texture": "#backpack", "uv": [ 8.0, 14.5, 11.0, 17.5 ] },
+								"west": { "texture": "#backpack", "uv": [ 11.0, 14.5, 16.0, 17.5 ] },
+								"up": { "texture": "#backpack", "uv": [ 0.0, 9.5, 3.0, 14.5 ] },
+								"down": { "texture": "#backpack", "uv": [ 3.0, 9.5, 6.0, 14.5 ] }
+							},
+							"children": [
+								{
+									"name": "latch",
+									"from": [ 2.8, -1.0, 2.1 ],
+									"to": [ 3.0, 0.0, 3.1 ],
+									"uv": [ 13.5, 0.0 ],
+									"rotationOrigin": [ 3.0, 0.0, 2.0 ],
+									"rotationZ": -30.0,
+									"faces": {
+										"north": { "texture": "#backpack", "uv": [ 13.5, 1.0, 14.0, 2.0 ] },
+										"east": { "texture": "#backpack", "uv": [ 14.0, 1.0, 15.0, 2.0 ] },
+										"south": { "texture": "#backpack", "uv": [ 15.0, 1.0, 15.5, 2.0 ] },
+										"west": { "texture": "#backpack", "uv": [ 15.5, 1.0, 16.5, 2.0 ] },
+										"up": { "texture": "#backpack", "uv": [ 13.5, 0.0, 14.0, 1.0 ] },
+										"down": { "texture": "#backpack", "uv": [ 14.0, 0.0, 14.5, 1.0 ] }
+									}
+								}
+							]
+						},
+						{
+							"name": "backpack top left",
+							"from": [ 0.01, -1.0, 3.2 ],
+							"to": [ 4.01, 3.0, 5.2 ],
+							"uv": [ 17.0, 45.0 ],
+							"rotationOrigin": [ 0.0, 3.0, 5.2 ],
+							"rotationX": -33.0,
+							"faces": {
+								"north": { "texture": "#backpack", "uv": [ 17.0, 47.0, 21.0, 51.0 ] },
+								"east": { "texture": "#backpack", "uv": [ 21.0, 47.0, 23.0, 51.0 ] },
+								"south": { "texture": "#backpack", "uv": [ 23.0, 47.0, 27.0, 51.0 ] },
+								"west": { "texture": "#backpack", "uv": [ 27.0, 47.0, 29.0, 51.0 ] },
+								"up": { "texture": "#backpack", "uv": [ 17.0, 45.0, 21.0, 47.0 ] },
+								"down": { "texture": "#backpack", "uv": [ 21.0, 45.0, 25.0, 47.0 ] }
+							},
+							"children": [
+								{
+									"name": "backpack left long",
+									"from": [ -0.01, -8.0, 1.0 ],
+									"to": [ 4.01, 0.0, 2.0 ],
+									"uv": [ 17.0, 33.0 ],
+									"rotationOrigin": [ 0.0, 0.0, 2.0 ],
+									"rotationX": 33.0,
+									"faces": {
+										"north": { "texture": "#backpack", "uv": [ 17.0, 34.0, 21.0, 42.0 ] },
+										"east": { "texture": "#backpack", "uv": [ 21.0, 34.0, 22.0, 42.0 ] },
+										"south": { "texture": "#backpack", "uv": [ 22.0, 34.0, 26.0, 42.0 ] },
+										"west": { "texture": "#backpack", "uv": [ 26.0, 34.0, 27.0, 42.0 ] },
+										"up": { "texture": "#backpack", "uv": [ 17.0, 33.0, 21.0, 34.0 ] },
+										"down": { "texture": "#backpack", "uv": [ 21.0, 33.0, 25.0, 34.0 ] }
+									}
+								}
+							]
+						},
+						{
+							"name": "backpack top right",
+							"from": [ 0.01, -1.0, 0.0 ],
+							"to": [ 4.01, 3.0, 2.0 ],
+							"uv": [ 32.0, 45.0 ],
+							"rotationOrigin": [ 0.0, 3.0, 0.0 ],
+							"rotationX": 33.0,
+							"faces": {
+								"north": { "texture": "#backpack", "uv": [ 32.0, 47.0, 36.0, 51.0 ] },
+								"east": { "texture": "#backpack", "uv": [ 36.0, 47.0, 38.0, 51.0 ] },
+								"south": { "texture": "#backpack", "uv": [ 38.0, 47.0, 42.0, 51.0 ] },
+								"west": { "texture": "#backpack", "uv": [ 42.0, 47.0, 44.0, 51.0 ] },
+								"up": { "texture": "#backpack", "uv": [ 32.0, 45.0, 36.0, 47.0 ] },
+								"down": { "texture": "#backpack", "uv": [ 36.0, 45.0, 40.0, 47.0 ] }
+							},
+							"children": [
+								{
+									"name": "backpack right long",
+									"from": [ -0.01, -8.0, 0.0 ],
+									"to": [ 4.01, 0.0, 1.0 ],
+									"uv": [ 32.0, 33.0 ],
+									"rotationOrigin": [ 0.0, 0.0, 0.0 ],
+									"rotationX": -33.0,
+									"faces": {
+										"north": { "texture": "#backpack", "uv": [ 32.0, 34.0, 36.0, 42.0 ] },
+										"east": { "texture": "#backpack", "uv": [ 36.0, 34.0, 37.0, 42.0 ] },
+										"south": { "texture": "#backpack", "uv": [ 37.0, 34.0, 41.0, 42.0 ] },
+										"west": { "texture": "#backpack", "uv": [ 41.0, 34.0, 42.0, 42.0 ] },
+										"up": { "texture": "#backpack", "uv": [ 32.0, 33.0, 36.0, 34.0 ] },
+										"down": { "texture": "#backpack", "uv": [ 36.0, 33.0, 40.0, 34.0 ] }
+									}
+								}
+							]
+						},
+						{
+							"name": "backpack top2",
+							"from": [ -1.0, -1.0, -1.0 ],
+							"to": [ 5.0, 1.0, 6.2 ],
+							"uv": [ 0.0, 0.0 ],
+							"rotationOrigin": [ -1.0, -1.0, -0.5 ],
+							"faces": {
+								"north": { "texture": "#backpack", "uv": [ 0.0, 7.0, 6.0, 9.0 ] },
+								"east": { "texture": "#backpack", "uv": [ 6.0, 7.0, 13.0, 9.0 ] },
+								"south": { "texture": "#backpack", "uv": [ 13.0, 7.0, 19.0, 9.0 ] },
+								"west": { "texture": "#backpack", "uv": [ 19.0, 7.0, 26.0, 9.0 ] },
+								"up": { "texture": "#backpack", "uv": [ 0.0, 0.0, 6.0, 7.0 ] },
+								"down": { "texture": "#backpack", "uv": [ 6.0, 0.0, 12.0, 7.0 ] }
+							}
+						},
+						{
+							"name": "backpack top back long",
+							"from": [ 4.4575, -7.7207, -0.01 ],
+							"to": [ 6.4575, 1.2793, 5.21 ],
+							"uv": [ 31.0, 18.0 ],
+							"rotationOrigin": [ 6.4575, 1.2793, 0.0 ],
+							"faces": {
+								"north": { "texture": "#backpack", "uv": [ 31.0, 23.0, 33.0, 32.0 ] },
+								"east": { "texture": "#backpack", "uv": [ 33.0, 23.0, 38.0, 32.0 ] },
+								"south": { "texture": "#backpack", "uv": [ 38.0, 23.0, 40.0, 32.0 ] },
+								"west": { "texture": "#backpack", "uv": [ 40.0, 23.0, 45.0, 32.0 ] },
+								"up": { "texture": "#backpack", "uv": [ 31.0, 18.0, 33.0, 23.0 ] },
+								"down": { "texture": "#backpack", "uv": [ 33.0, 18.0, 35.0, 23.0 ] }
+							}
+						}
+					]
+				}
+			]
+		}
+	],
+	"animations": [
+		{
+			"name": "Idle1",
+			"code": "idle1",
+			"quantityframes": 50,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Walk",
+			"code": "walk",
+			"quantityframes": 25,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Sprint",
+			"code": "sprint",
+			"quantityframes": 24,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Idle2",
+			"code": "idle2",
+			"quantityframes": 30,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+
+			]
+		},
+
+		{
+			"name": "Idle3",
+			"code": "idle3",
+			"quantityframes": 30,
+			"onActivityStopped": "Rewind",
+			"onAnimationEnd": "Repeat",
+			"keyframes": [
+
+			]
+		}
+	]
+}

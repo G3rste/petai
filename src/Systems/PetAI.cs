@@ -54,6 +54,7 @@ namespace PetAI
             api.RegisterItemClass("ItemPetAccessory", typeof(ItemPetAccessory));
             api.RegisterItemClass("ItemPetWhistle", typeof(ItemPetWhistle));
             api.RegisterItemClass("ItemTextureRotator", typeof(ItemTextureRotator));
+            api.RegisterItemClass("ItemPetCarrier", typeof(ItemPetCarrier));
 
             try
             {
