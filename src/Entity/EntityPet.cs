@@ -5,8 +5,6 @@ using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using System.IO;
 using Vintagestory.GameContent;
-using System.Collections.Generic;
-using Vintagestory.API.Client;
 
 namespace PetAI
 {
@@ -33,16 +31,6 @@ namespace PetAI
             {
                 GetBehavior<EntityBehaviorHealth>().onDamaged += (dmg, dmgSource) => applyPetArmor(dmg, dmgSource);
             }
-        }
-
-
-        public override void OnTesselation(ref Shape entityShape, string shapePathForLogging)
-        {
-            foreach (var slot in GearInventory)
-            {
-                addGearToShape(slot, entityShape, shapePathForLogging);
-            }
-            base.OnTesselation(ref entityShape, shapePathForLogging);
         }
 
         public override void FromBytes(BinaryReader reader, bool forClient)
@@ -73,7 +61,7 @@ namespace PetAI
             var owner = tameable?.cachedOwner;
             if (owner == null) return base.GetInfoText();
 
-            return String.Concat(base.GetInfoText(),
+            return string.Concat(base.GetInfoText(),
                     "\n",
                     Lang.Get("petai:gui-pet-owner", owner?.PlayerName),
                     "\n",
