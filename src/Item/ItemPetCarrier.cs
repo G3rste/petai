@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 
@@ -46,6 +47,18 @@ namespace PetAI
             }
             else
                 base.OnHeldInteractStart(slot, byEntity, blockSel, entitySel, firstEvent, ref handling);
+        }
+
+        public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
+        {
+            return new WorldInteraction[]{
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = "petai:pickup-pet",
+                        HotKeyCode = "sneak",
+                        MouseButton = EnumMouseButton.Right
+                    }
+            };
         }
     }
 }
