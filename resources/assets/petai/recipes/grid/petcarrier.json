@@ -1,0 +1,22 @@
+[
+    {
+        "ingredientPattern": "_B_,LLL",
+        "ingredients": {
+            "B": {
+                "type": "item",
+                "code": "game:backpack"
+            },
+            "L": {
+                "type": "item",
+                "code": "game:leather-plain"
+            }
+        },
+        "width": 3,
+        "height": 2,
+        "output": {
+            "type": "item",
+            "code": "backpack-empty",
+            "quantity": 1
+        }
+    }
+]
