@@ -12,9 +12,8 @@ namespace PetAI
             var pet = entitySel?.Entity;
             var tameable = pet?.GetBehavior<EntityBehaviorTameable>();
             var canPickUp = Attributes["canPickUp"];
-            api.Logger.Debug(JsonConvert.SerializeObject(Attributes));
             handling = EnumHandHandling.Handled;
-            if (pet != null && api.Side == EnumAppSide.Server && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.cachedOwner?.Entity == byEntity && tameable?.domesticationLevel == DomesticationLevel.DOMESTICATED)
+            if (pet != null && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.cachedOwner?.Entity == byEntity && tameable?.domesticationLevel == DomesticationLevel.DOMESTICATED)
             {
                 string newVariant = canPickUp[pet.Code.Path]["type"].AsString();
                 if (canPickUp[pet.Code.Path]["appendTextureIndex"].AsBool())
@@ -28,13 +27,11 @@ namespace PetAI
                                         (TreeAttribute)slot.Itemstack.Attributes,
                                         byEntity.World);
                 slot.Itemstack.Attributes.MergeTree(PetUtil.EntityToTree(pet));
-                byEntity.Api.Logger.Debug(slot.Itemstack.Attributes.GetString("class"));
                 entitySel.Entity.Die(EnumDespawnReason.PickedUp);
                 slot.MarkDirty();
             }
-            else if (api.Side == EnumAppSide.Server && byEntity.Controls.Sneak && !(Variant["type"] == "empty"))
+            else if (byEntity.Controls.Sneak && !(Variant["type"] == "empty"))
             {
-                byEntity.Api.Logger.Debug(slot.Itemstack.Attributes.GetString("class"));
                 pet = PetUtil.EntityFromTree(slot.Itemstack.Attributes, byEntity.World);
                 pet.ServerPos.SetPos(byEntity.ServerPos);
                 byEntity.World.SpawnEntity(pet);
