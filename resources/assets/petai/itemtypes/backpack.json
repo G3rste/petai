@@ -39,7 +39,12 @@
 		"backpack": {
 			"quantitySlots": 6
 		},
-		"canPickUp": {		}
+		"canPickUp": {},
+		"handbook": {
+			"groupBy": [
+				"backpack-*"
+			]
+		}
 	},
 	"shape": {
 		"baseByType": {
@@ -62,10 +67,10 @@
 	"storageFlags": 2,
 	"creativeinventory": {
 		"general": [
-			"*"
+			"backpack-empty"
 		],
 		"items": [
-			"*"
+			"backpack-empty"
 		]
 	},
 	"guiTransform": {
