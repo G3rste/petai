@@ -16,11 +16,5 @@
 				"blendMode": "Average" 
       },
       "file": "game:entities/humanoid/player.json"
-    },
-    {
-      "op": "replace",
-      "path": "/class",
-      "value": "EntityPlayerFix",
-      "file": "game:entities/humanoid/player.json"
     }
 ]
