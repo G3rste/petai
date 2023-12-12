@@ -24,7 +24,7 @@ namespace PetAI
         public int backpackSlots => Attributes["backpackslots"].AsInt(0);
         public bool canBeWornBy(string pet) => Attributes["validPets"].AsArray<string>(new string[0]).Contains(pet);
 
-        public Shape GetShape(ItemStack stack, EntityAgent forEntity)
+        public Shape GetShape(ItemStack stack, EntityAgent forEntity, string texturePrefixCode)
         {
             if(Attributes["shapes"][forEntity.Code.Path].Exists){
                 var compositeShape = Attributes["shapes"][forEntity.Code.Path].AsObject<CompositeShape>();
