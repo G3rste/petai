@@ -1,4 +1,5 @@
 using System;
+using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.API.Util;
 
@@ -26,10 +27,13 @@ namespace PetAI
 
         public Shape GetShape(ItemStack stack, EntityAgent forEntity, string texturePrefixCode)
         {
-            if(Attributes["shapes"][forEntity.Code.Path].Exists){
+            if (Attributes["shapes"][forEntity.Code.Path].Exists)
+            {
                 var compositeShape = Attributes["shapes"][forEntity.Code.Path].AsObject<CompositeShape>();
                 var shapePath = compositeShape.Base.CopyWithPath("shapes/" + compositeShape.Base.Path + ".json");
-                return Vintagestory.API.Common.Shape.TryGet(forEntity.Api, shapePath);
+                var shape = Vintagestory.API.Common.Shape.TryGet(forEntity.Api, shapePath);
+                shape?.SubclassForStepParenting(texturePrefixCode);
+                return shape;
             }
             return null;
         }
