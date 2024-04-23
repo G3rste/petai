@@ -62,7 +62,7 @@ namespace PetAI
         }
         public static bool Prefix(float secondsUsed, ItemSlot slot, EntityAgent byEntity, EntitySelection entitySel)
         {
-            if (entitySel == null || entitySel.Entity == null || !entitySel.Entity.HasBehavior<EntityBehaviorTameable>())
+            if (entitySel?.Entity?.HasBehavior<EntityBehaviorTameable>() != true && entitySel?.Entity?.Properties?.Attributes["poulticeRevive"].AsBool(false) != true)
             {
                 return true;
             }
@@ -85,6 +85,12 @@ namespace PetAI
                 {
                     EnumHandling handled = EnumHandling.PassThrough;
                     entitySel.Entity.GetBehavior<EntityBehaviorTameable>()?.OnInteract(byEntity, slot, entitySel.HitPosition, EnumInteractMode.Interact, ref handled);
+                    if (entitySel.Entity.Properties.Attributes["poulticeRevive"].AsBool(false))
+                    {
+                        entitySel.Entity.Revive();
+                        slot.TakeOut(1);
+                        slot.MarkDirty();
+                    }
                 }
             }
             Vec3d pos = entitySel.Entity.Pos.XYZ;
@@ -111,7 +117,7 @@ namespace PetAI
             return false;
         }
     }
-    
+
     public class WildcraftPoulticePatch
     {
 
@@ -121,7 +127,8 @@ namespace PetAI
             {
                 harmony.Patch(methodInfo()
                     , prefix: new HarmonyMethod(typeof(WildcraftPoulticePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
-            } catch(Exception) { }
+            }
+            catch (Exception) { }
         }
 
         public static void Unpatch(Harmony harmony)
@@ -130,7 +137,8 @@ namespace PetAI
             {
                 harmony.Unpatch(methodInfo()
                 , HarmonyPatchType.Prefix, "gerste.petai");
-            } catch(Exception) { }
+            }
+            catch (Exception) { }
         }
 
         public static MethodInfo methodInfo()
@@ -189,7 +197,7 @@ namespace PetAI
             return false;
         }
     }
-    
+
     public class HarvestablePatch
     {
 
