@@ -13,7 +13,7 @@ namespace PetAI
             var tameable = pet?.GetBehavior<EntityBehaviorTameable>();
             var canPickUp = Attributes["canPickUp"];
             handling = EnumHandHandling.Handled;
-            if (pet != null && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.cachedOwner?.Entity == byEntity && tameable?.domesticationLevel == DomesticationLevel.DOMESTICATED)
+            if (pet != null && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.cachedOwner?.Entity == byEntity && tameable?.domesticationLevel == DomesticationLevel.DOMESTICATED && Variant["type"] == "empty")
             {
                 string newVariant = canPickUp[pet.Code.Path]["type"].AsString();
                 if (canPickUp[pet.Code.Path]["appendTextureIndex"].AsBool())
@@ -30,7 +30,7 @@ namespace PetAI
                 entitySel.Entity.Die(EnumDespawnReason.PickedUp);
                 slot.MarkDirty();
             }
-            else if (byEntity.Controls.Sneak && !(Variant["type"] == "empty"))
+            else if (byEntity.Controls.Sneak && Variant["type"] != "empty")
             {
                 pet = PetUtil.EntityFromTree(slot.Itemstack.Attributes, byEntity.World);
                 pet.ServerPos.SetPos(byEntity.ServerPos);
