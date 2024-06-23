@@ -62,7 +62,7 @@ namespace PetAI
         }
         public static bool Prefix(float secondsUsed, ItemSlot slot, EntityAgent byEntity, EntitySelection entitySel)
         {
-            if (entitySel?.Entity?.HasBehavior<EntityBehaviorTameable>() != true && entitySel?.Entity?.Properties?.Attributes["poulticeRevive"].AsBool(false) != true)
+            if (entitySel?.Entity?.HasBehavior<EntityBehaviorTameable>() != true && entitySel?.Entity?.Properties?.Attributes?["poulticeRevive"]?.AsBool(false) != true)
             {
                 return true;
             }
