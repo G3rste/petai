@@ -5,7 +5,10 @@
             "C": {
                 "type": "item",
                 "code": "game:cloth-*",
-                "name": "color"
+                "name": "color",
+                "skipVariants": [
+                    "mordant"
+                ]
             }
         },
         "width": 2,

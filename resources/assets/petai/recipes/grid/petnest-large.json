@@ -5,7 +5,10 @@
             "C": {
                 "type": "block",
                 "code": "petnest-medium-*-north",
-                "name": "color"
+                "name": "color",
+                "skipVariants": [
+                    "mordant"
+                ]
             }
         },
         "width": 2,
