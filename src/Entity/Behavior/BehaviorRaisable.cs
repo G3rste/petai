@@ -2,6 +2,7 @@ using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace PetAI
 {
@@ -105,11 +106,6 @@ namespace PetAI
                 {
                     //Attempt to not change the texture during growing up
                     adult.WatchedAttributes.SetInt("textureIndex", entity.WatchedAttributes.GetInt("textureIndex", 0));
-                }
-                if(entity is EntityPet childPet && adult is EntityPet adultPet){
-                    for(int i = 0; i<childPet.GearInventory.Count; i++){
-                        childPet.GearInventory[i].TryPutInto(entity.World, adultPet.GearInventory[i]);
-                    }
                 }
             }
             else

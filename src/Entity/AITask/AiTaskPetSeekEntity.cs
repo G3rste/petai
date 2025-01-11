@@ -43,36 +43,36 @@ namespace PetAI
         {
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             var elapsedMs = entity.World.ElapsedMilliseconds;
-            float range = NowSeekRange;
             if (lastCheck + 500 < elapsedMs)
             {
+                NowSeekRange = getSeekRange();
                 lastCheck = elapsedMs;
                 if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (!IsTargetableEntity(targetEntity, range, true)) { targetEntity = null; }
+                if (!IsTargetableEntity(targetEntity, NowSeekRange, true)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (IsTargetableEntity(ownerAttackedBy, range, true))
+                        if (IsTargetableEntity(ownerAttackedBy, NowSeekRange, true))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (IsTargetableEntity(ownerAttacks, range, true))
+                        if (IsTargetableEntity(ownerAttacks, NowSeekRange, true))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (IsTargetableEntity(attackedByEntity, range, true))
+                    if (IsTargetableEntity(attackedByEntity, NowSeekRange, true))
                     {
                         targetEntity = attackedByEntity;
                     }
                 }
 
-                if (IsTargetableEntity(targetEntity, range, true))
+                if (IsTargetableEntity(targetEntity, NowSeekRange, true))
                 {
                     targetPos = targetEntity.ServerPos.XYZ;
                     return true;
@@ -81,9 +81,9 @@ namespace PetAI
             if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE && lastSearch + 5000 < elapsedMs)
             {
                 lastSearch = elapsedMs;
-                targetEntity = partitionUtil.GetNearestInteractableEntity(entity.ServerPos.XYZ, range, e => IsTargetableEntity(e, range));
+                targetEntity = partitionUtil.GetNearestInteractableEntity(entity.ServerPos.XYZ, NowSeekRange, e => IsTargetableEntity(e, NowSeekRange));
 
-                if (IsTargetableEntity(targetEntity, range, true))
+                if (IsTargetableEntity(targetEntity, NowSeekRange, true))
                 {
                     targetPos = targetEntity.ServerPos.XYZ;
                     return true;

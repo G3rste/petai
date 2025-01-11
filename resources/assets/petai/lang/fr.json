@@ -8,6 +8,7 @@
     "item-petcookie-veggie-partbaked": "Biscuit pour herbivore (à moitié cuit)",
     "item-petcookie-meat-perfect": "Biscuit pour carnivore",
     "item-petcookie-veggie-perfect": "Biscuit pour herbivore",
+    "item-backpack-*": "Sac à dos pour animaux de compagnie",
     "itemdesc-petwhistle": "Contrôlez vos familiers avec des ordres acoustiques. Appuyez sur s'acroupir + clic droit pour choisir un ordre. Appuyez sur le bouton droit pour lancer l'ordre.",
     "itemdesc-magicbone": "Faites un clic droit pour apprivoiser instantanément la créature devant vous (si possible) et la rendre obéissante à 100 %.",
     "itemdesc-petcookie-meat-raw": "Mettez-le au four pendant un certain temps pour offrir une expérience croquante parfaite à votre animal.",
@@ -97,6 +98,7 @@
     "interact-whistle-select": "Choisir une commande",
     "interact-whistle-command": "Commander l'animal à proximité",
     "interact-revive": "Soigner l'animal",
+    "pickup-pet": "Ramasser/déposer l'animal s'il entre dans le sac de transport.",
     "petaiguide-title": "Guide d'apprivoisement : Concept général",
     "petaiguide-text": "<strong>Guide d'apprivoisement : Concept général</strong>\n\nCe guide est une tentative d'explication des mécanismes d'apprivoisement introduits par le mod \"Pet AI\".\n\nPet AI lui-même n'introduit aucune créature apprivoisable. C'est juste un cadre pour d'autres mods pour faciliter la création d'animaux de compagnie. La plupart des animaux de compagnie pourront recevoir des commandes du joueur. Pour donner une commande à votre animal, vous devez vous accroupir et faire clic droit dessus. Une petite interface graphique s'ouvrira contenant les différentes commandes que votre animal acceptera. Mais gardez à l'esprit que votre animal n'exécutera des commandes que si vous êtes un bon maître. Cela signifie généralement nourrir votre animal régulièrement, mais cela peut également être étendu à des activités ludiques avec lui.\n\nPet AI prend actuellement en charge quatre niveaux d'agression différents pour les animaux de compagnie :\n<strong>Passif :</strong> votre animal ne fera de mal à personne.\n<strong>Neutre :</strong> votre animal n'attaquera que s'il est provoqué.\n<strong>Protectif :</strong> votre animal combattra à vos côtés, il vous défendra des autres créatures et traquera vos victimes.\n<strong>Agressif :</strong> votre animal attaquera de sa propre initiative une petite sélection de créatures.\n\nSi vous avez besoin de contrôler votre animal à distance, jetez un coup d'œil au sifflet pour animal de compagnie. Il rendra également votre animal de compagnie plus utile lors de la chasse.\nDécouvrez également les coussins pour animaux de compagnie. Ils sont purement décoratifs mais parfois vos animaux dormiront dedans."
 }

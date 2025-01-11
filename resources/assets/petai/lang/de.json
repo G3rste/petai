@@ -8,6 +8,7 @@
     "item-petcookie-veggie-partbaked": "Haustierkeks halbroh (vegetarisch)",
     "item-petcookie-meat-perfect": "Haustierkeksteig (mit Fleisch)",
     "item-petcookie-veggie-perfect": "Haustierkeks (vegetarisch)",
+    "item-backpack-*": "Haustier-Rucksack",
     "itemdesc-petwhistle": "Gib deinen Haustieren akustische Befehle. Drücke Ducken + Rechtsklick, um einen Befehl auszuwählen. Drücke Rechtsklick, um den Befehl zu geben.",
     "itemdesc-magicbone": "Rechtsklick, um die Kreatur vor Ihnen sofort zu zähmen (wenn möglich) und sie zu 100% gehorsam zu machen.",
     "itemdesc-petcookie-meat-raw": "Legen Sie es für eine Weile in den Ofen, um Ihrem Haustier das perfekte Knuspererlebnis zu bieten.",
@@ -97,6 +98,7 @@
     "interact-whistle-select": "Befehl auswählen",
     "interact-whistle-command": "Befehlige nahes Haustier",
     "interact-revive": "Haustier heilen",
+    "pickup-pet": "Hebe das Haustier hoch oder setze es ab, wenn es in den Transportbehälter passt.",
     "petaiguide-title": "Zähmungs-Leitfaden: Allgemeines zum Thema",
     "petaiguide-text": "<strong>Zähmungs-Leitfaden: Allgemeines zum Thema</strong>\n\nDieser Guide erklärt die Funktionsweisen und Konzepte der \"Pet AI\"-Mod.\n\nPet AI selbst führt keine Haustiere ein. Es ist nur ein Framework, um anderen Mods das einfügen von Haustieren leichter zu machen. Die meisten Haustiere sind in der Lage, einige Befehle des Spieler zu befolgen. Um einem Haustier einen Befehl zu geben, musst du es mit Shift + Rechtsklick anwählen. Ein kleiner Dialog mit Befehlen, welche dein Haustier ausführen kann, wird sich daraufhin öffnen. Damit dein Haustier deinen Befehlen folgt, musst du dich allerdings regelmäßig darum kümmern. Dazu kann neben dem Füttern auch das spielerische Beschäftigen mit deinem Haustier zählen.\n\nPet KI unterstützt derzeit vier verschiedene Aggressionsstufen für Haustiere:\n<strong>Passiv:</strong> Ihr Haustier wird niemanden schaden.\n<strong>Neutral:</strong> Dein Haustier wird nur angreifen, wenn es provoziert wird.\n<strong>Schutz:</strong> Dein Haustier wird an deiner Seite kämpfen, es wird dich vor bösen Kreaturen verteidigen und deine Opfer jagen.\n<strong>Aggressiv:</strong> Dein Begleiter wird eine kleine Auswahl an Kreaturen allein angreifen.\n\nWenn Sie den Drang verspüren, Ihr Haustier fernzusteuern, sollten Sie die Haustierpfeife ausprobieren. Sie macht Ihr Haustier auch bei der Jagd nützlicher.\nSehen Sie sich auch die Haustierkissen an. Sie sind rein dekorativ, aber manchmal schlafen Ihre Haustiere darin."
 }

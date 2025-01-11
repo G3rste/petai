@@ -198,13 +198,13 @@ namespace PetAI
         }
     }
 
-    public class HarvestablePatch
+    public class MortallyWoundableAfterInitializedPatch
     {
 
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(methodInfo()
-                , prefix: new HarmonyMethod(typeof(HarvestablePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
+                , prefix: new HarmonyMethod(typeof(MortallyWoundableAfterInitializedPatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
@@ -215,18 +215,58 @@ namespace PetAI
 
         public static MethodInfo methodInfo()
         {
-            return typeof(EntityBehaviorHarvestable).GetMethod("OnReceivedClientPacket", BindingFlags.Instance | BindingFlags.Public);
+            return typeof(EntityBehaviorMortallyWoundable).GetMethod("AfterInitialized", BindingFlags.Instance | BindingFlags.Public);
         }
-        public static bool Prefix(EntityBehaviorHarvestable __instance)
+        public static bool Prefix(EntityBehaviorMortallyWoundable __instance)
         {
-            if (__instance.entity.Alive)
+            if (__instance.entity.World.Side == EnumAppSide.Server)
             {
-                return false;
+                typeof(EntityBehaviorMortallyWoundable).GetField("ebh", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(__instance, __instance.entity.GetBehavior<EntityBehaviorHealth>());
+
+                EntityBehaviorTaskAI taskAi = __instance.entity.GetBehavior<EntityBehaviorTaskAI>();
+
+                taskAi.TaskManager.OnShouldExecuteTask += (t) => __instance.HealthState != EnumEntityHealthState.MortallyWounded && __instance.HealthState != EnumEntityHealthState.Recovering;
+
+                if (__instance.HealthState == EnumEntityHealthState.MortallyWounded)
+                {
+                    typeof(EntityBehaviorMortallyWoundable).GetMethod("setMortallyWounded", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, null);
+                }
             }
-            else
+
+            if (__instance.entity.HasBehavior<EntityBehaviorSeatable>())
             {
+                __instance.entity.GetBehavior<EntityBehaviorSeatable>().CanSit += typeof(EntityBehaviorMortallyWoundable).GetMethod("EntityBehaviorMortallyWoundable_CanSit", BindingFlags.Instance | BindingFlags.NonPublic).CreateDelegate<CanSitDelegate>(__instance);
+            }
+            return false;
+        }
+    }
+
+    public class MortallyWoundableOnEntityReceiveDamagePatch
+    {
+
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(methodInfo()
+                , prefix: new HarmonyMethod(typeof(MortallyWoundableOnEntityReceiveDamagePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
+        }
+
+        public static void Unpatch(Harmony harmony)
+        {
+            harmony.Unpatch(methodInfo()
+                , HarmonyPatchType.Prefix, "gerste.petai");
+        }
+
+        public static MethodInfo methodInfo()
+        {
+            return typeof(EntityBehaviorMortallyWoundable).GetMethod("OnEntityReceiveDamage", BindingFlags.Instance | BindingFlags.Public);
+        }
+        public static bool Prefix(EntityBehaviorMortallyWoundable __instance, ref float damage)
+        {
+            if (__instance.HealthState == EnumEntityHealthState.Normal){
                 return true;
             }
+            damage = 0;
+            return false;
         }
     }
 }

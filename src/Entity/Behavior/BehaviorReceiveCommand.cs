@@ -47,7 +47,7 @@ namespace PetAI
                 if (entity.GetBehavior<EntityBehaviorTameable>().domesticationLevel == DomesticationLevel.WILD) { return EnumAggressionLevel.AGGRESSIVE; }
                 EnumAggressionLevel level;
                 string commandName = entity.WatchedAttributes.GetString("aggressionLevel");
-                if (Enum.TryParse<EnumAggressionLevel>(commandName, out level) && (isEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName))))
+                if (Enum.TryParse<EnumAggressionLevel>(commandName, out level) && isEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName)))
                 {
                     return level;
                 }
@@ -88,7 +88,7 @@ namespace PetAI
             if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
                 && player != null
                 && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.PlayerUID
-                && byEntity.Controls.Sprint
+                && byEntity.Controls.Sneak
                 && mode == EnumInteractMode.Interact)
             {
                 if (entity.Api.Side == EnumAppSide.Client)
@@ -155,7 +155,7 @@ namespace PetAI
                     new WorldInteraction()
                     {
                         ActionLangCode = "petai:interact-command",
-                        HotKeyCode = "sprint",
+                        HotKeyCode = "sneak",
                         MouseButton = EnumMouseButton.Right,
                     }
                 };

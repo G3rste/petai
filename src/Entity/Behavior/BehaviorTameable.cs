@@ -8,6 +8,7 @@ using Vintagestory.API.MathTools;
 using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
+using System.Text;
 
 namespace PetAI
 {
@@ -22,8 +23,7 @@ namespace PetAI
         {
             get
             {
-                DomesticationLevel level;
-                if (Enum.TryParse<DomesticationLevel>(domesticationStatus.GetString("domesticationLevel"), out level))
+                if (Enum.TryParse<DomesticationLevel>(domesticationStatus.GetString("domesticationLevel"), out var level))
                 {
                     return level;
                 }
@@ -39,7 +39,7 @@ namespace PetAI
             }
         }
 
-        public String ownerId
+        public string ownerId
         {
             get => domesticationStatus.GetString("owner");
             set
@@ -220,7 +220,6 @@ namespace PetAI
             if (mode != EnumInteractMode.Interact) return;
             if (!entity.Alive)
             {
-                tryReviveWith(itemslot);
                 return;
             }
             if (byEntity.Controls.Sneak) return;
@@ -250,9 +249,7 @@ namespace PetAI
             }
             else if (domesticationLevel == DomesticationLevel.DOMESTICATED)
             {
-                bool next = !attachAccessoryIfPossible(byEntity as EntityPlayer, itemslot);
-                if (next)
-                    next = !feedEntityIfPossible(itemslot, player);
+                feedEntityIfPossible(itemslot, player);
             }
 
             if (itemslot?.Itemstack?.Collectible?.Code?.Path == "magicbone")
@@ -261,25 +258,6 @@ namespace PetAI
                 obedience = 1;
                 ownerId = (byEntity as EntityPlayer)?.PlayerUID;
                 spawnTameVariant(1f);
-            }
-        }
-
-        public override void OnReceivedClientPacket(IServerPlayer player, int packetid, byte[] data, ref EnumHandling handled)
-        {
-            // We need to Handle the Clientpacket here as we cannot prevent subsequent packet handling when using the Entitymethod directly
-            if (entity.Alive && packetid < 1000 && (entity is EntityPet))
-            {
-                var inv = (entity as EntityPet)?.backpackInv as InventorySlotBound;
-                inv.reloadFromSlots();
-                inv.InvNetworkUtil.HandleClientPacket(player, packetid, data);
-                inv.saveAllSlots();
-                handled = EnumHandling.PreventSubsequent;
-                for (int i = 0; i < inv.Count; i++)
-                {
-                    if (inv[i].Empty) { continue; }
-
-                    inv.MarkSlotDirty(i);
-                }
             }
         }
         public override string PropertyName()
@@ -404,18 +382,6 @@ namespace PetAI
             entity.World.UnregisterGameTickListener(listenerId);
         }
 
-        private bool attachAccessoryIfPossible(EntityPlayer byEntity, ItemSlot slot)
-        {
-            if (cachedOwner == null || cachedOwner.PlayerUID != byEntity?.PlayerUID) return false;
-            var item = slot?.Itemstack?.Item;
-            var pet = entity as EntityPet;
-            if (pet != null && item is ItemPetAccessory)
-            {
-                return slot.TryFlipWith(pet.GearInventory.GetBestSuitedSlot(slot)?.slot);
-            }
-            return false;
-        }
-
         private bool feedEntityIfPossible(ItemSlot foodsource, EntityPlayer player)
         {
             var tamingItem = treatList.Find((item) => isValidTamingItem(item, foodsource));
@@ -434,21 +400,6 @@ namespace PetAI
             }
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
-
-        private void tryReviveWith(ItemSlot itemslot)
-        {
-            var item = PetConfig.Current.Resurrectors.Find(resurrector => resurrector.name == itemslot?.Itemstack?.Collectible?.Code?.Path);
-            if (item != null && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
-            {
-                entity.Revive();
-                itemslot.TakeOut(1);
-                itemslot.MarkDirty();
-                if (entity.HasBehavior<EntityBehaviorHealth>())
-                {
-                    entity.GetBehavior<EntityBehaviorHealth>().Health = item.healingValue;
-                }
-            }
-        }
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
             List<ItemStack> treats = new List<ItemStack>();
@@ -465,20 +416,6 @@ namespace PetAI
                     treats.Add(new ItemStack(block));
                 }
             }
-            List<ItemStack> resurrectors = new List<ItemStack>();
-            foreach (var resurrector in PetConfig.Current.Resurrectors)
-            {
-                var item = world.GetItem(new AssetLocation(resurrector.domain + ":" + resurrector.name));
-                if (item != null)
-                {
-                    resurrectors.Add(new ItemStack(item));
-                }
-                var block = world.GetBlock(new AssetLocation(resurrector.domain + ":" + resurrector.name));
-                if (block != null)
-                {
-                    resurrectors.Add(new ItemStack(block));
-                }
-            }
             if (entity.Alive && treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
                 return new WorldInteraction[]
@@ -491,48 +428,39 @@ namespace PetAI
                     }
                 };
             }
-            else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && resurrectors.Count > 0)
-            {
-                return new WorldInteraction[]
-                {
-                    new WorldInteraction()
-                    {
-                        ActionLangCode = "petai:interact-revive",
-                        MouseButton = EnumMouseButton.Right,
-                        Itemstacks = resurrectors.ToArray()
-                    }
-                };
-            }
             else
             {
                 return base.GetInteractionHelp(world, es, player, ref handled);
             }
         }
 
-        public override void OnEntityDeath(DamageSource damageSourceForDeath)
+        public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
-            base.OnEntityDeath(damageSourceForDeath);
-            if (!string.IsNullOrEmpty(ownerId) && entity.Api is ICoreServerAPI sapi)
+            if (PetConfig.Current.PvpOff
+                && domesticationLevel != DomesticationLevel.WILD
+                && damageSource.CauseEntity is EntityPlayer player
+                && player.PlayerUID != ownerId
+                || damageSource.Source == EnumDamageSource.Fall
+                && PetConfig.Current.FalldamageOff)
             {
-                sapi.SendMessage(cachedOwner,
-                GlobalConstants.GeneralChatGroup,
-                Lang.Get("petai:message-pet-dead",
-                entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
-                EnumChatType.Notification);
+                damage = 0;
+                damageSource.CauseEntity = null;
+                damageSource.SourceEntity = null;
+            }
+        }
 
-                if (entity.Api.ModLoader.GetModSystem<WorldMapManager>().MapLayers.Find(ml => ml is WaypointMapLayer) is WaypointMapLayer waypointMap)
-                {
-                    waypointMap.AddWaypoint(new Waypoint()
-                    {
-                        Color = 9044739,
-                        Icon = "gravestone",
-                        Pinned = true,
-                        Position = entity.ServerPos.XYZ,
-                        OwningPlayerUid = ownerId,
-                        Title = Lang.Get("petai:message-pet-dead", entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
-                    },
-                        cachedOwner as IServerPlayer);
-                }
+        public override void GetInfoText(StringBuilder infotext)
+        {
+            if (cachedOwner == null) return;
+
+            infotext
+                .AppendLine(Lang.Get("petai:gui-pet-owner", cachedOwner?.PlayerName))
+                .AppendLine(domesticationLevel == DomesticationLevel.DOMESTICATED ? Lang.Get("petai:gui-pet-obedience", Math.Round(obedience * 100, 2)) : Lang.Get("petai:gui-pet-domesticationProgress", Math.Round(domesticationProgress * 100, 2)))
+                .AppendLine(Lang.Get("petai:gui-pet-nestsize", Lang.Get("petai:gui-pet-nestsize-" + size.ToString().ToLower())));
+            if (entity.HasBehavior<EntityBehaviorHealth>())
+            {
+                var beh = entity.GetBehavior<EntityBehaviorHealth>();
+                infotext.AppendLine(Lang.Get("Health: {0}/{1}", beh.Health, beh.MaxHealth));
             }
         }
     }
