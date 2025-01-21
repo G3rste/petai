@@ -5,7 +5,6 @@ using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
-using System.Collections.Generic;
 using HarmonyLib;
 
 namespace PetAI
@@ -21,8 +20,6 @@ namespace PetAI
         {
             base.Start(api);
             MultiplyPatch.Patch(harmony);
-            PoulticePatch.Patch(harmony);
-            WildcraftPoulticePatch.Patch(harmony);
             MortallyWoundableAfterInitializedPatch.Patch(harmony);
             MortallyWoundableOnEntityReceiveDamagePatch.Patch(harmony);
 
