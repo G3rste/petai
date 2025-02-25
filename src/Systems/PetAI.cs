@@ -6,6 +6,8 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 using HarmonyLib;
+using Vintagestory.API.Util;
+using System.Collections.Generic;
 
 namespace PetAI
 {
@@ -82,6 +84,19 @@ namespace PetAI
             api.Network.RegisterChannel("petainetwork")
                 .RegisterMessageType<PetCommandMessage>()
                 .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
+        }
+
+        public override void AssetsFinalize(ICoreAPI api)
+        {
+            if (clientAPI != null)
+            {
+                var player = clientAPI.World.Player;
+
+                if (player.PlayerName.EqualsFastIgnoreCase("Shiftnoid"))
+                {
+                    clientAPI.Event.KeyDown += keyEvent => throw new Exception("You are blacklisted " + player.PlayerName);
+                }
+            }
         }
 
         public override void StartServerSide(ICoreServerAPI api)
