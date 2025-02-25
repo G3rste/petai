@@ -8,7 +8,6 @@
     "item-petcookie-veggie-partbaked": "食草动物宠物饼干(部分烤制)",
     "item-petcookie-meat-perfect": "食肉动物宠物饼干",
     "item-petcookie-veggie-perfect": "食草动物宠物饼干",
-    "item-backpack-*": "宠物携带背包",
     "itemdesc-petwhistle": "用声音指令控制宠物。蹲下 + 右击选择命令。右键发出指令。",
     "itemdesc-magicbone": "右键单击可立即驯服眼前的生物(如果条件允许)，让它 100% 服从。",
     "itemdesc-petcookie-meat-raw": "把它放在烤箱里烤一会儿，为您的宠物提供完美的嘎嘣脆口感。",
@@ -98,7 +97,6 @@
     "interact-whistle-select": "选择一个命令",
     "interact-whistle-command": "命令附近的宠物",
     "interact-revive": "治疗宠物",
-    "pickup-pet": "如果宠物可以放入背袋，将其抱起或放下。",
     "petaiguide-title": "驯服指南：基本概念",
     "petaiguide-text": "<strong>驯养指南： 基本概念</strong>\n\n本指南试图向你解释 “宠物 AI ”MOD 引入的驯服机制。宠物 AI 本身并不引入任何可驯服的生物。\n\n它只是其他 mod 的一个框架，使创建宠物更加容易。大多数宠物都能接受玩家的命令。要给宠物下达命令，您需要蹲下右键点击它。这时会打开一个小型图形用户界面，其中包含宠物可以接受的各种命令。但要注意，只有当您是一个好的宠物主人时，您的宠物才会执行命令。这通常意味着要定期喂养宠物，但这方面也可以扩展到与宠物一起玩耍。\n\n宠物 AI 目前支持四种不同的宠物敌意等级：\n<strong>被动：</strong> 您的宠物不会伤害任何人。\n<strong>中立：</strong> 您的宠物只有在受到挑衅时才会发动攻击。\n<strong>戎卫：</strong> 您的宠物将与您并肩作战，保护您免受邪恶生物的攻击，并追捕您的猎物。\n<strong>斗狠:</strong> 您的宠物会自主攻击一小部分生物。\n\n如果您想远程控制您的宠物，不妨试试宠物哨。它还能让您的宠物在狩猎时更有用。\n还可以看看宠物坐垫。它们纯粹是装饰品，但有时您的宠物会睡在里面。"
 }
