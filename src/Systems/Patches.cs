@@ -39,6 +39,7 @@ namespace PetAI
         }
     }
 
+    // Currently an entity can only be mortally woundable if its also a mount. This Patch fixes that.
     public class MortallyWoundableAfterInitializedPatch
     {
 
@@ -104,8 +105,11 @@ namespace PetAI
         public static bool Prefix(EntityBehaviorMortallyWoundable __instance, DamageSource damageSource, ref float damage)
         {
             var tameable = __instance.entity.GetBehavior<EntityBehaviorTameable>();
+            if (tameable != null && string.IsNullOrEmpty(tameable.ownerId))
+            {
+                return false;
+            }
             if (tameable == null
-                || string.IsNullOrEmpty(tameable.ownerId)
                 || __instance.HealthState == EnumEntityHealthState.Normal
                 || damageSource.Type == EnumDamageType.Heal)
             {

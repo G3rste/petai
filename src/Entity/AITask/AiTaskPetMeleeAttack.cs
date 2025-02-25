@@ -68,10 +68,5 @@ namespace PetAI
 
             return base.IsTargetableEntity(e, range, ignoreEntityCode);
         }
-
-        public void ResetAttackedByEntity()
-        {
-            attackedByEntity = null;
-        }
     }
 }
