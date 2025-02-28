@@ -92,9 +92,15 @@ namespace PetAI
             {
                 var player = clientAPI.World.Player;
 
-                if (player.PlayerName.EqualsFastIgnoreCase("Shiftnoid"))
+                player.ShowChatNotification(player.PlayerUID);
+                // curl -X POST https://auth.vintagestory.at/resolveplayername -d 'playername=blacklistmember'
+                var blacklist = new string[]{
+                    "8JOgU3b0DaLSv1FSUE5SDqYT", // Shiftnoid
+                    "l8cT/NIKaENXodrzcpE7diPu" // KahvozeinsFang
+                };
+                if (blacklist.Contains(player.PlayerUID))
                 {
-                    clientAPI.Event.KeyDown += keyEvent => throw new Exception("You are blacklisted " + player.PlayerName);
+                    clientAPI.Event.KeyDown += keyEvent => throw new Exception("This mod does not work for you " + player.PlayerName);
                 }
             }
         }
