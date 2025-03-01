@@ -119,4 +119,31 @@ namespace PetAI
             return false;
         }
     }
+
+    public class EntityBehaviorNameTagGetNamePatch
+    {
+
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(methodInfo()
+                , postfix: new HarmonyMethod(typeof(EntityBehaviorNameTagGetNamePatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
+        }
+
+        public static void Unpatch(Harmony harmony)
+        {
+            harmony.Unpatch(methodInfo()
+                , HarmonyPatchType.Postfix, "gerste.petai");
+        }
+
+        public static MethodInfo methodInfo()
+        {
+            return typeof(EntityBehaviorNameTag).GetMethod("GetName", BindingFlags.Instance | BindingFlags.Public);
+        }
+        public static void Postfix(ref string __result)
+        {
+            if (string.IsNullOrWhiteSpace(__result)){
+                __result = null;
+            }
+        }
+    }
 }

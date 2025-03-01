@@ -24,6 +24,7 @@ namespace PetAI
             MultiplyPatch.Patch(harmony);
             MortallyWoundableAfterInitializedPatch.Patch(harmony);
             MortallyWoundableOnEntityReceiveDamagePatch.Patch(harmony);
+            EntityBehaviorNameTagGetNamePatch.Patch(harmony);
 
             api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
