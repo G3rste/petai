@@ -87,25 +87,6 @@ namespace PetAI
                 .RegisterMessageType<PetProfileMessage>().SetMessageHandler<PetProfileMessage>(OnPetProfileMessageClient);
         }
 
-        public override void AssetsFinalize(ICoreAPI api)
-        {
-            if (clientAPI != null)
-            {
-                var player = clientAPI.World.Player;
-
-                player.ShowChatNotification(player.PlayerUID);
-                // curl -X POST https://auth.vintagestory.at/resolveplayername -d 'playername=blacklistmember'
-                var blacklist = new string[]{
-                    "8JOgU3b0DaLSv1FSUE5SDqYT", // Shiftnoid
-                    "l8cT/NIKaENXodrzcpE7diPu" // KahvozeinsFang
-                };
-                if (blacklist.Contains(player.PlayerUID))
-                {
-                    clientAPI.Event.KeyDown += keyEvent => throw new Exception("This mod does not work for you " + player.PlayerName);
-                }
-            }
-        }
-
         public override void StartServerSide(ICoreServerAPI api)
         {
             base.StartServerSide(api);
