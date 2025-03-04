@@ -93,7 +93,6 @@ namespace PetAI
             {
                 var player = clientAPI.World.Player;
 
-                player.ShowChatNotification(player.PlayerUID);
                 // curl -X POST https://auth.vintagestory.at/resolveplayername -d 'playername=blacklistmember'
                 var blacklist = new string[]{
                     "8JOgU3b0DaLSv1FSUE5SDqYT", // Shiftnoid
