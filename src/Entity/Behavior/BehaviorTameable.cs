@@ -436,10 +436,9 @@ namespace PetAI
 
         public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
-            if (PetConfig.Current.PvpOff
-                && domesticationLevel != DomesticationLevel.WILD
-                && damageSource.CauseEntity is EntityPlayer player
-                && player.PlayerUID != ownerId
+            if (damageSource.CauseEntity is EntityPlayer player
+                && (player.PlayerUID == ownerId && !PetConfig.Current.PetDamageableByOwner
+                    || player.PlayerUID != ownerId && !PetConfig.Current.PvpOn && domesticationLevel != DomesticationLevel.WILD)
                 || damageSource.Source == EnumDamageSource.Fall
                 && PetConfig.Current.FalldamageOff)
             {

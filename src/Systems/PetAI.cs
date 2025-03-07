@@ -60,18 +60,18 @@ namespace PetAI
                 else
                 {
                     api.Logger.Notification("No Mod Config specified. Falling back to default settings");
-                    PetConfig.Current = PetConfig.getDefault();
+                    PetConfig.Current = new();
                 }
             }
             catch
             {
-                PetConfig.Current = PetConfig.getDefault();
+                PetConfig.Current = new();
                 api.Logger.Error("Failed to load custom mod configuration. Falling back to default settings!");
             }
             finally
             {
                 if (PetConfig.Current.Difficulty == null)
-                    PetConfig.Current.Difficulty = PetConfig.getDefault().Difficulty;
+                    PetConfig.Current.Difficulty = new();
 
                 api.StoreModConfig(PetConfig.Current, "petconfig.json");
             }
@@ -166,39 +166,21 @@ namespace PetAI
     }
     public class PetConfig
     {
-        public static PetConfig Current { get; set; }
-        public Difficulty Difficulty { get; set; }
-        public bool PvpOff { get; set; }
-        public bool FalldamageOff { get; set; }
-        public bool AllowTeleport { get; set; }
-        public static PetConfig getDefault()
-        {
-            var config = new PetConfig();
-            config.Difficulty = new Difficulty
-            {
-                tamingMultiplier = 1,
-                obedienceMultiplier = 1,
-                disobedienceMultiplier = 1,
-                growingMultiplier = 1,
-                tamingMultiplierIncreasePerGen = 05f,
-                obedienceMultiplierIncreasePerGen = 05f,
-                disobedienceMultiplierDecreasePerGen = 05f
-            };
-
-            config.PvpOff = false;
-            config.FalldamageOff = false;
-            config.AllowTeleport = false;
-            return config;
-        }
+        public static PetConfig Current;
+        public Difficulty Difficulty = new();
+        public bool PvpOn = true;
+        public bool PetDamageableByOwner = false;
+        public bool FalldamageOff = true;
+        public bool AllowTeleport = false;
     }
     public class Difficulty
     {
-        public float tamingMultiplier;
-        public float obedienceMultiplier;
-        public float disobedienceMultiplier;
-        public float tamingMultiplierIncreasePerGen;
-        public float obedienceMultiplierIncreasePerGen;
-        public float disobedienceMultiplierDecreasePerGen;
-        public float growingMultiplier;
+        public float tamingMultiplier = 1;
+        public float obedienceMultiplier = 1;
+        public float disobedienceMultiplier = 1;
+        public float growingMultiplier = 1;
+        public float tamingMultiplierIncreasePerGen = 0.05f;
+        public float obedienceMultiplierIncreasePerGen = 0.05f;
+        public float disobedienceMultiplierDecreasePerGen = 0.05f;
     }
 }

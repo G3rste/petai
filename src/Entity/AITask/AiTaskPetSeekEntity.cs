@@ -102,7 +102,7 @@ namespace PetAI
                 {
                     return false;
                 }
-                if (PetConfig.Current.PvpOff && tameable?.domesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.ownerId)
+                if (!PetConfig.Current.PvpOn && tameable?.domesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.ownerId)
                 {
                     return false;
                 }
