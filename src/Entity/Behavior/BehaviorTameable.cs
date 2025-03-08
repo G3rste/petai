@@ -353,8 +353,8 @@ namespace PetAI
                 }
                 if (acceptedItems < 1) return false;
 
-                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.Difficulty.obedienceMultiplier * (float)Math.Pow(1 + PetConfig.Current.Difficulty.obedienceMultiplierIncreasePerGen, generation);
-                else domesticationProgress += tamingItem.progress * PetConfig.Current.Difficulty.tamingMultiplier * (float)Math.Pow(1 + PetConfig.Current.Difficulty.tamingMultiplierIncreasePerGen, generation);
+                if (domesticationLevel == DomesticationLevel.DOMESTICATED) obedience += tamingItem.progress * PetConfig.Current.Difficulty.obedienceMultiplier * (float)Math.Pow(1f + PetConfig.Current.Difficulty.obedienceMultiplierIncreasePerGen, generation);
+                else domesticationProgress += tamingItem.progress * PetConfig.Current.Difficulty.tamingMultiplier * (float)Math.Pow(1f + PetConfig.Current.Difficulty.tamingMultiplierIncreasePerGen, generation);
 
                 cooldown = entity.World.Calendar.TotalHours + tamingItem.cooldown;
 
@@ -396,7 +396,7 @@ namespace PetAI
             // I hope the PlayerEntity is null when the player is offline
             if (cachedOwner?.Entity != null)
             {
-                obedience -= PetConfig.Current.Difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1 - PetConfig.Current.Difficulty.disobedienceMultiplierDecreasePerGen, generation);
+                obedience -= PetConfig.Current.Difficulty.disobedienceMultiplier * disobediencePerDay * ((float)(hoursPassed / 24)) * (float)Math.Pow(1f - PetConfig.Current.Difficulty.disobedienceMultiplierDecreasePerGen, generation);
             }
             disobedienceTime = entity.World.Calendar.TotalHours;
         }
