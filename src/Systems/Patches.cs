@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using HarmonyLib;
 using Vintagestory.API.Common;
@@ -141,9 +142,35 @@ namespace PetAI
         }
         public static void Postfix(ref string __result)
         {
-            if (string.IsNullOrWhiteSpace(__result)){
+            if (string.IsNullOrWhiteSpace(__result))
+            {
                 __result = null;
             }
+        }
+    }
+
+    public class AiTaskStayCloseToEntityOnNoPathPatch
+    {
+
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(methodInfo()
+                , postfix: new HarmonyMethod(typeof(AiTaskStayCloseToEntityOnNoPathPatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
+        }
+
+        public static void Unpatch(Harmony harmony)
+        {
+            harmony.Unpatch(methodInfo()
+                , HarmonyPatchType.Postfix, "gerste.petai");
+        }
+
+        public static MethodInfo methodInfo()
+        {
+            return typeof(AiTaskStayCloseToEntity).GetMethod("OnNoPath", BindingFlags.Instance | BindingFlags.Public, new Type[0]);
+        }
+        public static void Postfix(AiTaskStayCloseToEntity __instance)
+        {
+            __instance.OnNoPath(null);
         }
     }
 }

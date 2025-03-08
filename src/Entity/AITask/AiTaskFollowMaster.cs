@@ -1,5 +1,6 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -36,6 +37,11 @@ namespace PetAI
             }
             return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName
                 && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z) > maxDistance * maxDistance;
+        }
+        public override void OnNoPath(Vec3d target)
+        {
+            stuck = false;
+            pathTraverser.WalkTowards(targetEntity.ServerPos.XYZ, moveSpeed, maxDistance, OnGoalReached, OnStuck);
         }
     }
 }
