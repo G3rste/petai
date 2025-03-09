@@ -7,20 +7,14 @@ namespace PetAI
     {
         public override void OnHeldInteractStart(ItemSlot slot, EntityAgent byEntity, BlockSelection blockSel, EntitySelection entitySel, bool firstEvent, ref EnumHandHandling handling)
         {
-            var textureMorpher = entitySel?.Entity;
-            if (api is ICoreServerAPI sapi && textureMorpher != null && firstEvent)
+            var oldEntity = entitySel?.Entity;
+            if (api is ICoreServerAPI sapi && oldEntity != null && firstEvent)
             {
-                int textures = 1;
-                var alternates = textureMorpher.Properties.Client.FirstTexture.Alternates;
-                if (alternates != null)
-                {
-                    textures += alternates.Length;
-                }
-                int oldtexture = textureMorpher.WatchedAttributes.GetInt("textureIndex", 0);
-                textureMorpher.WatchedAttributes.SetInt("textureIndex", (oldtexture + 1) % textures);
-                textureMorpher.WatchedAttributes.MarkPathDirty("textureIndex");
-                sapi.World.SpawnEntity(PetUtil.EntityFromTree(PetUtil.EntityToTree(textureMorpher), sapi.World));
-                textureMorpher.Die(EnumDespawnReason.Removed);
+                int oldtexture = oldEntity.WatchedAttributes.GetInt("textureIndex", 0);
+                oldEntity.WatchedAttributes.SetInt("textureIndex", (oldtexture + 1) % (oldEntity.Properties.Client.TexturesAlternatesCount + 1));
+                oldEntity.WatchedAttributes.MarkPathDirty("textureIndex");
+                sapi.World.SpawnEntity(PetUtil.EntityFromTree(PetUtil.EntityToTree(oldEntity), sapi.World));
+                oldEntity.Die(EnumDespawnReason.Removed);
             }
             handling = EnumHandHandling.Handled;
         }
