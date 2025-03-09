@@ -38,10 +38,18 @@ namespace PetAI
             return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName
                 && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z) > maxDistance * maxDistance;
         }
+
         public override void OnNoPath(Vec3d target)
         {
-            stuck = false;
-            pathTraverser.WalkTowards(targetEntity.ServerPos.XYZ, moveSpeed, maxDistance, OnGoalReached, OnStuck);
+            if (allowTeleport && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos) > teleportAfterRange * teleportAfterRange)
+            {
+                tryTeleport();
+            }
+            else
+            {
+                stuck = false;
+                pathTraverser.WalkTowards(targetEntity.ServerPos.XYZ, moveSpeed, maxDistance, OnGoalReached, OnStuck);
+            }
         }
     }
 }
