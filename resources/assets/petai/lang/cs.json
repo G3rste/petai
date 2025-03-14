@@ -1,5 +1,11 @@
 {
     "item-magicbone": "Magická kost",
     "item-texturerotator": "Přeskinovat",
+    "block-petnest-medium-blue-*": "Střední polštář pro domácí mazlíčky (modrý)",
+    "block-petnest-medium-red-*": "Střední polštář pro domácí mazlíčky (červený)",
+    "block-petnest-medium-orange-*": "Střední polštář pro domácí mazlíčky (oranžový)",
+    "block-petnest-medium-green-*": "Střední polštář pro domácí mazlíčky (zelený)",
+    "block-petnest-medium-brown-*": "Střední polštář pro domácí mazlíčky (hnědý)",
+    "block-petnest-medium-black-*": "Střední polštář pro domácí mazlíčky (černý)",
     "gui-pet-nestsize-medium": "střední"
 }
