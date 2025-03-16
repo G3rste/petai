@@ -449,6 +449,33 @@ namespace PetAI
             }
         }
 
+        public override void OnEntityDeath(DamageSource damageSourceForDeath)
+        {
+            base.OnEntityDeath(damageSourceForDeath);
+            if (!string.IsNullOrEmpty(ownerId) && entity.Api is ICoreServerAPI sapi)
+            {
+                sapi.SendMessage(cachedOwner,
+                GlobalConstants.GeneralChatGroup,
+                Lang.Get("petai:message-pet-dead",
+                entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
+                EnumChatType.Notification);
+
+                if (entity.Api.ModLoader.GetModSystem<WorldMapManager>().MapLayers.Find(ml => ml is WaypointMapLayer) is WaypointMapLayer waypointMap)
+                {
+                    waypointMap.AddWaypoint(new Waypoint()
+                    {
+                        Color = 9044739,
+                        Icon = "gravestone",
+                        Pinned = true,
+                        Position = entity.ServerPos.XYZ,
+                        OwningPlayerUid = ownerId,
+                        Title = Lang.Get("petai:message-pet-dead", entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
+                    },
+                        cachedOwner as IServerPlayer);
+                }
+            }
+        }
+
         public override void GetInfoText(StringBuilder infotext)
         {
             if (cachedOwner == null) return;
