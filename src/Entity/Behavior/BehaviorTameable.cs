@@ -207,7 +207,9 @@ namespace PetAI
             size = nestSize;
 
             disobediencePerDay = attributes["disobediencePerDay"].AsFloat(0f);
-            listenerId = entity.World.RegisterGameTickListener(disobey, 60000);
+            entity.Api.Event.EnqueueMainThreadTask(() =>
+                listenerId = entity.World.RegisterGameTickListener(disobey, 60000), "register disobedience tick listener"
+            );
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
