@@ -39,12 +39,8 @@ Here is a short overview over the most important new entity behaviors and tasks:
 
 ### Pet Accessories
 
-Your pets can also wear accessories, armor and backpacks (see [dog collar](https://github.com/G3rste/wolftaming/blob/main/resources/assets/wolftaming/itemtypes/dogcollar.json)). If your pet should be able to wear its own accessories, the most important thing to remember is using the entitypet class for the entity because this class does all the inventory handling. Then you have to create an item of class ItemPetAccessory. There you need to set the following attributes:
+Your pets can also wear accessories, armor and backpacks (see [dog collar](https://github.com/G3rste/wolftaming/blob/main/resources/assets/wolftaming/itemtypes/dogcollar.json)). Since 1.20 this uses the vanilla mechanics to implement this (see the tamed elk for more reference).
 
-* **wearableAttachment**: true
-* **clothingType**: NECK | HEAD | BACK | BODY | TAIL | PAWS
-* **validPets**: code of all pets that can wear this accessory
-
-If the item should also work as armor/ backpack, you cann add the damageReduction attribute (lets you set the damageReduction in percent, see [dog armor](https://github.com/G3rste/wolftaming/blob/main/resources/assets/wolftaming/itemtypes/dogarmor.json)) or the backpackslots attribute (lets you set how many slots the backpack has, see [dog backpack](https://github.com/G3rste/wolftaming/blob/main/resources/assets/wolftaming/itemtypes/dogbackpack.json)).
+If the item should also work as armor, you cann add the damageReduction attribute (lets you set the damageReduction in percent, see [dog armor](https://github.com/G3rste/wolftaming/blob/main/resources/assets/wolftaming/itemtypes/dogarmor.json)).
 
 ![Thumbnail](petai.png)
