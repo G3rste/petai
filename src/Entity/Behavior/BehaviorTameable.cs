@@ -9,6 +9,8 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Server;
 using Vintagestory.GameContent;
 using System.Text;
+using System.Linq;
+using Vintagestory.API.Util;
 
 namespace PetAI
 {
@@ -222,6 +224,7 @@ namespace PetAI
             if (mode != EnumInteractMode.Interact) return;
             if (!entity.Alive)
             {
+                tryReviveWith(itemslot);
                 return;
             }
             if (byEntity.Controls.Sneak) return;
@@ -404,20 +407,11 @@ namespace PetAI
         }
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
-            List<ItemStack> treats = new List<ItemStack>();
-            foreach (var treat in treatList)
+            List<ItemStack> treats = treatList.ConvertAll(treat =>
             {
-                var item = world.GetItem(new AssetLocation(treat.domain + ":" + treat.name));
-                if (item != null)
-                {
-                    treats.Add(new ItemStack(item));
-                }
-                var block = world.GetBlock(new AssetLocation(treat.domain + ":" + treat.name));
-                if (block != null)
-                {
-                    treats.Add(new ItemStack(block));
-                }
-            }
+                var assetLocation = new AssetLocation(treat.domain + ":" + treat.name);
+                return new ItemStack((CollectibleObject)world.GetItem(assetLocation) ?? world.GetBlock(assetLocation));
+            });
             if (entity.Alive && treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
                 return new WorldInteraction[]
@@ -427,6 +421,18 @@ namespace PetAI
                         ActionLangCode = "petai:interact-feed",
                         MouseButton = EnumMouseButton.Right,
                         Itemstacks = treats.ToArray()
+                    }
+                };
+            }
+            else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && PetConfig.Current.Resurrectors?.Count > 0)
+            {
+                return new WorldInteraction[]
+                {
+                    new WorldInteraction()
+                    {
+                        ActionLangCode = "petai:interact-revive",
+                        MouseButton = EnumMouseButton.Right,
+                        Itemstacks = PetConfig.Current.Resurrectors.ConvertAll(resurrector => new ItemStack((CollectibleObject)world.GetItem(resurrector) ?? world.GetBlock(resurrector))).ToArray()
                     }
                 };
             }
@@ -490,6 +496,19 @@ namespace PetAI
             {
                 var beh = entity.GetBehavior<EntityBehaviorHealth>();
                 infotext.AppendLine(Lang.Get("Health: {0}/{1}", beh.Health, beh.MaxHealth));
+            }
+        }
+
+        private void tryReviveWith(ItemSlot itemslot)
+        {
+            var item = PetConfig.Current.Resurrectors.Find(resurrector => resurrector.Split(":").Last() == itemslot?.Itemstack?.Collectible?.Code?.Path);
+            if (item != null && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
+            {
+                entity.Revive();
+                entity.GetBehavior<EntityBehaviorMortallyWoundable>().HealthState = EnumEntityHealthState.Normal;
+                entity.AnimManager.ActiveAnimationsByAnimCode.Keys.Foreach(entity.AnimManager.StopAnimation);
+                itemslot.TakeOut(1);
+                itemslot.MarkDirty();
             }
         }
     }

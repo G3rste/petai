@@ -174,6 +174,7 @@ namespace PetAI
         public bool PetDamageableByOwner = false;
         public bool FalldamageOff = true;
         public bool AllowTeleport = false;
+        public List<string> Resurrectors = new(){ "game:gear-temporal" };
     }
     public class Difficulty
     {
