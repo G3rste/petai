@@ -407,12 +407,13 @@ namespace PetAI
         }
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
-            List<ItemStack> treats = treatList.ConvertAll(treat =>
-            {
-                var assetLocation = new AssetLocation(treat.domain + ":" + treat.name);
-                return new ItemStack((CollectibleObject)world.GetItem(assetLocation) ?? world.GetBlock(assetLocation));
-            });
-            if (entity.Alive && treats.Count > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
+            ItemStack[] treats = treatList
+                .ConvertAll(treat => new AssetLocation(treat.domain + ":" + treat.name))
+                .ConvertAll(treat => (CollectibleObject)world.GetItem(treat) ?? world.GetBlock(treat))
+                .FindAll(treat => treat != null)
+                .ConvertAll(treat => new ItemStack(treat))
+                .ToArray();
+            if (entity.Alive && treats.Length > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
                 return new WorldInteraction[]
                 {
@@ -420,7 +421,7 @@ namespace PetAI
                     {
                         ActionLangCode = "petai:interact-feed",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = treats.ToArray()
+                        Itemstacks = treats
                     }
                 };
             }
@@ -432,7 +433,12 @@ namespace PetAI
                     {
                         ActionLangCode = "petai:interact-revive",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = PetConfig.Current.Resurrectors.ConvertAll(resurrector => new ItemStack((CollectibleObject)world.GetItem(resurrector) ?? world.GetBlock(resurrector))).ToArray()
+                        Itemstacks = PetConfig.Current.Resurrectors
+                            .ConvertAll(resurrector => new AssetLocation(resurrector))
+                            .ConvertAll(resurrector => (CollectibleObject)world.GetItem(resurrector) ?? world.GetBlock(resurrector))
+                            .FindAll(resurrector => resurrector != null)
+                            .ConvertAll(resurrector => new ItemStack(resurrector))
+                            .ToArray()
                     }
                 };
             }
