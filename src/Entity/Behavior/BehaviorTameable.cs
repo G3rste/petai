@@ -425,7 +425,7 @@ namespace PetAI
                     }
                 };
             }
-            else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && PetConfig.Current.Resurrectors?.Count > 0)
+            else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && PetConfig.Current.Resurrectors?.Length > 0)
             {
                 return new WorldInteraction[]
                 {
@@ -433,7 +433,7 @@ namespace PetAI
                     {
                         ActionLangCode = "petai:interact-revive",
                         MouseButton = EnumMouseButton.Right,
-                        Itemstacks = PetConfig.Current.Resurrectors
+                        Itemstacks = PetConfig.Current.Resurrectors.ToList()
                             .ConvertAll(resurrector => new AssetLocation(resurrector))
                             .ConvertAll(resurrector => (CollectibleObject)world.GetItem(resurrector) ?? world.GetBlock(resurrector))
                             .FindAll(resurrector => resurrector != null)
@@ -507,8 +507,8 @@ namespace PetAI
 
         private void tryReviveWith(ItemSlot itemslot)
         {
-            var item = PetConfig.Current.Resurrectors.Find(resurrector => resurrector.Split(":").Last() == itemslot?.Itemstack?.Collectible?.Code?.Path);
-            if (item != null && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
+            var isResurrector = PetConfig.Current.Resurrectors.Any(resurrector => resurrector.Split(":").Last() == itemslot?.Itemstack?.Collectible?.Code?.Path);
+            if (isResurrector && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
             {
                 entity.Revive();
                 entity.GetBehavior<EntityBehaviorMortallyWoundable>().HealthState = EnumEntityHealthState.Normal;
