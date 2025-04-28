@@ -511,8 +511,11 @@ namespace PetAI
             if (isResurrector && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true)
             {
                 entity.Revive();
-                entity.GetBehavior<EntityBehaviorMortallyWoundable>().HealthState = EnumEntityHealthState.Normal;
-                entity.AnimManager.ActiveAnimationsByAnimCode.Keys.Foreach(entity.AnimManager.StopAnimation);
+                if (entity.HasBehavior<EntityBehaviorMortallyWoundable>())
+                {
+                    entity.GetBehavior<EntityBehaviorMortallyWoundable>().HealthState = EnumEntityHealthState.Normal;
+                }
+                entity.AnimManager?.ActiveAnimationsByAnimCode.Keys.Foreach(entity.AnimManager.StopAnimation);
                 itemslot.TakeOut(1);
                 itemslot.MarkDirty();
             }
