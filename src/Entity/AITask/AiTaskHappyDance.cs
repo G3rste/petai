@@ -14,13 +14,8 @@ namespace PetAI
         protected int minduration;
         protected int maxduration;
         protected long durationUntilMs;
-        public AiTaskHappyDance(EntityAgent entity) : base(entity)
+        public AiTaskHappyDance(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-        }
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
-
             minduration = (int)taskConfig["minduration"]?.AsInt(1000);
             maxduration = (int)taskConfig["maxduration"]?.AsInt(4000);
         }

@@ -16,13 +16,8 @@ namespace PetAI
         bool stuck = false;
 
         string commandName = "stay";
-        public AiTaskStay(EntityAgent entity) : base(entity)
+        public AiTaskStay(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-        }
-
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
 
             if (taskConfig["movespeed"] != null)
             {

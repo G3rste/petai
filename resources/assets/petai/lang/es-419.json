@@ -1,6 +1,9 @@
 {
+    "block-petnest-small-purple": "Cojín pequeño para mascotas (violeta)",
     "gui-pet-owner": "Dueño: {0}",
     "gui-profile-name": "Nombre:",
+    "gui-profile-multiply": ":",
     "gui-profile-ok": "OK",
-    "gui-profile-cancel": "Cancelar"
+    "gui-profile-cancel": "Cancelar",
+    "petaiguide-text": "<strong>Guía de domesticación: Concepto general</strong>\n\nEsta guía intenta explicar las mecánicas de domesticación introducidas por el mod \"Pet AI\".\n\n\"Pet AI\" en sí no introduce criaturas domesticables. Es simplemente una herramienta para que otros mods faciliten la creación de mascotas. La mayoría de las mascotas podrán recibir órdenes del jugador. Para dar una orden a tu mascota, debes agacharte y hacer clic derecho sobre ella. Se abrirá una pequeña interfaz con las distintas órdenes que tu mascota aceptará. Pero ten en cuenta que tu mascota solo ejecutará órdenes si eres un buen dueño. Esto generalmente implica alimentar a tu mascota con regularidad, pero también puede incluir actividades de juego con ella.\n\n\"Pet AI\" admite actualmente cuatro niveles de agresividad:\n<strong>Pasivo:</strong> Tu mascota no dañará a nadie.\n<strong>Neutral:</strong> Tu mascota solo atacará si se le provoca.\n<strong>Protector:</strong> Tu mascota luchará a tu lado, te defenderá de criaturas malvadas y cazará a tus víctimas.\n<strong>Agresivo:</strong> Tu mascota atacará a un pequeño grupo de criaturas por sí sola.\n\nSi te quieres controlar a tu mascota a distancia, prueba el silbato. Además, te ayudará a cazar.\nEcha un vistazo también a los cojines. Son puramente decorativos, pero a veces tus mascotas duermen en ellos."
 }

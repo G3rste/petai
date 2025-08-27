@@ -28,14 +28,8 @@ namespace PetAI
             }
         }
 
-        public AiTaskPetSeekEntity(EntityAgent entity) : base(entity)
+        public AiTaskPetSeekEntity(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-        }
-
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
-
             this.isCommandable = taskConfig["isCommandable"].AsBool(false);
         }
 

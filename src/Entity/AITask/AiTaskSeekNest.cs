@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.GameContent;
@@ -9,8 +10,6 @@ namespace PetAI
     {
         private BlockEntityPetNest nest { get; set; }
 
-        private List<DayTimeFrame> duringDayTimeFrames = new List<DayTimeFrame>();
-
         int range = 15;
 
         long lastCheck;
@@ -18,17 +17,8 @@ namespace PetAI
         bool stuck = false;
 
         float moveSpeed = 0.02f;
-        public AiTaskSeekNest(EntityAgent entity) : base(entity)
+        public AiTaskSeekNest(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-        }
-
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
-            if (taskConfig["duringDayTimeFrames"] != null)
-            {
-                duringDayTimeFrames.AddRange(taskConfig["duringDayTimeFrames"].AsObject<DayTimeFrame[]>(new DayTimeFrame[0]));
-            }
             range = taskConfig["horRange"].AsInt(15);
             moveSpeed = taskConfig["movespeed"].AsFloat(0.02f);
         }
@@ -37,10 +27,10 @@ namespace PetAI
         {
             if (lastCheck + 10000 > entity.World.ElapsedMilliseconds) return false;
             lastCheck = entity.World.ElapsedMilliseconds;
-            if (duringDayTimeFrames.Count > 0)
+            if (duringDayTimeFrames.Length > 0)
             {
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
-                if (!duringDayTimeFrames.Exists(frame => frame.Matches(hourOfDay))) return false;
+                if (!Array.Exists(duringDayTimeFrames, frame => frame.Matches(hourOfDay))) return false;
             }
             if (nest == null || entity.ServerPos.SquareDistanceTo(nest.Position) > 50)
             {

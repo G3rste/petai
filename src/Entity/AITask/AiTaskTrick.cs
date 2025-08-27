@@ -6,8 +6,9 @@ namespace PetAI
 {
     public class AiTaskTrick : AiTaskIdle
     {
-        public AiTaskTrick(EntityAgent entity) : base(entity)
+        public AiTaskTrick(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
+            commandName = taskConfig["command"].AsString();
         }
 
         public override int Slot => base.Slot;
@@ -17,15 +18,10 @@ namespace PetAI
         public override float PriorityForCancel => base.PriorityForCancel;
 
         public string commandName;
-
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
-            commandName = taskConfig["command"].AsString();
-        }
+        
         public override bool ShouldExecute()
         {
-            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.simpleCommand == commandName;;
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.simpleCommand == commandName; ;
         }
 
         public override void StartExecute() {

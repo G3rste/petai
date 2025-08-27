@@ -9,14 +9,8 @@ namespace PetAI
     {
         string commandName = "followmaster";
         EntityBehaviorTameable tameable;
-        public AiTaskFollowMaster(EntityAgent entity) : base(entity)
+        public AiTaskFollowMaster(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-        }
-
-        public override void LoadConfig(JsonObject taskConfig, JsonObject aiConfig)
-        {
-            base.LoadConfig(taskConfig, aiConfig);
-
             if (taskConfig["command"] != null)
             {
                 commandName = taskConfig["command"].AsString("followmaster");
