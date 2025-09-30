@@ -40,50 +40,6 @@ namespace PetAI
         }
     }
 
-    // Currently an entity can only be mortally woundable if its also a mount. This Patch fixes that.
-    public class MortallyWoundableAfterInitializedPatch
-    {
-
-        public static void Patch(Harmony harmony)
-        {
-            harmony.Patch(methodInfo()
-                , prefix: new HarmonyMethod(typeof(MortallyWoundableAfterInitializedPatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
-        }
-
-        public static void Unpatch(Harmony harmony)
-        {
-            harmony.Unpatch(methodInfo()
-                , HarmonyPatchType.Prefix, "gerste.petai");
-        }
-
-        public static MethodInfo methodInfo()
-        {
-            return typeof(EntityBehaviorMortallyWoundable).GetMethod("AfterInitialized", BindingFlags.Instance | BindingFlags.Public);
-        }
-        public static bool Prefix(EntityBehaviorMortallyWoundable __instance)
-        {
-            if (__instance.entity.World.Side == EnumAppSide.Server)
-            {
-                typeof(EntityBehaviorMortallyWoundable).GetField("ebh", BindingFlags.Instance | BindingFlags.NonPublic).SetValue(__instance, __instance.entity.GetBehavior<EntityBehaviorHealth>());
-
-                EntityBehaviorTaskAI taskAi = __instance.entity.GetBehavior<EntityBehaviorTaskAI>();
-
-                taskAi.TaskManager.OnShouldExecuteTask += (t) => __instance.HealthState != EnumEntityHealthState.MortallyWounded && __instance.HealthState != EnumEntityHealthState.Recovering;
-
-                if (__instance.HealthState == EnumEntityHealthState.MortallyWounded)
-                {
-                    typeof(EntityBehaviorMortallyWoundable).GetMethod("setMortallyWounded", BindingFlags.Instance | BindingFlags.NonPublic).Invoke(__instance, null);
-                }
-            }
-
-            if (__instance.entity.HasBehavior<EntityBehaviorSeatable>())
-            {
-                __instance.entity.GetBehavior<EntityBehaviorSeatable>().CanSit += typeof(EntityBehaviorMortallyWoundable).GetMethod("EntityBehaviorMortallyWoundable_CanSit", BindingFlags.Instance | BindingFlags.NonPublic).CreateDelegate<CanSitDelegate>(__instance);
-            }
-            return false;
-        }
-    }
-
     public class MortallyWoundableOnEntityReceiveDamagePatch
     {
 

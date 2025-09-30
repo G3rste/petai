@@ -22,7 +22,6 @@ namespace PetAI
         {
             base.Start(api);
             MultiplyPatch.Patch(harmony);
-            MortallyWoundableAfterInitializedPatch.Patch(harmony);
             MortallyWoundableOnEntityReceiveDamagePatch.Patch(harmony);
             EntityBehaviorNameTagGetNamePatch.Patch(harmony);
             AiTaskStayCloseToEntityOnNoPathPatch.Patch(harmony);
