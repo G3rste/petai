@@ -461,6 +461,11 @@ namespace PetAI
                 damageSource.CauseEntity = null;
                 damageSource.SourceEntity = null;
             }
+            var behaviorHealth = entity.GetBehavior<EntityBehaviorHealth>();
+            if (behaviorHealth?.Health < 0)
+            {
+                behaviorHealth.Health=GameMath.Clamp(behaviorHealth.Health, 0, behaviorHealth.MaxHealth);
+            }
         }
 
         public override void OnEntityDeath(DamageSource damageSourceForDeath)
