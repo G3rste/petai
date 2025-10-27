@@ -24,7 +24,7 @@ Here is a short overview over the most important new entity behaviors and tasks:
       * **cooldown**: cooldown in in-game hours for how long your pet will need to accept food again
   * **receivecommand**: indicates that the pet can be trained to execute certain commands
     * **availablecommands**": there are a couple commands of various complexity available for your pet, here is an examplelist: ```{ "commandName":"sit", "commandType":"SIMPLE", "minObedience":0.2 }, { "commandName":"lay", "commandType":"SIMPLE", "minObedience":0.2 }, { "commandName":"speak", "commandType":"SIMPLE", "minObedience":0.2 }, { "commandName":"followmaster", "commandType":"COMPLEX", "minObedience":0.6 }, { "commandName":"stay", "commandType":"COMPLEX", "minObedience":0.1 }, { "commandName":"NEUTRAL", "commandType":"AGGRESSIONLEVEL", "minObedience":0 }, { "commandName":"PROTECTIVE", "commandType":"AGGRESSIONLEVEL", "minObedience":0.5 }, { "commandName":"AGGRESSIVE", "commandType":"AGGRESSIONLEVEL", "minObedience":0.7 }, { "commandName":"PASSIVE", "commandType":"AGGRESSIONLEVEL", "minObedience":0.8 }```
-  * **raisable**: same as the vanilla behavior grow, but will keep the pets taming stats on growing up
+  * **raisable**: now obsolete, use vanilla grow instead
 * **aitasks**:
   * **petmeleeattack**: basically the same as the vanilla meleeattack, but necessary if your pet should fight alongside you
     * **isCommandable**: if set to true, your pet can aid you an combat and react to your commands
