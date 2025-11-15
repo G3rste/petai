@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using HarmonyLib;
 using Vintagestory.API.Common;
+using Vintagestory.API.Common.Entities;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -102,6 +103,37 @@ namespace PetAI
             {
                 __result = null;
             }
+        }
+    }
+
+    public class EntityBehaviorGrowBecomeAdultPatch
+    {
+
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(methodInfo()
+                , postfix: new HarmonyMethod(typeof(EntityBehaviorGrowBecomeAdultPatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
+        }
+
+        public static void Unpatch(Harmony harmony)
+        {
+            harmony.Unpatch(methodInfo()
+                , HarmonyPatchType.Postfix, "gerste.petai");
+        }
+
+        public static MethodInfo methodInfo()
+        {
+            return typeof(EntityBehaviorGrow).GetMethod("BecomeAdult", BindingFlags.Instance | BindingFlags.NonPublic);
+        }
+
+        public static void Postfix(EntityBehaviorGrow __instance, Entity adult, bool keepTextureIndex) {
+            Entity entity = __instance.entity;
+
+            if (adult.HasBehavior<EntityBehaviorTameable>())
+            {
+                adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
+            }
+            adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
         }
     }
 

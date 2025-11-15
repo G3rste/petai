@@ -24,9 +24,10 @@ namespace PetAI
             MultiplyPatch.Patch(harmony);
             MortallyWoundableOnEntityReceiveDamagePatch.Patch(harmony);
             EntityBehaviorNameTagGetNamePatch.Patch(harmony);
+            EntityBehaviorGrowBecomeAdultPatch.Patch(harmony);
             AiTaskStayCloseToEntityOnNoPathPatch.Patch(harmony);
 
-            api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable));
+            api.RegisterEntityBehaviorClass("raisable", typeof(EntityBehaviorRaisable)); // Obsolete, can be removed in a future version
             api.RegisterEntityBehaviorClass("tameable", typeof(EntityBehaviorTameable));
             api.RegisterEntityBehaviorClass("petinventory", typeof(EntityBehaviorPetInventory));
             api.RegisterEntityBehaviorClass("givecommand", typeof(EntityBehaviorGiveCommand));
