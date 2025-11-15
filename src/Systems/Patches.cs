@@ -63,13 +63,14 @@ namespace PetAI
         public static bool Prefix(EntityBehaviorMortallyWoundable __instance, DamageSource damageSource, ref float damage)
         {
             var tameable = __instance.entity.GetBehavior<EntityBehaviorTameable>();
-            if (!string.IsNullOrEmpty(tameable?.ownerId)
-                && __instance.HealthState == EnumEntityHealthState.MortallyWounded
-                && damageSource.Type != EnumDamageType.Heal)
+            if (string.IsNullOrEmpty(tameable?.ownerId)
+                || __instance.HealthState == EnumEntityHealthState.Normal
+                || damageSource.Type == EnumDamageType.Heal)
             {
-                damage = 0;
+                return true;
             }
-            return true;
+            damage = 0;
+            return false;
         }
     }
 
@@ -121,8 +122,7 @@ namespace PetAI
             return typeof(EntityBehaviorGrow).GetMethod("BecomeAdult", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        public static void Postfix(EntityBehaviorGrow __instance, Entity adult, bool keepTextureIndex)
-        {
+        public static void Postfix(EntityBehaviorGrow __instance, Entity adult, bool keepTextureIndex) {
             Entity entity = __instance.entity;
 
             if (adult.HasBehavior<EntityBehaviorTameable>())
