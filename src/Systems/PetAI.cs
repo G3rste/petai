@@ -174,6 +174,9 @@ namespace PetAI
     }
     public class Difficulty
     {
+        public float petMaxHpModifier = 0;
+        public float petDamageMultiplier = 1;
+        public float petSpeedMultiplier = 1;
         public float tamingMultiplier = 1;
         public float obedienceMultiplier = 1;
         public float disobedienceMultiplier = 1;

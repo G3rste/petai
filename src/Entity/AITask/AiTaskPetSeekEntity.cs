@@ -30,7 +30,9 @@ namespace PetAI
 
         public AiTaskPetSeekEntity(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-            this.isCommandable = taskConfig["isCommandable"].AsBool(false);
+            isCommandable = taskConfig["isCommandable"].AsBool(false);
+            moveSpeed *= PetConfig.Current.Difficulty.petSpeedMultiplier;
+            animMeta.AnimationSpeed *= PetConfig.Current.Difficulty.petSpeedMultiplier;
         }
 
         public override bool ShouldExecute()

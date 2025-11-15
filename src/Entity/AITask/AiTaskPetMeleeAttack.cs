@@ -26,7 +26,8 @@ namespace PetAI
 
         public AiTaskPetMeleeAttack(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
-            this.isCommandable = taskConfig["isCommandable"].AsBool(false);
+            isCommandable = taskConfig["isCommandable"].AsBool(false);
+            damage *= PetConfig.Current.Difficulty.petDamageMultiplier;
         }
 
         public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)

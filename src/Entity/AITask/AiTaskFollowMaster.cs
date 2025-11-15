@@ -16,6 +16,8 @@ namespace PetAI
                 commandName = taskConfig["command"].AsString("followmaster");
             }
             allowTeleport &= PetConfig.Current.AllowTeleport;
+            moveSpeed *= PetConfig.Current.Difficulty.petSpeedMultiplier;
+            animMeta.AnimationSpeed *= PetConfig.Current.Difficulty.petSpeedMultiplier;
         }
 
         public override bool ShouldExecute()

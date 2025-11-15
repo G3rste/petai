@@ -212,6 +212,7 @@ namespace PetAI
             entity.Api.Event.EnqueueMainThreadTask(() =>
                 listenerId = entity.World.RegisterGameTickListener(disobey, 60000), "register disobedience tick listener"
             );
+            entity.GetBehavior<EntityBehaviorHealth>()?.SetMaxHealthModifiers("petconfig", PetConfig.Current.Difficulty.petMaxHpModifier);
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
