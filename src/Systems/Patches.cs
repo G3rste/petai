@@ -63,7 +63,11 @@ namespace PetAI
         public static bool Prefix(EntityBehaviorMortallyWoundable __instance, DamageSource damageSource, ref float damage)
         {
             var tameable = __instance.entity.GetBehavior<EntityBehaviorTameable>();
-            if (string.IsNullOrEmpty(tameable?.ownerId)
+            if (tameable != null && string.IsNullOrEmpty(tameable.ownerId))
+            {
+                return false;
+            }
+            if (tameable == null
                 || __instance.HealthState == EnumEntityHealthState.Normal
                 || damageSource.Type == EnumDamageType.Heal)
             {
