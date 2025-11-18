@@ -49,8 +49,11 @@ namespace PetAI
                 BlockSelection blockSel = null;
                 Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
                 player.World.RayTraceForSelection(pos, player.Pos.Pitch, player.Pos.Yaw, 50, ref blockSel, ref entitySel);
-                giveBehavior.victim = entitySel?.Entity;
-                target = entitySel?.Entity;
+                if (entitySel?.Entity?.GetBehavior<EntityBehaviorTameable>()?.ownerId != player.PlayerUID)
+                {
+                    giveBehavior.victim = entitySel?.Entity;
+                    target = entitySel?.Entity;
+                }
             }
             if (command.commandName == "removetarget")
             {
@@ -87,6 +90,7 @@ namespace PetAI
                     attackTask.targetEntity = null;
                     attackTask.ClearAttacker();
                 }
+
 
 
                 foreach (var task in taskManager.AllTasks)
