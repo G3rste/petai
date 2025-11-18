@@ -212,6 +212,10 @@ namespace PetAI
             entity.Api.Event.EnqueueMainThreadTask(() =>
                 listenerId = entity.World.RegisterGameTickListener(disobey, 60000), "register disobedience tick listener"
             );
+        }
+
+        public override void AfterInitialized(bool onFirstSpawn)
+        {
             entity.GetBehavior<EntityBehaviorHealth>()?.SetMaxHealthModifiers("petconfig", PetConfig.Current.Difficulty.petMaxHpModifier);
         }
 
@@ -416,20 +420,18 @@ namespace PetAI
                 .ToArray();
             if (entity.Alive && treats.Length > 0 && (string.IsNullOrEmpty(ownerId) || player.PlayerUID == ownerId))
             {
-                return new WorldInteraction[]
-                {
+                return [
                     new WorldInteraction()
                     {
                         ActionLangCode = "petai:interact-feed",
                         MouseButton = EnumMouseButton.Right,
                         Itemstacks = treats
                     }
-                };
+                ];
             }
             else if (!entity.Alive && entity.GetBehavior<EntityBehaviorHarvestable>()?.IsHarvested != true && PetConfig.Current.Resurrectors?.Length > 0)
             {
-                return new WorldInteraction[]
-                {
+                return [
                     new WorldInteraction()
                     {
                         ActionLangCode = "petai:interact-revive",
@@ -441,7 +443,7 @@ namespace PetAI
                             .ConvertAll(resurrector => new ItemStack(resurrector))
                             .ToArray()
                     }
-                };
+                ];
             }
             else
             {

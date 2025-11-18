@@ -33,7 +33,7 @@ namespace PetAI
             {
                 return base.GetInteractionHelp(world, es, player, ref handled);
             }
-            return new WorldInteraction[0];
+            return [];
         }
         public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
