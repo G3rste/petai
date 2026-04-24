@@ -1,5 +1,6 @@
 [
     {
+      "side": "server",
       "op": "add",
       "path": "/server/behaviors/-",
       "value": {
@@ -8,12 +9,13 @@
       "file": "game:entities/humanoid/player.json"
     },
     {
+      "side": "server",
       "op": "add",
       "path": "/client/animations/-",
       "value": {
         "code": "rideidle",
-				"animation": "rideidle", 
-				"blendMode": "Average" 
+				"animation": "rideidle",
+				"blendMode": "Average"
       },
       "file": "game:entities/humanoid/player.json"
     }

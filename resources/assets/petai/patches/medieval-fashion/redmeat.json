@@ -1,5 +1,6 @@
 [
     {
+        "side": "server",
         "op": "add",
         "path": "/behaviors",
         "value": [

@@ -1,5 +1,6 @@
 [
     {
+    "side": "server",
     "op": "replace",
     "path": "/tpHandTransformByType/*",
     "value": {
