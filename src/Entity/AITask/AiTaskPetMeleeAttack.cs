@@ -30,7 +30,7 @@ namespace PetAI
             damage *= PetConfig.Current.Difficulty.petDamageMultiplier;
         }
 
-        public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
+        public override bool IsTargetableEntity(Entity e, float range)
         {
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
@@ -51,17 +51,17 @@ namespace PetAI
             {
                 if (behaviorGiveCommand?.attacker == e || behaviorGiveCommand?.victim == e)
                 {
-                    return base.IsTargetableEntity(e, range, true);
+                    return base.IsTargetableEntity(e, range);
                 }
             }
             if (attackedByEntity == e)
             {
-                return base.IsTargetableEntity(e, range, true);
+                return base.IsTargetableEntity(e, range);
             }
 
             if (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.NEUTRAL) { return false; }
 
-            return base.IsTargetableEntity(e, range, ignoreEntityCode);
+            return base.IsTargetableEntity(e, range);
         }
     }
 }
