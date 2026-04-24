@@ -48,7 +48,7 @@ namespace PetAI
                 EntitySelection entitySel = null;
                 BlockSelection blockSel = null;
                 Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
-                player.World.RayTraceForSelection(pos, player.SidedPos.Pitch, player.SidedPos.Yaw, 50, ref blockSel, ref entitySel);
+                player.World.RayTraceForSelection(pos, player.Pos.Pitch, player.Pos.Yaw, 50, ref blockSel, ref entitySel);
                 giveBehavior.victim = entitySel?.Entity;
                 target = entitySel?.Entity;
             }
