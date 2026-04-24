@@ -25,7 +25,7 @@ namespace PetAI
                 byEntity.AnimManager?.StartAnimation("eat");
                 if (byEntity.Api?.Side == EnumAppSide.Server)
                 {
-                    byEntity.World?.PlaySoundAt(new AssetLocation("petai:sounds/whistling.ogg"), byEntity.ServerPos.X, byEntity.ServerPos.Y, byEntity.ServerPos.Z);
+                    byEntity.World?.PlaySoundAt(new AssetLocation("petai:sounds/whistling.ogg"), byEntity.Pos.X, byEntity.Pos.Y, byEntity.Pos.Z);
                 }
                 notifyNearbyPets(byEntity);
             }
@@ -39,7 +39,7 @@ namespace PetAI
             var command = giveBehavior.activeCommand;
             if (command == null) return;
 
-            var petArray = byEntity.World.GetEntitiesAround(byEntity.ServerPos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
+            var petArray = byEntity.World.GetEntitiesAround(byEntity.Pos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
 
             var player = byEntity as EntityPlayer;
             Entity target = null;
@@ -88,7 +88,7 @@ namespace PetAI
                     attackTask.ClearAttacker();
                 }
 
-                
+
                 foreach (var task in taskManager.AllTasks)
                 {
                     (task as AiTaskBaseTargetable)?.ClearAttacker();

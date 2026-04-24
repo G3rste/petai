@@ -111,9 +111,9 @@ namespace PetAI
                     complexCommand = command.commandName;
 
                     ITreeAttribute location = new TreeAttribute();
-                    location.SetDouble("x", entity.ServerPos.X);
-                    location.SetDouble("y", entity.ServerPos.Y);
-                    location.SetDouble("z", entity.ServerPos.Z);
+                    location.SetDouble("x", entity.Pos.X);
+                    location.SetDouble("y", entity.Pos.Y);
+                    location.SetDouble("z", entity.Pos.Z);
 
                     entity.WatchedAttributes.SetAttribute("staylocation", location);
                 }

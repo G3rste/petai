@@ -32,7 +32,7 @@ namespace PetAI
             else if (byEntity.Controls.Sneak && Variant["type"] != "empty")
             {
                 pet = PetUtil.EntityFromTree(slot.Itemstack.Attributes, byEntity.World);
-                pet.ServerPos.SetPos(byEntity.ServerPos);
+                pet.Pos.SetPos(byEntity.Pos);
                 byEntity.World.SpawnEntity(pet);
                 slot.Itemstack = new ItemStack(byEntity.World.GetItem(slot.Itemstack.Item.CodeWithVariant("type", "empty")).Id,
                                         EnumItemClass.Item,

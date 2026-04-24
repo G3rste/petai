@@ -32,11 +32,11 @@ namespace PetAI
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
                 if (!Array.Exists(duringDayTimeFrames, frame => frame.Matches(hourOfDay))) return false;
             }
-            if (nest == null || entity.ServerPos.SquareDistanceTo(nest.Position) > 50)
+            if (nest == null || entity.Pos.SquareDistanceTo(nest.Position) > 50)
             {
-                nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.ServerPos.XYZ, range, isValidNonOccupiedNest) as BlockEntityPetNest;
+                nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.Pos.XYZ, range, isValidNonOccupiedNest) as BlockEntityPetNest;
             }
-            return nest != null && entity.ServerPos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
+            return nest != null && entity.Pos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
         }
 
         private bool isValidNonOccupiedNest(IPointOfInterest poi)
