@@ -45,30 +45,30 @@ namespace PetAI
                 lastCheck = elapsedMs;
                 if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (!IsTargetableEntity(targetEntity, NowSeekRange)) { targetEntity = null; }
+                if (!CanSense(targetEntity, NowSeekRange)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (IsTargetableEntity(ownerAttackedBy, NowSeekRange))
+                        if (ownerAttackedBy?.Alive && CanSense(ownerAttackedBy, NowSeekRange))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (IsTargetableEntity(ownerAttacks, NowSeekRange))
+                        if (ownerAttacks?.Alive && CanSense(ownerAttacks, NowSeekRange))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (IsTargetableEntity(attackedByEntity, NowSeekRange))
+                    if (attackedByEntity?.Alive && CanSense(attackedByEntity, NowSeekRange))
                     {
                         targetEntity = attackedByEntity;
                     }
                 }
 
-                if (IsTargetableEntity(targetEntity, NowSeekRange))
+                if (CanSense(targetEntity, NowSeekRange))
                 {
                     targetPos = targetEntity.Pos.XYZ;
                     return true;

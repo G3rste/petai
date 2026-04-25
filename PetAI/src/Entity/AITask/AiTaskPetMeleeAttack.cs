@@ -32,6 +32,10 @@ namespace PetAI
 
         public override bool IsTargetableEntity(Entity e, float range)
         {
+            if (e==null || !e.Alive)
+            {
+                return false;
+            }
             var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
@@ -51,12 +55,12 @@ namespace PetAI
             {
                 if (behaviorGiveCommand?.attacker == e || behaviorGiveCommand?.victim == e)
                 {
-                    return base.IsTargetableEntity(e, range);
+                    return CanSense(e, range);
                 }
             }
             if (attackedByEntity == e)
             {
-                return base.IsTargetableEntity(e, range);
+                return CanSense(e, range);
             }
 
             if (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.NEUTRAL) { return false; }
