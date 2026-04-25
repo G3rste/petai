@@ -7,8 +7,8 @@
         "G3rste"
     ],
     "description": "Mod that focuses on implementing various new AI behaviours and tasks centered around taming.",
-    "version": "4.0.3",
+    "version": "5.0.0",
     "dependencies": {
-        "game": "1.21.0"
+        "game": "1.22.0"
     }
 }
