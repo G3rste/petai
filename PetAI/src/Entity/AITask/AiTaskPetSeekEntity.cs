@@ -51,18 +51,18 @@ namespace PetAI
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (ownerAttackedBy?.Alive && CanSense(ownerAttackedBy, NowSeekRange))
+                        if (ownerAttackedBy?.Alive == true && CanSense(ownerAttackedBy, NowSeekRange))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (ownerAttacks?.Alive && CanSense(ownerAttacks, NowSeekRange))
+                        if (ownerAttacks?.Alive == true && CanSense(ownerAttacks, NowSeekRange))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (attackedByEntity?.Alive && CanSense(attackedByEntity, NowSeekRange))
+                    if (attackedByEntity?.Alive == true && CanSense(attackedByEntity, NowSeekRange))
                     {
                         targetEntity = attackedByEntity;
                     }
