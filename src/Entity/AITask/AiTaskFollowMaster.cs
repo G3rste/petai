@@ -32,19 +32,19 @@ namespace PetAI
                 return false;
             }
             return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName
-                && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos.X, entity.ServerPos.Y, entity.ServerPos.Z) > maxDistance * maxDistance;
+                && targetEntity.Pos.SquareDistanceTo(entity.Pos.X, entity.Pos.Y, entity.Pos.Z) > maxDistance * maxDistance;
         }
 
         public override void OnNoPath(Vec3d target)
         {
-            if (allowTeleport && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos) > teleportAfterRange * teleportAfterRange)
+            if (allowTeleport && targetEntity.Pos.SquareDistanceTo(entity.Pos) > teleportAfterRange * teleportAfterRange)
             {
                 tryTeleport();
             }
             else
             {
                 stuck = false;
-                pathTraverser.WalkTowards(targetEntity.ServerPos.XYZ, moveSpeed, maxDistance, OnGoalReached, OnStuck);
+                pathTraverser.WalkTowards(targetEntity.Pos.XYZ, moveSpeed, maxDistance, OnGoalReached, OnStuck);
             }
         }
     }

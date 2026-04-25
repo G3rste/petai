@@ -58,7 +58,7 @@ namespace PetAI
                 return false;
             }
             return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName &&
-                entity.ServerPos.SquareDistanceTo((float)x, (float)y, (float)z) > maxDistance * maxDistance;
+                entity.Pos.SquareDistanceTo((float)x, (float)y, (float)z) > maxDistance * maxDistance;
         }
         public override void StartExecute()
         {
@@ -78,7 +78,7 @@ namespace PetAI
                 return false;
             }
 
-            if (entity.ServerPos.SquareDistanceTo((double)x, (double)y, (double)z) < maxDistance * maxDistance / 4)
+            if (entity.Pos.SquareDistanceTo((double)x, (double)y, (double)z) < maxDistance * maxDistance / 4)
             {
                 pathTraverser.Stop();
                 return false;

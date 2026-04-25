@@ -28,7 +28,7 @@ namespace PetAI
             targetEntity = tameable?.cachedOwner?.Entity;
             return cooldownUntilMs < entity.World.ElapsedMilliseconds
                 && targetEntity != null
-                && targetEntity.ServerPos.SquareDistanceTo(entity.ServerPos) <= 25
+                && targetEntity.Pos.SquareDistanceTo(entity.Pos) <= 25
                 && hasNiceThing(targetEntity);
         }
         public override void StartExecute()
@@ -40,16 +40,16 @@ namespace PetAI
         public override bool ContinueExecute(float dt)
         {
             Vec3f targetVec = new Vec3f(
-                (float)(targetEntity.ServerPos.X - entity.ServerPos.X),
-                (float)(targetEntity.ServerPos.Y - entity.ServerPos.Y),
-                (float)(targetEntity.ServerPos.Z - entity.ServerPos.Z)
+                (float)(targetEntity.Pos.X - entity.Pos.X),
+                (float)(targetEntity.Pos.Y - entity.Pos.Y),
+                (float)(targetEntity.Pos.Z - entity.Pos.Z)
             );
 
             float desiredYaw = (float)Math.Atan2(targetVec.X, targetVec.Z);
 
-            float yawDist = GameMath.AngleRadDistance(entity.ServerPos.Yaw, desiredYaw);
-            entity.ServerPos.Yaw += GameMath.Clamp(yawDist, -250 * dt, 250 * dt);
-            entity.ServerPos.Yaw = entity.ServerPos.Yaw % GameMath.TWOPI;
+            float yawDist = GameMath.AngleRadDistance(entity.Pos.Yaw, desiredYaw);
+            entity.Pos.Yaw += GameMath.Clamp(yawDist, -250 * dt, 250 * dt);
+            entity.Pos.Yaw = entity.Pos.Yaw % GameMath.TWOPI;
 
             return durationUntilMs > entity.World.ElapsedMilliseconds
                 && hasNiceThing(targetEntity)

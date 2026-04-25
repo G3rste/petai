@@ -287,7 +287,7 @@ namespace PetAI
                 Cuboidf collisionBox = tameType.SpawnCollisionBox;
 
                 // Delay spawning if we're colliding
-                if (entity.World.CollisionTester.IsColliding(entity.World.BlockAccessor, collisionBox, entity.ServerPos.XYZ, false))
+                if (entity.World.CollisionTester.IsColliding(entity.World.BlockAccessor, collisionBox, entity.Pos.XYZ, false))
                 {
                     callbackId = entity.World.RegisterCallback(spawnTameVariant, 1000);
                     return;
@@ -295,8 +295,8 @@ namespace PetAI
 
                 tameEntity = entity.World.ClassRegistry.CreateEntity(tameType);
 
-                tameEntity.ServerPos.SetFrom(entity.ServerPos);
-                tameEntity.Pos.SetFrom(tameEntity.ServerPos);
+                tameEntity.Pos.SetFrom(entity.Pos);
+                tameEntity.Pos.SetFrom(tameEntity.Pos);
 
                 entity.Die(EnumDespawnReason.Expire, null);
                 entity.World.SpawnEntity(tameEntity);
@@ -487,7 +487,7 @@ namespace PetAI
                         Color = 9044739,
                         Icon = "gravestone",
                         Pinned = true,
-                        Position = entity.ServerPos.XYZ,
+                        Position = entity.Pos.XYZ,
                         OwningPlayerUid = ownerId,
                         Title = Lang.Get("petai:message-pet-dead", entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName),
                     },

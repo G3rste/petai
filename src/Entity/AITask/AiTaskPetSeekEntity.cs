@@ -45,50 +45,50 @@ namespace PetAI
                 lastCheck = elapsedMs;
                 if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (!IsTargetableEntity(targetEntity, NowSeekRange, true)) { targetEntity = null; }
+                if (!IsTargetableEntity(targetEntity, NowSeekRange)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
                         var ownerAttackedBy = behaviorGiveCommand?.attacker;
-                        if (IsTargetableEntity(ownerAttackedBy, NowSeekRange, true))
+                        if (IsTargetableEntity(ownerAttackedBy, NowSeekRange))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
                         var ownerAttacks = behaviorGiveCommand?.victim;
-                        if (IsTargetableEntity(ownerAttacks, NowSeekRange, true))
+                        if (IsTargetableEntity(ownerAttacks, NowSeekRange))
                         {
                             targetEntity = ownerAttacks;
                         }
                     }
-                    if (IsTargetableEntity(attackedByEntity, NowSeekRange, true))
+                    if (IsTargetableEntity(attackedByEntity, NowSeekRange))
                     {
                         targetEntity = attackedByEntity;
                     }
                 }
 
-                if (IsTargetableEntity(targetEntity, NowSeekRange, true))
+                if (IsTargetableEntity(targetEntity, NowSeekRange))
                 {
-                    targetPos = targetEntity.ServerPos.XYZ;
+                    targetPos = targetEntity.Pos.XYZ;
                     return true;
                 }
             }
             if (aggressionLevel == EnumAggressionLevel.AGGRESSIVE && lastSearch + 5000 < elapsedMs)
             {
                 lastSearch = elapsedMs;
-                targetEntity = partitionUtil.GetNearestInteractableEntity(entity.ServerPos.XYZ, NowSeekRange, e => IsTargetableEntity(e, NowSeekRange));
+                targetEntity = partitionUtil.GetNearestInteractableEntity(entity.Pos.XYZ, NowSeekRange, e => IsTargetableEntity(e, NowSeekRange));
 
-                if (IsTargetableEntity(targetEntity, NowSeekRange, true))
+                if (IsTargetableEntity(targetEntity, NowSeekRange))
                 {
-                    targetPos = targetEntity.ServerPos.XYZ;
+                    targetPos = targetEntity.Pos.XYZ;
                     return true;
                 }
             }
             return false;
         }
 
-        public override bool IsTargetableEntity(Entity e, float range, bool ignoreEntityCode = false)
+        public override bool IsTargetableEntity(Entity e, float range)
         {
             if (e == null) { return false; }
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
@@ -103,10 +103,10 @@ namespace PetAI
                     return false;
                 }
             }
-            if (e.ServerPos.SquareDistanceTo(entity.ServerPos) > range * range) { return false; }
+            if (e.Pos.SquareDistanceTo(entity.Pos) > range * range) { return false; }
 
 
-            return base.IsTargetableEntity(e, range, ignoreEntityCode);
+            return base.IsTargetableEntity(e, range);
         }
     }
 }
