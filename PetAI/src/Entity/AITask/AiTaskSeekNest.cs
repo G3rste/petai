@@ -8,15 +8,15 @@ namespace PetAI
 {
     public class AiTaskSeekNest : AiTaskBase
     {
-        private BlockEntityPetNest nest { get; set; }
+        private BlockEntityPetNest Nest { get; set; }
 
-        int range = 15;
+        readonly int range = 15;
 
         long lastCheck;
 
         bool stuck = false;
 
-        float moveSpeed = 0.02f;
+        readonly float moveSpeed = 0.02f;
         public AiTaskSeekNest(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
             range = taskConfig["horRange"].AsInt(15);
@@ -32,19 +32,19 @@ namespace PetAI
                 double hourOfDay = entity.World.Calendar.HourOfDay / entity.World.Calendar.HoursPerDay * 24f + (entity.World.Rand.NextDouble() * 0.3f - 0.15f);
                 if (!Array.Exists(duringDayTimeFrames, frame => frame.Matches(hourOfDay))) return false;
             }
-            if (nest == null || entity.Pos.SquareDistanceTo(nest.Position) > 50)
+            if (Nest == null || entity.Pos.SquareDistanceTo(Nest.Position) > 50)
             {
-                nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.Pos.XYZ, range, isValidNonOccupiedNest) as BlockEntityPetNest;
+                Nest = entity.Api.ModLoader.GetModSystem<POIRegistry>().GetNearestPoi(entity.Pos.XYZ, range, IsValidNonOccupiedNest) as BlockEntityPetNest;
             }
-            return nest != null && entity.Pos.SquareDistanceTo(nest.Pos.ToVec3d()) > 2;
+            return Nest != null && entity.Pos.SquareDistanceTo(Nest.Pos.ToVec3d()) > 2;
         }
 
-        private bool isValidNonOccupiedNest(IPointOfInterest poi)
+        private bool IsValidNonOccupiedNest(IPointOfInterest poi)
         {
             if (poi is BlockEntityPetNest nest)
             {
-                if ((nest.Block as BlockPetNest).nestSize < entity.GetBehavior<EntityBehaviorTameable>().size) { return false; }
-                if (entity.World.GetEntitiesAround(nest.Position, 3, 3, occupier => occupier.GetBehavior<EntityBehaviorTaskAI>()?.TaskManager?.GetTask<AiTaskSeekNest>()?.nest == nest).Length == 0)
+                if ((nest.Block as BlockPetNest).nestSize < entity.GetBehavior<EntityBehaviorTameable>().Size) { return false; }
+                if (entity.World.GetEntitiesAround(nest.Position, 3, 3, occupier => occupier.GetBehavior<EntityBehaviorTaskAI>()?.TaskManager?.GetTask<AiTaskSeekNest>()?.Nest == nest).Length == 0)
                 {
                     return true;
                 }
@@ -58,7 +58,7 @@ namespace PetAI
 
             stuck = false;
 
-            pathTraverser.WalkTowards(nest.MiddlePostion, moveSpeed, 0.12f, () => { }, () => stuck = true);
+            pathTraverser.WalkTowards(Nest.MiddlePostion, moveSpeed, 0.12f, () => { }, () => stuck = true);
         }
 
         public override bool ContinueExecute(float dt)

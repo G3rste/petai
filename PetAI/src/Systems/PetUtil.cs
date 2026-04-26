@@ -12,9 +12,9 @@ namespace PetAI
         {
             var entityTree = new TreeAttribute();
             entityTree.SetString("class", entity.Api.World.ClassRegistry.GetEntityClassName(entity.GetType()));
-            using (MemoryStream ms = new MemoryStream())
+            using (MemoryStream ms = new())
             {
-                using (BinaryWriter writer = new BinaryWriter(ms, Encoding.UTF8))
+                using (BinaryWriter writer = new(ms, Encoding.UTF8))
                 {
                     entity.ToBytes(writer, false);
                     writer.Flush();
@@ -31,9 +31,9 @@ namespace PetAI
                 return null;
             }
             
-            using (MemoryStream ms = new MemoryStream(entityTree.GetBytes("pet")))
+            using (MemoryStream ms = new(entityTree.GetBytes("pet")))
             {
-                using (BinaryReader reader = new BinaryReader(ms, Encoding.UTF8))
+                using (BinaryReader reader = new(ms, Encoding.UTF8))
                 {
                     Entity capturedEntity = world.ClassRegistry.CreateEntity(entityTree.GetString("class"));
                     capturedEntity.FromBytes(reader, false);

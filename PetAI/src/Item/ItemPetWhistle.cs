@@ -27,45 +27,44 @@ namespace PetAI
                 {
                     byEntity.World?.PlaySoundAt(new AssetLocation("petai:sounds/whistling.ogg"), byEntity.Pos.X, byEntity.Pos.Y, byEntity.Pos.Z);
                 }
-                notifyNearbyPets(byEntity);
+                NotifyNearbyPets(byEntity);
             }
         }
 
-        private void notifyNearbyPets(EntityAgent byEntity)
+        private void NotifyNearbyPets(EntityAgent byEntity)
         {
             var giveBehavior = byEntity.GetBehavior<EntityBehaviorGiveCommand>();
             if (giveBehavior == null) return;
 
-            var command = giveBehavior.activeCommand;
+            var command = giveBehavior.ActiveCommand;
             if (command == null) return;
 
             var petArray = byEntity.World.GetEntitiesAround(byEntity.Pos.XYZ, 15, 5, entity => entity.HasBehavior<EntityBehaviorReceiveCommand>());
 
-            var player = byEntity as EntityPlayer;
             Entity target = null;
-            if (player != null && command.commandName == "settarget")
+            if (byEntity is EntityPlayer player && command.CommandName == "settarget")
             {
                 EntitySelection entitySel = null;
                 BlockSelection blockSel = null;
                 Vec3d pos = player.Pos.XYZ.Add(player.LocalEyePos);
                 player.World.RayTraceForSelection(pos, player.Pos.Pitch, player.Pos.Yaw, 50, ref blockSel, ref entitySel);
-                if (entitySel?.Entity?.GetBehavior<EntityBehaviorTameable>()?.ownerId != player.PlayerUID)
+                if (entitySel?.Entity?.GetBehavior<EntityBehaviorTameable>()?.OwnerId != player.PlayerUID)
                 {
-                    giveBehavior.victim = entitySel?.Entity;
+                    giveBehavior.Victim = entitySel?.Entity;
                     target = entitySel?.Entity;
                 }
             }
-            if (command.commandName == "removetarget")
+            if (command.CommandName == "removetarget")
             {
-                giveBehavior.victim = null;
-                giveBehavior.attacker = null;
+                giveBehavior.Victim = null;
+                giveBehavior.Attacker = null;
 
             }
 
             foreach (var pet in petArray)
             {
                 var receiveBehavior = pet.GetBehavior<EntityBehaviorReceiveCommand>();
-                receiveBehavior.setCommand(command, byEntity as EntityPlayer);
+                receiveBehavior.SetCommand(command, byEntity as EntityPlayer);
 
                 var taskManager = pet.GetBehavior<EntityBehaviorTaskAI>()?.TaskManager;
                 var seekTask = taskManager?.GetTask<AiTaskPetSeekEntity>();
@@ -74,12 +73,12 @@ namespace PetAI
                 if (target != null
                     && seekTask != null
                     && attackTask != null
-                    && (receiveBehavior.aggressionLevel == EnumAggressionLevel.PROTECTIVE || receiveBehavior.aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
+                    && (receiveBehavior.AggressionLevel == EnumAggressionLevel.PROTECTIVE || receiveBehavior.AggressionLevel == EnumAggressionLevel.AGGRESSIVE))
                 {
                     seekTask.targetEntity = target;
                 }
 
-                if (command.commandName == "removetarget"
+                if (command.CommandName == "removetarget"
                     && seekTask != null
                     && attackTask != null)
                 {
@@ -109,8 +108,8 @@ namespace PetAI
         public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
         {
 
-            return new WorldInteraction[]
-            {
+            return
+            [
                 new WorldInteraction()
                 {
                     ActionLangCode = "petai:interact-whistle-select",
@@ -122,7 +121,7 @@ namespace PetAI
                     ActionLangCode = "petai:interact-whistle-command",
                     MouseButton = EnumMouseButton.Right,
                 }
-            };
+            ];
         }
     }
 }

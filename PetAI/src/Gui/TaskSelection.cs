@@ -10,9 +10,9 @@ namespace PetAI
     {
         public override string ToggleKeyCombinationCode => null;
 
-        private EntityAgent targetEntity;
+        readonly private EntityAgent targetEntity;
 
-        private EntityPlayer player;
+        readonly private EntityPlayer player;
         private int currentX = 0;
         private int currentY = 0;
         List<Command> availableCommands;
@@ -21,10 +21,10 @@ namespace PetAI
         {
             this.targetEntity = targetEntity;
             this.player = player;
-            composeGui();
+            ComposeGui();
         }
 
-        public void composeGui()
+        public void ComposeGui()
         {
             currentY = 20;
             currentX = 0;
@@ -34,80 +34,82 @@ namespace PetAI
 
             if (targetEntity == null
                 || !targetEntity.HasBehavior<EntityBehaviorTameable>()
-                || targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands.Keys.Count == 0)
+                || targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().AvailableCommands.Keys.Count == 0)
             {
-                composeStaticDialogue(dialogBounds, bgBounds);
+                ComposeStaticDialogue(dialogBounds, bgBounds);
             }
             else
             {
-                composeDynamicDialogue(dialogBounds, bgBounds);
+                ComposeDynamicDialogue(dialogBounds, bgBounds);
             }
         }
 
-        private void composeDynamicDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
+        private void ComposeDynamicDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
         {
-            availableCommands = new List<Command>(targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands.Keys);
+            availableCommands = [.. targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().AvailableCommands.Keys];
             SingleComposer = capi.Gui.CreateCompo("CommandDialog-", dialogBounds)
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar(Lang.Get("petai:gui-command-title"), () => TryClose())
                 .BeginChildElements(bgBounds);
 
-            addGuiRow(EnumCommandType.SIMPLE, "petai:gui-command-simple");
-            addGuiRow(EnumCommandType.COMPLEX, "petai:gui-command-complex");
-            addGuiRow(EnumCommandType.AGGRESSIONLEVEL, "petai:gui-command-aggressionlevel");
+            AddGuiRow(EnumCommandType.SIMPLE, "petai:gui-command-simple");
+            AddGuiRow(EnumCommandType.COMPLEX, "petai:gui-command-complex");
+            AddGuiRow(EnumCommandType.AGGRESSIONLEVEL, "petai:gui-command-aggressionlevel");
 
-            SingleComposer.AddIconButton("necklace", onToggleProfile, ElementBounds.FixedOffseted(EnumDialogArea.RightTop, 0, 20, 30, 30))
+            SingleComposer.AddIconButton("necklace", OnToggleProfile, ElementBounds.FixedOffseted(EnumDialogArea.RightTop, 0, 20, 30, 30))
                 .EndChildElements()
             .Compose();
         }
 
-        private void addGuiRow(EnumCommandType type, string headline)
+        private void AddGuiRow(EnumCommandType type, string headline)
         {
-            if (availableCommands.Exists(command => command.type == type))
+            if (availableCommands.Exists(command => command.Type == type))
             {
                 SingleComposer.AddStaticText(Lang.Get(headline), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
                 currentY += 35;
                 currentX = 0;
 
-                foreach (var command in availableCommands.FindAll(command => command.type == type))
+                foreach (var command in availableCommands.FindAll(command => command.Type == type))
                 {
-                    SingleComposer.AddButton(Lang.Get(string.Format("petai:gui-command-{0}", command.commandName.ToLower())), () => onCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
+                    SingleComposer.AddButton(Lang.Get(string.Format("petai:gui-command-{0}", command.CommandName.ToLower())), () => OnCommandClick(command), ElementBounds.Fixed(currentX, currentY, 135, 45));
                     currentX += 150;
                 }
                 currentY += 50;
             }
         }
 
-        private void composeStaticDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
+        private void ComposeStaticDialogue(ElementBounds dialogBounds, ElementBounds bgBounds)
         {
             SingleComposer = capi.Gui.CreateCompo("CommandDialog-", dialogBounds)
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar(Lang.Get("petai:gui-command-title"), () => TryClose())
                 .BeginChildElements(bgBounds)
                     .AddStaticText(Lang.Get("petai:gui-command-simple"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 20, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-sit"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "sit")), ElementBounds.Fixed(0, 50, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-lay"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "lay")), ElementBounds.Fixed(150, 50, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-speak"), () => onCommandClick(new Command(EnumCommandType.SIMPLE, "speak")), ElementBounds.Fixed(300, 50, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-sit"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "sit")), ElementBounds.Fixed(0, 50, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-lay"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "lay")), ElementBounds.Fixed(150, 50, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-speak"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "speak")), ElementBounds.Fixed(300, 50, 135, 45))
                     .AddStaticText(Lang.Get("petai:gui-command-complex"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 100, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-followmaster"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 135, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-stay"), () => onCommandClick(new Command(EnumCommandType.COMPLEX, "stay")), ElementBounds.Fixed(150, 135, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-followmaster"), () => OnCommandClick(new Command(EnumCommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 135, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-stay"), () => OnCommandClick(new Command(EnumCommandType.COMPLEX, "stay")), ElementBounds.Fixed(150, 135, 135, 45))
                     .AddStaticText(Lang.Get("petai:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 185, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-neutral"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.NEUTRAL.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-protective"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-aggressive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-passive"), () => onCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(450, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-neutral"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.NEUTRAL.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-protective"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-aggressive"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-passive"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(450, 220, 135, 45))
                     .AddStaticText(Lang.Get("petai:gui-command-attackorder"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 270, 200, 20))
-                    .AddButton(Lang.Get("petai:gui-command-settarget"), () => onCommandClick(new Command(EnumCommandType.ATTACKORDER, "settarget")), ElementBounds.Fixed(0, 305, 135, 45))
-                    .AddButton(Lang.Get("petai:gui-command-removetarget"), () => onCommandClick(new Command(EnumCommandType.ATTACKORDER, "removetarget")), ElementBounds.Fixed(150, 305, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-settarget"), () => OnCommandClick(new Command(EnumCommandType.ATTACKORDER, "settarget")), ElementBounds.Fixed(0, 305, 135, 45))
+                    .AddButton(Lang.Get("petai:gui-command-removetarget"), () => OnCommandClick(new Command(EnumCommandType.ATTACKORDER, "removetarget")), ElementBounds.Fixed(150, 305, 135, 45))
                 .EndChildElements()
                 .Compose();
         }
-        private bool onCommandClick(Command command)
+        private bool OnCommandClick(Command command)
         {
-            var message = new PetCommandMessage();
-            message.commandName = command.commandName;
-            message.commandType = command.type.ToString();
-            message.playerUID = player.PlayerUID;
+            var message = new PetCommandMessage
+            {
+                commandName = command.CommandName,
+                commandType = command.Type.ToString(),
+                playerUID = player.PlayerUID
+            };
             if (targetEntity != null)
             {
                 message.targetEntityUID = targetEntity.EntityId;
@@ -115,10 +117,10 @@ namespace PetAI
 
             if (targetEntity != null
                 && targetEntity.HasBehavior<EntityBehaviorTameable>()
-                && command.commandName != "dropgear"
-                && targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands[command] > targetEntity.GetBehavior<EntityBehaviorTameable>().obedience)
+                && command.CommandName != "dropgear"
+                && targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().AvailableCommands[command] > targetEntity.GetBehavior<EntityBehaviorTameable>().Obedience)
             {
-                capi.ShowChatMessage(Lang.Get("petai:gui-pet-disobey", targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().availableCommands[command] * 100));
+                capi.ShowChatMessage(Lang.Get("petai:gui-pet-disobey", targetEntity.GetBehavior<EntityBehaviorReceiveCommand>().AvailableCommands[command] * 100));
                 return true;
             }
 
@@ -128,7 +130,7 @@ namespace PetAI
             return true;
         }
 
-        private void onToggleProfile(bool value)
+        private void OnToggleProfile(bool value)
         {
             var gui = new PetProfileGUI(capi, targetEntity.EntityId);
             gui.TryClose();

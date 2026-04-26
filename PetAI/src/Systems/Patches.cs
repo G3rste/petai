@@ -12,23 +12,23 @@ namespace PetAI
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(methodInfo()
+            harmony.Patch(MethodInfo()
                 , prefix: new HarmonyMethod(typeof(MultiplyPatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
         {
-            harmony.Unpatch(methodInfo()
+            harmony.Unpatch(MethodInfo()
                 , HarmonyPatchType.Prefix, "gerste.petai");
         }
 
-        public static MethodInfo methodInfo()
+        public static MethodInfo MethodInfo()
         {
             return typeof(EntityBehaviorMultiply).GetMethod("TryGetPregnant", BindingFlags.Instance | BindingFlags.NonPublic);
         }
         public static bool Prefix(ref bool __result, EntityBehaviorMultiply __instance)
         {
-            bool? multiplyAllowed = __instance.entity.GetBehavior<EntityBehaviorTameable>()?.multiplyAllowed;
+            bool? multiplyAllowed = __instance.entity.GetBehavior<EntityBehaviorTameable>()?.MultiplyAllowed;
             if (multiplyAllowed == null || multiplyAllowed == true)
             {
                 return true;
@@ -46,24 +46,24 @@ namespace PetAI
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(methodInfo()
+            harmony.Patch(MethodInfo()
                 , prefix: new HarmonyMethod(typeof(MortallyWoundableOnEntityReceiveDamagePatch).GetMethod("Prefix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
         {
-            harmony.Unpatch(methodInfo()
+            harmony.Unpatch(MethodInfo()
                 , HarmonyPatchType.Prefix, "gerste.petai");
         }
 
-        public static MethodInfo methodInfo()
+        public static MethodInfo MethodInfo()
         {
             return typeof(EntityBehaviorMortallyWoundable).GetMethod("OnEntityReceiveDamage", BindingFlags.Instance | BindingFlags.Public);
         }
         public static bool Prefix(EntityBehaviorMortallyWoundable __instance, DamageSource damageSource, ref float damage)
         {
             var tameable = __instance.entity.GetBehavior<EntityBehaviorTameable>();
-            if (tameable != null && string.IsNullOrEmpty(tameable.ownerId))
+            if (tameable != null && string.IsNullOrEmpty(tameable.OwnerId))
             {
                 return false;
             }
@@ -83,17 +83,17 @@ namespace PetAI
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(methodInfo()
+            harmony.Patch(MethodInfo()
                 , postfix: new HarmonyMethod(typeof(EntityBehaviorNameTagGetNamePatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
         {
-            harmony.Unpatch(methodInfo()
+            harmony.Unpatch(MethodInfo()
                 , HarmonyPatchType.Postfix, "gerste.petai");
         }
 
-        public static MethodInfo methodInfo()
+        public static MethodInfo MethodInfo()
         {
             return typeof(EntityBehaviorNameTag).GetMethod("GetName", BindingFlags.Instance | BindingFlags.Public);
         }
@@ -111,27 +111,27 @@ namespace PetAI
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(methodInfo()
+            harmony.Patch(MethodInfo()
                 , postfix: new HarmonyMethod(typeof(EntityBehaviorGrowBecomeAdultPatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
         {
-            harmony.Unpatch(methodInfo()
+            harmony.Unpatch(MethodInfo()
                 , HarmonyPatchType.Postfix, "gerste.petai");
         }
 
-        public static MethodInfo methodInfo()
+        public static MethodInfo MethodInfo()
         {
             return typeof(EntityBehaviorGrow).GetMethod("BecomeAdult", BindingFlags.Instance | BindingFlags.NonPublic);
         }
 
-        public static void Postfix(EntityBehaviorGrow __instance, Entity adult, bool keepTextureIndex) {
+        public static void Postfix(EntityBehaviorGrow __instance, Entity adult) {
             Entity entity = __instance.entity;
 
             if (adult.HasBehavior<EntityBehaviorTameable>())
             {
-                adult.GetBehavior<EntityBehaviorTameable>().domesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().domesticationStatus;
+                adult.GetBehavior<EntityBehaviorTameable>().DomesticationStatus = entity.GetBehavior<EntityBehaviorTameable>().DomesticationStatus;
             }
             adult.GetBehavior<EntityBehaviorNameTag>()?.SetName(entity.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
         }
@@ -142,19 +142,19 @@ namespace PetAI
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(methodInfo()
+            harmony.Patch(MethodInfo()
                 , postfix: new HarmonyMethod(typeof(AiTaskStayCloseToEntityOnNoPathPatch).GetMethod("Postfix", BindingFlags.Static | BindingFlags.Public)));
         }
 
         public static void Unpatch(Harmony harmony)
         {
-            harmony.Unpatch(methodInfo()
+            harmony.Unpatch(MethodInfo()
                 , HarmonyPatchType.Postfix, "gerste.petai");
         }
 
-        public static MethodInfo methodInfo()
+        public static MethodInfo MethodInfo()
         {
-            return typeof(AiTaskStayCloseToEntity).GetMethod("OnNoPath", BindingFlags.Instance | BindingFlags.Public, new Type[0]);
+            return typeof(AiTaskStayCloseToEntity).GetMethod("OnNoPath", BindingFlags.Instance | BindingFlags.Public, []);
         }
         public static void Postfix(AiTaskStayCloseToEntity __instance)
         {

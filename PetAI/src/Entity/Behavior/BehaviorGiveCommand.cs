@@ -9,7 +9,7 @@ namespace PetAI
     {
         private Entity _victim;
         private Entity _attacker;
-        public Entity victim
+        public Entity Victim
         {
             get
             {
@@ -22,7 +22,7 @@ namespace PetAI
             }
             set => _victim = value;
         }
-        public Entity attacker
+        public Entity Attacker
         {
             get
             {
@@ -35,15 +35,14 @@ namespace PetAI
             }
             set => _attacker = value;
         }
-        public Command activeCommand
+        public Command ActiveCommand
         {
             get
             {
                 ITreeAttribute command = entity.WatchedAttributes.GetTreeAttribute("activeCommand");
                 String commandName = command?.GetString("commandName");
-                EnumCommandType type;
 
-                if (Enum.TryParse<EnumCommandType>(command?.GetString("type"), out type) && commandName != null)
+                if (Enum.TryParse<EnumCommandType>(command?.GetString("type"), out EnumCommandType type) && commandName != null)
                 {
                     return new Command(type, commandName);
                 }
@@ -52,8 +51,8 @@ namespace PetAI
             set
             {
                 ITreeAttribute command = new TreeAttribute();
-                command.SetString("commandName", value.commandName);
-                command.SetString("type", value.type.ToString());
+                command.SetString("commandName", value.CommandName);
+                command.SetString("type", value.Type.ToString());
                 entity.WatchedAttributes.SetAttribute("activeCommand", command);
             }
         }
@@ -61,13 +60,13 @@ namespace PetAI
         public override void DidAttack(DamageSource source, EntityAgent targetEntity, ref EnumHandling handled)
         {
             base.DidAttack(source, targetEntity, ref handled);
-            victim = targetEntity;
+            Victim = targetEntity;
         }
 
         public override void OnEntityReceiveDamage(DamageSource damageSource, ref float damage)
         {
             base.OnEntityReceiveDamage(damageSource, ref damage);
-            attacker = damageSource.GetCauseEntity();
+            Attacker = damageSource.GetCauseEntity();
         }
 
         public override string PropertyName()
@@ -78,27 +77,27 @@ namespace PetAI
 
     public class Command
     {
-        public EnumCommandType type { get; }
-        public string commandName { get; }
+        public EnumCommandType Type { get; }
+        public string CommandName { get; }
 
         public Command(EnumCommandType type, string commandName)
         {
-            this.commandName = commandName;
-            this.type = type;
+            this.CommandName = commandName;
+            this.Type = type;
         }
 
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
-            if (!(obj is Command)) return false;
+            if (obj is not Command) return false;
             if (obj == this) return true;
             Command command = obj as Command;
-            return this.commandName == command.commandName && this.type == command.type;
+            return this.CommandName == command.CommandName && this.Type == command.Type;
         }
 
         public override int GetHashCode()
         {
-            return commandName.GetHashCode();
+            return CommandName.GetHashCode();
         }
     }
     public enum EnumCommandType

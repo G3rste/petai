@@ -12,7 +12,7 @@ namespace PetAI
             var tameable = pet?.GetBehavior<EntityBehaviorTameable>();
             var canPickUp = Attributes["canPickUp"];
             handling = EnumHandHandling.Handled;
-            if (pet != null && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.cachedOwner?.Entity == byEntity && tameable?.domesticationLevel == DomesticationLevel.DOMESTICATED && Variant["type"] == "empty")
+            if (pet != null && byEntity.Controls.Sneak && canPickUp[pet.Code.Path].Exists && tameable?.CachedOwner?.Entity == byEntity && tameable?.DomesticationLevel == DomesticationLevel.DOMESTICATED && Variant["type"] == "empty")
             {
                 string newVariant = canPickUp[pet.Code.Path]["type"].AsString();
                 if (canPickUp[pet.Code.Path]["appendTextureIndex"].AsBool())
@@ -47,14 +47,14 @@ namespace PetAI
 
         public override WorldInteraction[] GetHeldInteractionHelp(ItemSlot inSlot)
         {
-            return new WorldInteraction[]{
+            return [
                     new WorldInteraction()
                     {
                         ActionLangCode = "petai:pickup-pet",
                         HotKeyCode = "sneak",
                         MouseButton = EnumMouseButton.Right
                     }
-            };
+            ];
         }
     }
 }

@@ -18,7 +18,7 @@ namespace PetAI
             if (lastObedienceIncrease + 1000 < byEntity.World.ElapsedMilliseconds && entity.HasBehavior<EntityBehaviorTameable>())
             {
                 lastObedienceIncrease = byEntity.World.ElapsedMilliseconds;
-                entity.GetBehavior<EntityBehaviorTameable>().obedience += 0.004f;
+                entity.GetBehavior<EntityBehaviorTameable>().Obedience += 0.004f;
             }
         }
 

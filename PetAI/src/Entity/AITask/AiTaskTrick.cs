@@ -21,11 +21,11 @@ namespace PetAI
         
         public override bool ShouldExecute()
         {
-            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.simpleCommand == commandName; ;
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>()?.SimpleCommand == commandName; ;
         }
 
         public override void StartExecute() {
-            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(new Command(EnumCommandType.SIMPLE, null), null);
+            entity.GetBehavior<EntityBehaviorReceiveCommand>()?.SetCommand(new Command(EnumCommandType.SIMPLE, null), null);
             base.StartExecute();
         }
     }

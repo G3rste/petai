@@ -12,8 +12,8 @@ namespace PetAI
     {
         public override string ToggleKeyCombinationCode => null;
 
-        private long targetEntityId;
-        private int currentY = 20;
+        readonly private long targetEntityId;
+        readonly private int currentY = 20;
 
         string petName;
 
@@ -38,18 +38,16 @@ namespace PetAI
             currentY += 35;
             SingleComposer.AddTextInput(ElementBounds.Fixed(0, currentY, 200, 40), (name) =>
             {
-                if (!String.IsNullOrEmpty(name) && name.Length > 50)
+                if (!string.IsNullOrEmpty(name) && name.Length > 50)
                 {
-                    name = name.Substring(0, 50); // did not think this would be necessary but here we are
+                    name = name[..50]; // did not think this would be necessary but here we are
                     SingleComposer.GetTextInput("petName").SetValue(name);
                 }
                 petName = name;
             }, null, "petName");
             SingleComposer.GetTextInput("petName").SetValue(targetEntity?.GetBehavior<EntityBehaviorNameTag>()?.DisplayName);
             currentY += 50;
-            float? health;
-            float? maxhealth;
-            getHealthSat(out health, out maxhealth, targetEntity);
+            GetHealthSat(out float? health, out float? maxhealth, targetEntity);
             if (health != null && maxhealth != null)
             {
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-currenthealth", health, maxhealth), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 240, 20));
@@ -57,7 +55,7 @@ namespace PetAI
             }
             if (targetEntity?.HasBehavior<EntityBehaviorMultiply>() == true)
             {
-                var multiply = targetEntity.GetBehavior<EntityBehaviorTameable>().multiplyAllowed;
+                var multiply = targetEntity.GetBehavior<EntityBehaviorTameable>().MultiplyAllowed;
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-multiply"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
                 SingleComposer.AddSwitch(value => multiplyAllowed = value, ElementBounds.Fixed(150, currentY, 200, 20), "multiplyAllowed");
                 SingleComposer.GetSwitch("multiplyAllowed").SetValue(multiply);
@@ -66,13 +64,13 @@ namespace PetAI
             SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-abandon"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
             SingleComposer.AddSwitch(value => abandon = value, ElementBounds.Fixed(150, currentY, 200, 20), "abandon");
             currentY += 50;
-            SingleComposer.AddButton(Lang.Get("petai:gui-profile-ok"), () => onClick(), ElementBounds.Fixed(0, currentY, 90, 40))
+            SingleComposer.AddButton(Lang.Get("petai:gui-profile-ok"), () => OnClick(), ElementBounds.Fixed(0, currentY, 90, 40))
                 .AddButton(Lang.Get("petai:gui-profile-cancel"), () => TryClose(), ElementBounds.Fixed(150, currentY, 90, 40))
                 .EndChildElements()
                 .Compose();
         }
 
-        void getHealthSat(out float? health, out float? maxHealth, Entity targetEntity)
+        void GetHealthSat(out float? health, out float? maxHealth, Entity targetEntity)
         {
             health = null;
             maxHealth = null;
@@ -87,15 +85,17 @@ namespace PetAI
             if (health != null) health = (float)Math.Round((float)health, 1);
             if (maxHealth != null) maxHealth = (float)Math.Round((float)maxHealth, 1);
         }
-        private bool onClick()
+        private bool OnClick()
         {
-            var message = new PetProfileMessage();
-            message.petName = petName;
-            message.multiplyAllowed = multiplyAllowed;
-            message.abandon = abandon;
-            message.targetEntityUID = targetEntityId;
+            var message = new PetProfileMessage
+            {
+                petName = petName,
+                multiplyAllowed = multiplyAllowed,
+                abandon = abandon,
+                targetEntityUID = targetEntityId
+            };
 
-            capi.Network.GetChannel("petainetwork").SendPacket<PetProfileMessage>(message);
+            capi.Network.GetChannel("petainetwork").SendPacket(message);
 
             TryClose();
             return true;

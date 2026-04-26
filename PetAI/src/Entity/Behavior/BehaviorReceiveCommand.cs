@@ -13,11 +13,11 @@ namespace PetAI
         private string _simpleCommand;
 
         protected TaskSelectionGui gui;
-        public string simpleCommand
+        public string SimpleCommand
         {
             get
             {
-                if (isEntityObedient(new Command(EnumCommandType.SIMPLE, _simpleCommand))) return _simpleCommand;
+                if (IsEntityObedient(new Command(EnumCommandType.SIMPLE, _simpleCommand))) return _simpleCommand;
                 else return null;
 
             }
@@ -26,12 +26,12 @@ namespace PetAI
                 _simpleCommand = value;
             }
         }
-        public string complexCommand
+        public string ComplexCommand
         {
             get
             {
                 string commandName = entity.WatchedAttributes.GetString("activeCommand");
-                if (isEntityObedient(new Command(EnumCommandType.COMPLEX, commandName))) return commandName;
+                if (IsEntityObedient(new Command(EnumCommandType.COMPLEX, commandName))) return commandName;
                 else return null;
             }
             private set
@@ -40,14 +40,13 @@ namespace PetAI
             }
         }
 
-        public EnumAggressionLevel aggressionLevel
+        public EnumAggressionLevel AggressionLevel
         {
             get
             {
-                if (entity.GetBehavior<EntityBehaviorTameable>().domesticationLevel == DomesticationLevel.WILD) { return EnumAggressionLevel.AGGRESSIVE; }
-                EnumAggressionLevel level;
+                if (entity.GetBehavior<EntityBehaviorTameable>().DomesticationLevel == DomesticationLevel.WILD) { return EnumAggressionLevel.AGGRESSIVE; }
                 string commandName = entity.WatchedAttributes.GetString("aggressionLevel");
-                if (Enum.TryParse<EnumAggressionLevel>(commandName, out level) && isEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName)))
+                if (Enum.TryParse<EnumAggressionLevel>(commandName, out EnumAggressionLevel level) && IsEntityObedient(new Command(EnumCommandType.AGGRESSIONLEVEL, commandName)))
                 {
                     return level;
                 }
@@ -59,7 +58,7 @@ namespace PetAI
                 entity.WatchedAttributes.SetString("aggressionLevel", value.ToString());
             }
         }
-        public Dictionary<Command, float> availableCommands { get; private set; } = new Dictionary<Command, float>();
+        public Dictionary<Command, float> AvailableCommands { get; private set; } = [];
         public EntityBehaviorReceiveCommand(Entity entity) : base(entity)
         {
         }
@@ -68,47 +67,44 @@ namespace PetAI
         {
             base.Initialize(properties, attributes);
 
-            JsonObject[] commands = attributes["availableCommands"]?.AsArray();
-            if (commands == null) commands = new JsonObject[0];
+            JsonObject[] commands = attributes["availableCommands"]?.AsArray() ?? [];
             foreach (var item in commands)
             {
                 string commandName = item["commandName"].AsString();
-                EnumCommandType type;
-                Enum.TryParse<EnumCommandType>(item["commandType"].AsString(), out type);
+                Enum.TryParse(item["commandType"].AsString(), out EnumCommandType type);
                 float minObedience = item["minObedience"].AsFloat(1f);
 
-                availableCommands.Add(new Command(type, commandName), minObedience);
+                AvailableCommands.Add(new Command(type, commandName), minObedience);
             }
         }
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
         {
             base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
-            EntityPlayer player = byEntity as EntityPlayer;
-            if (entity.GetBehavior<EntityBehaviorTameable>()?.domesticationLevel != DomesticationLevel.WILD
-                && player != null
-                && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.PlayerUID
+            if (entity.GetBehavior<EntityBehaviorTameable>()?.DomesticationLevel != DomesticationLevel.WILD
+                && byEntity is EntityPlayer player
+                && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.CachedOwner?.PlayerUID
                 && byEntity.Controls.Sneak
                 && mode == EnumInteractMode.Interact)
             {
                 if (entity.Api.Side == EnumAppSide.Client)
                 {
                     if (gui == null) { gui = new TaskSelectionGui(entity.Api as ICoreClientAPI, player, entity as EntityAgent); }
-                    else { gui.composeGui(); }
+                    else { gui.ComposeGui(); }
                     gui.TryOpen();
                 }
             }
         }
-        public void setCommand(Command command, EntityPlayer byPlayer)
+        public void SetCommand(Command command, EntityPlayer byPlayer)
         {
             if (command == null) return;
             if (byPlayer == null
-                || entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner == null
-                || entity.GetBehavior<EntityBehaviorTameable>().cachedOwner.PlayerUID == byPlayer.PlayerUID)
+                || entity.GetBehavior<EntityBehaviorTameable>()?.CachedOwner == null
+                || entity.GetBehavior<EntityBehaviorTameable>().CachedOwner.PlayerUID == byPlayer.PlayerUID)
             {
-                if (command.type == EnumCommandType.COMPLEX)
+                if (command.Type == EnumCommandType.COMPLEX)
                 {
-                    complexCommand = command.commandName;
+                    ComplexCommand = command.CommandName;
 
                     ITreeAttribute location = new TreeAttribute();
                     location.SetDouble("x", entity.Pos.X);
@@ -117,16 +113,15 @@ namespace PetAI
 
                     entity.WatchedAttributes.SetAttribute("staylocation", location);
                 }
-                if (command.type == EnumCommandType.SIMPLE)
+                if (command.Type == EnumCommandType.SIMPLE)
                 {
-                    simpleCommand = command.commandName;
+                    SimpleCommand = command.CommandName;
                 }
-                if (command.type == EnumCommandType.AGGRESSIONLEVEL)
+                if (command.Type == EnumCommandType.AGGRESSIONLEVEL)
                 {
-                    EnumAggressionLevel level;
-                    if (Enum.TryParse<EnumAggressionLevel>(command.commandName, out level))
+                    if (Enum.TryParse(command.CommandName, out EnumAggressionLevel level))
                     {
-                        aggressionLevel = level;
+                        AggressionLevel = level;
                     }
                 }
             }
@@ -137,32 +132,32 @@ namespace PetAI
             return "receivecommand";
         }
 
-        private bool isEntityObedient(Command command)
+        private bool IsEntityObedient(Command command)
         {
-            if (command == null || command.commandName == null) return true;
-            if (entity.HasBehavior<EntityBehaviorTameable>() && availableCommands.ContainsKey(command))
+            if (command == null || command.CommandName == null) return true;
+            if (entity.HasBehavior<EntityBehaviorTameable>() && AvailableCommands.ContainsKey(command))
             {
-                return entity.GetBehavior<EntityBehaviorTameable>().obedience >= availableCommands[command];
+                return entity.GetBehavior<EntityBehaviorTameable>().Obedience >= AvailableCommands[command];
             }
             return true;
         }
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
-            if (entity.Alive && entity.GetBehavior<EntityBehaviorTameable>()?.ownerId == player.PlayerUID)
+            if (entity.Alive && entity.GetBehavior<EntityBehaviorTameable>()?.OwnerId == player.PlayerUID)
             {
-                return new WorldInteraction[]
-                {
+                return
+                [
                     new WorldInteraction()
                     {
                         ActionLangCode = "petai:interact-command",
                         HotKeyCode = "sneak",
                         MouseButton = EnumMouseButton.Right,
                     }
-                };
+                ];
             }
             else
             {
-                return new WorldInteraction[0];
+                return [];
             }
         }
     }

@@ -7,7 +7,7 @@ namespace PetAI
 {
     public class AiTaskFollowMaster : AiTaskStayCloseToEntity
     {
-        string commandName = "followmaster";
+        readonly string commandName = "followmaster";
         EntityBehaviorTameable tameable;
         public AiTaskFollowMaster(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
@@ -22,16 +22,13 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            targetEntity = tameable?.cachedOwner?.Entity;
-            if (tameable == null)
-            {
-                tameable = entity.GetBehavior<EntityBehaviorTameable>();
-            }
+            targetEntity = tameable?.CachedOwner?.Entity;
+            tameable ??= entity.GetBehavior<EntityBehaviorTameable>();
             if (targetEntity == null || !targetEntity.Alive || targetEntity.ShouldDespawn || !targetEntity.IsInteractable)
             {
                 return false;
             }
-            return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>().ComplexCommand == commandName
                 && targetEntity.Pos.SquareDistanceTo(entity.Pos.X, entity.Pos.Y, entity.Pos.Z) > maxDistance * maxDistance;
         }
 

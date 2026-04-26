@@ -6,15 +6,13 @@ using Vintagestory.GameContent;
 using ProtoBuf;
 using System;
 using HarmonyLib;
-using Vintagestory.API.Util;
-using System.Collections.Generic;
 
 namespace PetAI
 {
     public class PetAI : ModSystem
     {
 
-        Harmony harmony = new Harmony("gerste.petai");
+        readonly Harmony harmony = new("gerste.petai");
         ICoreServerAPI serverAPI;
 
         ICoreClientAPI clientAPI;
@@ -105,15 +103,14 @@ namespace PetAI
         {
             EntityPlayer player = serverAPI.World.PlayerByUid(networkMessage.playerUID)?.Entity;
             EntityAgent target = serverAPI.World.GetEntityById(networkMessage.targetEntityUID) as EntityAgent;
-            EnumCommandType commandType;
-            if (Enum.TryParse<EnumCommandType>(networkMessage.commandType, out commandType))
+            if (Enum.TryParse(networkMessage.commandType, out EnumCommandType commandType))
             {
-                Command command = new Command(commandType, networkMessage.commandName);
+                Command command = new(commandType, networkMessage.commandName);
                 if (player != null)
                 {
-                    player.GetBehavior<EntityBehaviorGiveCommand>().activeCommand = command;
+                    player.GetBehavior<EntityBehaviorGiveCommand>().ActiveCommand = command;
                 }
-                target?.GetBehavior<EntityBehaviorReceiveCommand>()?.setCommand(command, player);
+                target?.GetBehavior<EntityBehaviorReceiveCommand>()?.SetCommand(command, player);
             }
         }
 
@@ -124,13 +121,13 @@ namespace PetAI
             if (target?.HasBehavior<EntityBehaviorTameable>() == true)
             {
                 var tameable = target.GetBehavior<EntityBehaviorTameable>();
-                tameable.multiplyAllowed = networkMessage.multiplyAllowed;
+                tameable.MultiplyAllowed = networkMessage.multiplyAllowed;
 
                 if (networkMessage.abandon)
                 {
-                    tameable.ownerId = null;
-                    tameable.domesticationLevel = DomesticationLevel.WILD;
-                    tameable.domesticationProgress = 0f;
+                    tameable.OwnerId = null;
+                    tameable.DomesticationLevel = DomesticationLevel.WILD;
+                    tameable.DomesticationProgress = 0f;
                 }
             }
         }
@@ -139,8 +136,7 @@ namespace PetAI
         {
             if (clientAPI != null)
             {
-                EntityAgent entity = clientAPI.World.GetEntityById(networkMessage.oldEntityUID) as EntityAgent;
-                if (entity != null) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
+                if (clientAPI.World.GetEntityById(networkMessage.oldEntityUID) is EntityAgent entity) clientAPI.ShowChatMessage(Lang.Get("petai:message-finished-taming", entity.GetName()));
                 new PetProfileGUI(clientAPI, networkMessage.targetEntityUID).TryOpen();
             }
         }
@@ -170,7 +166,7 @@ namespace PetAI
         public bool PetDamageableByOwner = false;
         public bool FalldamageOff = true;
         public bool AllowTeleport = false;
-        public string[] Resurrectors = { "game:gear-temporal" };
+        public string[] Resurrectors = ["game:gear-temporal"];
     }
     public class Difficulty
     {

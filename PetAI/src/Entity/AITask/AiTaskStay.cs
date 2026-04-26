@@ -10,23 +10,17 @@ namespace PetAI
         double? x;
         double? y;
         double? z;
-        float moveSpeed = 0.01f;
-        float range = 40f;
-        float maxDistance = 10f;
+        readonly float moveSpeed = 0.01f;
+        readonly float maxDistance = 10f;
         bool stuck = false;
 
-        string commandName = "stay";
+        readonly string commandName = "stay";
         public AiTaskStay(EntityAgent entity, JsonObject taskConfig, JsonObject aiConfig) : base(entity, taskConfig, aiConfig)
         {
 
             if (taskConfig["movespeed"] != null)
             {
                 moveSpeed = taskConfig["movespeed"].AsFloat(0.01f);
-            }
-
-            if (taskConfig["searchrange"] != null)
-            {
-                range = taskConfig["searchrange"].AsFloat(40f);
             }
 
             if (taskConfig["maxdistance"] != null)
@@ -42,7 +36,7 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.complexCommand != commandName)
+            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.ComplexCommand != commandName)
             {
                 x = null;
                 y = null;
@@ -57,7 +51,7 @@ namespace PetAI
                 z = home?.TryGetDouble("z");
                 return false;
             }
-            return entity.GetBehavior<EntityBehaviorReceiveCommand>().complexCommand == commandName &&
+            return entity.GetBehavior<EntityBehaviorReceiveCommand>().ComplexCommand == commandName &&
                 entity.Pos.SquareDistanceTo((float)x, (float)y, (float)z) > maxDistance * maxDistance;
         }
         public override void StartExecute()

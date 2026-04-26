@@ -7,7 +7,7 @@ namespace PetAI
 {
     public class AiTaskPetSeekEntity : AiTaskSeekEntity
     {
-        bool isCommandable = false;
+        readonly bool isCommandable = false;
 
         long lastCheck;
 
@@ -15,14 +15,14 @@ namespace PetAI
 
         private EntityBehaviorGiveCommand _behaviorGiveCommand;
         private long lastOwnerLookup;
-        private EntityBehaviorGiveCommand behaviorGiveCommand
+        private EntityBehaviorGiveCommand BehaviorGiveCommand
         {
             get
             {
                 if (_behaviorGiveCommand == null && lastOwnerLookup + 5000 < entity.World.ElapsedMilliseconds)
                 {
                     lastOwnerLookup = entity.World.ElapsedMilliseconds;
-                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.CachedOwner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                 }
                 return _behaviorGiveCommand;
             }
@@ -37,26 +37,26 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
+            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.AggressionLevel;
             var elapsedMs = entity.World.ElapsedMilliseconds;
             if (lastCheck + 500 < elapsedMs)
             {
                 NowSeekRange = getSeekRange();
                 lastCheck = elapsedMs;
-                if (aggressionLevel == null) { aggressionLevel = EnumAggressionLevel.AGGRESSIVE; }
+                aggressionLevel ??= EnumAggressionLevel.AGGRESSIVE;
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
                 if (!CanSense(targetEntity, NowSeekRange)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
                     {
-                        var ownerAttackedBy = behaviorGiveCommand?.attacker;
+                        var ownerAttackedBy = BehaviorGiveCommand?.Attacker;
                         if (ownerAttackedBy?.Alive == true && CanSense(ownerAttackedBy, NowSeekRange))
                         {
                             targetEntity = ownerAttackedBy;
                         }
 
-                        var ownerAttacks = behaviorGiveCommand?.victim;
+                        var ownerAttacks = BehaviorGiveCommand?.Victim;
                         if (ownerAttacks?.Alive == true && CanSense(ownerAttacks, NowSeekRange))
                         {
                             targetEntity = ownerAttacks;
@@ -94,11 +94,11 @@ namespace PetAI
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
             if (e is EntityPlayer player)
             {
-                if (player.PlayerUID == tameable?.ownerId && tameable != null && tameable.obedience > 0.5f)
+                if (player.PlayerUID == tameable?.OwnerId && tameable != null && tameable.Obedience > 0.5f)
                 {
                     return false;
                 }
-                if (!PetConfig.Current.PvpOn && tameable?.domesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.ownerId)
+                if (!PetConfig.Current.PvpOn && tameable?.DomesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.OwnerId)
                 {
                     return false;
                 }

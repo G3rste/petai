@@ -21,15 +21,12 @@ namespace PetAI
         }
         public override bool ShouldExecute()
         {
-            if (tameable == null)
-            {
-                tameable = entity.GetBehavior<EntityBehaviorTameable>();
-            }
-            targetEntity = tameable?.cachedOwner?.Entity;
+            tameable ??= entity.GetBehavior<EntityBehaviorTameable>();
+            targetEntity = tameable?.CachedOwner?.Entity;
             return cooldownUntilMs < entity.World.ElapsedMilliseconds
                 && targetEntity != null
                 && targetEntity.Pos.SquareDistanceTo(entity.Pos) <= 25
-                && hasNiceThing(targetEntity);
+                && HasNiceThing(targetEntity);
         }
         public override void StartExecute()
         {
@@ -39,7 +36,7 @@ namespace PetAI
         }
         public override bool ContinueExecute(float dt)
         {
-            Vec3f targetVec = new Vec3f(
+            Vec3f targetVec = new(
                 (float)(targetEntity.Pos.X - entity.Pos.X),
                 (float)(targetEntity.Pos.Y - entity.Pos.Y),
                 (float)(targetEntity.Pos.Z - entity.Pos.Z)
@@ -52,14 +49,14 @@ namespace PetAI
             entity.Pos.Yaw = entity.Pos.Yaw % GameMath.TWOPI;
 
             return durationUntilMs > entity.World.ElapsedMilliseconds
-                && hasNiceThing(targetEntity)
+                && HasNiceThing(targetEntity)
                 && base.ContinueExecute(dt);
         }
 
-        private bool hasNiceThing(EntityPlayer owner)
+        private bool HasNiceThing(EntityPlayer owner)
         {
             var code = owner?.RightHandItemSlot?.Itemstack?.Item?.Code.Path;
-            return tameable?.treatList?.Find(item => item.name == code) != null || code == "dogtoy";
+            return tameable?.treatList?.Find(item => item.Name == code) != null || code == "dogtoy";
         }
     }
 }

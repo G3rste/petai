@@ -7,18 +7,18 @@ namespace PetAI
 {
     public class AiTaskPetMeleeAttack : AiTaskMeleeAttack
     {
-        bool isCommandable = false;
+        readonly bool isCommandable = false;
 
         private EntityBehaviorGiveCommand _behaviorGiveCommand;
         private long lastOwnerLookup;
-        private EntityBehaviorGiveCommand behaviorGiveCommand
+        private EntityBehaviorGiveCommand BehaviorGiveCommand
         {
             get
             {
                 if (_behaviorGiveCommand == null && lastOwnerLookup + 5000 < entity.World.ElapsedMilliseconds)
                 {
                     lastOwnerLookup = entity.World.ElapsedMilliseconds;
-                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.cachedOwner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
+                    _behaviorGiveCommand = entity.GetBehavior<EntityBehaviorTameable>()?.CachedOwner?.Entity?.GetBehavior<EntityBehaviorGiveCommand>();
                 }
                 return _behaviorGiveCommand;
             }
@@ -36,16 +36,16 @@ namespace PetAI
             {
                 return false;
             }
-            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.aggressionLevel;
+            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.AggressionLevel;
             if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
             var tameable = entity.GetBehavior<EntityBehaviorTameable>();
             if (e is EntityPlayer player)
             {
-                if (tameable != null && player.PlayerUID == tameable.ownerId && tameable.obedience > 0.5f)
+                if (tameable != null && player.PlayerUID == tameable.OwnerId && tameable.Obedience > 0.5f)
                 {
                     return false;
                 }
-                if (!PetConfig.Current.PvpOn && tameable?.domesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.ownerId)
+                if (!PetConfig.Current.PvpOn && tameable?.DomesticationLevel != DomesticationLevel.WILD && player.PlayerUID != tameable?.OwnerId)
                 {
                     return false;
                 }
@@ -53,7 +53,7 @@ namespace PetAI
 
             if (isCommandable && (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.AGGRESSIVE))
             {
-                if (behaviorGiveCommand?.attacker == e || behaviorGiveCommand?.victim == e)
+                if (BehaviorGiveCommand?.Attacker == e || BehaviorGiveCommand?.Victim == e)
                 {
                     return CanSense(e, range);
                 }

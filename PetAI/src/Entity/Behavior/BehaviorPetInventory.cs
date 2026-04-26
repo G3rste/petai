@@ -20,7 +20,7 @@ namespace PetAI
 
         public override void OnInteract(EntityAgent byEntity, ItemSlot itemslot, Vec3d hitPosition, EnumInteractMode mode, ref EnumHandling handled)
         {
-            if (byEntity is EntityPlayer player && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.ownerId)
+            if (byEntity is EntityPlayer player && player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.OwnerId)
             {
                 base.OnInteract(byEntity, itemslot, hitPosition, mode, ref handled);
             }
@@ -29,7 +29,7 @@ namespace PetAI
 
         public override WorldInteraction[] GetInteractionHelp(IClientWorldAccessor world, EntitySelection es, IClientPlayer player, ref EnumHandling handled)
         {
-            if (player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.ownerId)
+            if (player.PlayerUID == entity.GetBehavior<EntityBehaviorTameable>()?.OwnerId)
             {
                 return base.GetInteractionHelp(world, es, player, ref handled);
             }
