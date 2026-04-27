@@ -37,15 +37,14 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.AggressionLevel;
+            var aggressionLevel = entity.GetBehavior<EntityBehaviorReceiveCommand>()?.AggressionLevel ?? EnumAggressionLevel.AGGRESSIVE;
             var elapsedMs = entity.World.ElapsedMilliseconds;
             if (lastCheck + 500 < elapsedMs)
             {
                 NowSeekRange = getSeekRange();
                 lastCheck = elapsedMs;
-                aggressionLevel ??= EnumAggressionLevel.AGGRESSIVE;
                 if (aggressionLevel == EnumAggressionLevel.PASSIVE) { return false; }
-                if (!CanSense(targetEntity, NowSeekRange)) { targetEntity = null; }
+                if (targetEntity?.Alive != true || !CanSense(targetEntity, NowSeekRange)) { targetEntity = null; }
                 if (targetEntity == null)
                 {
                     if (aggressionLevel != EnumAggressionLevel.NEUTRAL && isCommandable)
@@ -107,6 +106,13 @@ namespace PetAI
 
 
             return base.IsTargetableEntity(e, range);
+        }
+
+        public override bool CanSense(Entity e, double range)
+        {
+            return e != null
+                && base.CanSense(e, range)
+                && e.Pos.SquareDistanceTo(entity.Pos) <= range * range;
         }
     }
 }
