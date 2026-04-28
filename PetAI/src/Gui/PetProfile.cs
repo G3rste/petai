@@ -56,6 +56,7 @@ namespace PetAI
             if (targetEntity?.HasBehavior<EntityBehaviorMultiply>() == true)
             {
                 var multiply = targetEntity.GetBehavior<EntityBehaviorTameable>().MultiplyAllowed;
+                multiplyAllowed = multiply;
                 SingleComposer.AddStaticText(Lang.Get("petai:gui-profile-multiply"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
                 SingleComposer.AddSwitch(value => multiplyAllowed = value, ElementBounds.Fixed(150, currentY, 200, 20), "multiplyAllowed");
                 SingleComposer.GetSwitch("multiplyAllowed").SetValue(multiply);
