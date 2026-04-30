@@ -65,7 +65,7 @@ namespace PetAI
         {
             if (availableCommands.Exists(command => command.Type == type))
             {
-                SingleComposer.AddStaticText(Lang.Get(headline), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 200, 20));
+                SingleComposer.AddStaticText(Lang.Get(headline), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, currentY, 300, 20));
                 currentY += 35;
                 currentX = 0;
 
@@ -84,19 +84,19 @@ namespace PetAI
                 .AddShadedDialogBG(bgBounds)
                 .AddDialogTitleBar(Lang.Get("petai:gui-command-title"), () => TryClose())
                 .BeginChildElements(bgBounds)
-                    .AddStaticText(Lang.Get("petai:gui-command-simple"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 20, 200, 20))
+                    .AddStaticText(Lang.Get("petai:gui-command-simple"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 20, 300, 20))
                     .AddButton(Lang.Get("petai:gui-command-sit"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "sit")), ElementBounds.Fixed(0, 50, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-lay"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "lay")), ElementBounds.Fixed(150, 50, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-speak"), () => OnCommandClick(new Command(EnumCommandType.SIMPLE, "speak")), ElementBounds.Fixed(300, 50, 135, 45))
-                    .AddStaticText(Lang.Get("petai:gui-command-complex"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 100, 200, 20))
+                    .AddStaticText(Lang.Get("petai:gui-command-complex"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 100, 300, 20))
                     .AddButton(Lang.Get("petai:gui-command-followmaster"), () => OnCommandClick(new Command(EnumCommandType.COMPLEX, "followmaster")), ElementBounds.Fixed(0, 135, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-stay"), () => OnCommandClick(new Command(EnumCommandType.COMPLEX, "stay")), ElementBounds.Fixed(150, 135, 135, 45))
-                    .AddStaticText(Lang.Get("petai:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 185, 200, 20))
+                    .AddStaticText(Lang.Get("petai:gui-command-aggressionlevel"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 185, 300, 20))
                     .AddButton(Lang.Get("petai:gui-command-neutral"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.NEUTRAL.ToString())), ElementBounds.Fixed(0, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-protective"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PROTECTIVE.ToString())), ElementBounds.Fixed(150, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-aggressive"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.AGGRESSIVE.ToString())), ElementBounds.Fixed(300, 220, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-passive"), () => OnCommandClick(new Command(EnumCommandType.AGGRESSIONLEVEL, EnumAggressionLevel.PASSIVE.ToString())), ElementBounds.Fixed(450, 220, 135, 45))
-                    .AddStaticText(Lang.Get("petai:gui-command-attackorder"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 270, 200, 20))
+                    .AddStaticText(Lang.Get("petai:gui-command-attackorder"), CairoFont.WhiteSmallishText(), ElementBounds.Fixed(0, 270, 300, 20))
                     .AddButton(Lang.Get("petai:gui-command-settarget"), () => OnCommandClick(new Command(EnumCommandType.ATTACKORDER, "settarget")), ElementBounds.Fixed(0, 305, 135, 45))
                     .AddButton(Lang.Get("petai:gui-command-removetarget"), () => OnCommandClick(new Command(EnumCommandType.ATTACKORDER, "removetarget")), ElementBounds.Fixed(150, 305, 135, 45))
                 .EndChildElements()
