@@ -1,6 +1,7 @@
 using Vintagestory.API.Common;
 using Vintagestory.API.Datastructures;
 using Vintagestory.API.MathTools;
+using Vintagestory.GameContent;
 
 namespace PetAI
 {
@@ -36,7 +37,8 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.ComplexCommand != commandName)
+            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.ComplexCommand != commandName
+                || entity?.GetBehavior<EntityBehaviorRideable>()?.AnyMounted() == true)
             {
                 x = null;
                 y = null;
