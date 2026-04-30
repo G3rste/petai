@@ -43,6 +43,7 @@ namespace PetAI
             AiTaskRegistry.Register<AiTaskPetSeekEntity>("petseekentity");
             AiTaskRegistry.Register<AiTaskSeekNest>("seeknest");
             AiTaskRegistry.Register<AiTaskHappyDance>("happydance");
+            AiTaskRegistry.Register<AiTaskAvoidFire>("avoidfire");
 
             api.RegisterItemClass("ItemPetWhistle", typeof(ItemPetWhistle));
             api.RegisterItemClass("ItemTextureRotator", typeof(ItemTextureRotator));
