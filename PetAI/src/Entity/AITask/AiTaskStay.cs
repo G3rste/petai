@@ -37,8 +37,20 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
-            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.ComplexCommand != commandName
-                || entity?.GetBehavior<EntityBehaviorRideable>()?.AnyMounted() == true)
+        if (entity?.GetBehavior<EntityBehaviorRideable>()?.AnyMounted() == true)
+            {
+                x = null;
+                y = null;
+                z = null;
+                ITreeAttribute stayloc = entity?.WatchedAttributes?.GetTreeAttribute("staylocation");
+                if (stayloc != null)
+                {
+                    entity?.WatchedAttributes?.RemoveAttribute("staylocation");
+                }
+                return false;
+            }
+            
+            if (entity?.GetBehavior<EntityBehaviorReceiveCommand>()?.ComplexCommand != commandName)
             {
                 x = null;
                 y = null;
@@ -73,6 +85,8 @@ namespace PetAI
             {
                 return false;
             }
+
+            
 
             if (entity.Pos.SquareDistanceTo((double)x, (double)y, (double)z) < maxDistance * maxDistance / 4)
             {
