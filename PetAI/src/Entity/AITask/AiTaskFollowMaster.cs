@@ -22,6 +22,7 @@ namespace PetAI
 
         public override bool ShouldExecute()
         {
+            if (!PreconditionsSatisfied()) return false;
             targetEntity = tameable?.CachedOwner?.Entity;
             tameable ??= entity.GetBehavior<EntityBehaviorTameable>();
             if (targetEntity == null || !targetEntity.Alive || targetEntity.ShouldDespawn || !targetEntity.IsInteractable)
