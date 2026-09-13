@@ -1,6 +1,8 @@
+using System;
 using Vintagestory.API.Common;
 using Vintagestory.API.Common.Entities;
 using Vintagestory.API.Datastructures;
+using Vintagestory.API.MathTools;
 using Vintagestory.GameContent;
 
 namespace PetAI
@@ -66,6 +68,48 @@ namespace PetAI
             if (aggressionLevel == EnumAggressionLevel.PROTECTIVE || aggressionLevel == EnumAggressionLevel.NEUTRAL) { return false; }
 
             return base.IsTargetableEntity(e, range);
+        }
+
+        public override bool ShouldExecute()
+        {
+            long elapsedMs = entity.World.ElapsedMilliseconds;
+            if (elapsedMs - lastCheckOrAttackMs < attackDurationMs || cooldownUntilMs > elapsedMs)
+            {
+                return false;
+            }
+
+            if (!PreconditionsSatisfied()) return false;
+
+            Vec3d pos = entity.Pos.XYZ.Add(0, entity.SelectionBox.Y2 / 2, 0).Ahead(entity.SelectionBox.XSize / 2, 0, entity.Pos.Yaw);
+
+            int generation = GetOwnGeneration();
+            bool fullyTamed = generation >= tamingGenerations;
+
+            float fearReductionFactor = Math.Max(0f, (tamingGenerations - generation) / tamingGenerations);
+            if (WhenInEmotionStates != null) fearReductionFactor = 1;
+
+            if (fearReductionFactor <= 0) return false;
+
+            if (entity.World.ElapsedMilliseconds - attackedByEntityMs > 30000)
+            {
+                attackedByEntity = null;
+            }
+            if (ShouldRetaliateForRange(15) && hasDirectContact(attackedByEntity, minDist, minVerDist))
+            {
+                targetEntity = attackedByEntity;
+            }
+            else
+            {
+                targetEntity = entity.World.GetNearestEntity(pos, attackRange * fearReductionFactor, attackRange * fearReductionFactor, (e) =>
+                {
+                    return IsTargetableEntity(e, 15) && hasDirectContact(e, minDist, minVerDist);
+                });
+            }
+
+            lastCheckOrAttackMs = entity.World.ElapsedMilliseconds;
+            damageInflicted = false;
+
+            return targetEntity != null;
         }
     }
 }
